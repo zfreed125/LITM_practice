@@ -27,7 +27,7 @@ if(mysqli_query($conn, $sql)){
     header("location: view.php");
     die();
 } else{
-    echo "ERROR: Not able to execute $sql. " . mysqli_error($link);
+    echo "ERROR: Not able to execute $sql. " . mysqli_error($conn);
 }
     
     $conn->close();
