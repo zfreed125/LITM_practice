@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config.php';
+require_once '../config.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
@@ -15,7 +15,7 @@ $sql = "DELETE from Test1 where id='$id';";
 
 if(mysqli_query($conn, $sql)){
     echo "Record id $id was successfully deleted.";
-    header("location: http://192.168.1.223/read.php");
+    header("location: view.php");
     die();
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($link);

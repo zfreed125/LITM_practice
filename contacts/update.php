@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config.php';
+require_once '../config.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
@@ -25,7 +25,7 @@ $email = mysqli_real_escape_string($conn, $_REQUEST['email']);
 $sql = "UPDATE Test1 set firstname='$firstname', lastname='$lastname', email='$email' where id='$id';";
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
-    header("location: http://192.168.1.223/read.php");
+    header("location: view.php");
     die();
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($link);

@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config.php';
+require_once '../config.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
@@ -73,7 +73,6 @@ $result = mysqli_query($conn, $sql);
                                 <br>
                                 <br>
                                 <!-- <input type="submit" class="btn btn-danger" value="Delete"> -->
-                                <!-- <a href=""></a> -->
                                 <a class="btn btn-danger" href="delete.php?id=<?php echo $id;?>">Delete</a>
                             </form>
                 </div>
