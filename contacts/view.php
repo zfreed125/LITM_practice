@@ -20,7 +20,7 @@
 
         .wrapper{
 
-            width: 650px;
+            width: 100%;
 
             margin: 0 auto;
 
@@ -91,7 +91,7 @@
 
                     // Attempt select query execution
 
-                    $sql = "SELECT * FROM Test1;";
+                    $sql = "SELECT * FROM contacts;";
 
                     if($result = mysqli_query($conn, $sql)){
 
@@ -109,7 +109,7 @@
 
                                         echo "<th>Last Name</th>";
 
-                                        echo "<th>Email</th>";
+                                        echo "<th>Active</th>";
 
                                         echo "<th>Reg Date</th>";
 
@@ -129,7 +129,7 @@
 
                                         echo "<td>" . $row['lastname'] . "</td>";
 
-                                        echo "<td>" . $row['email'] . "</td>";
+                                        echo "<td>" . $row['active'] . "</td>";
 
                                         echo "<td>" . $row['reg_date'] . "</td>";
 

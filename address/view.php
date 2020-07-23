@@ -18,13 +18,9 @@
 
     <style type="text/css">
 
-        .wider{
-            max-width: 500px !important;
-        }
-
         .wrapper{
 
-            width: 650px;
+            width: 100%;
 
             margin: 0 auto;
 
@@ -123,7 +119,7 @@
 
                                         echo "<th>Country</th>";
 
-                                        echo "<th style='max-width: 350px !important;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word'>Reg date</th>";
+                                        echo "<th>Reg date</th>";
 
                                     echo "</tr>";
 
@@ -151,7 +147,7 @@
 
                                         echo "<td>" . $row['country'] . "</td>";
 
-                                        echo "<td style='max-width: 350px !important;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word'>" . $row['reg_date'] . "</td>";
+                                        echo "<td>" . $row['reg_date'] . "</td>";
 
                                         echo "<td>";
 

@@ -16,16 +16,15 @@ if ($conn->connect_error) {
     
 $first_name = mysqli_real_escape_string($conn, $_REQUEST['first_name']);
 $last_name = mysqli_real_escape_string($conn, $_REQUEST['last_name']);
-$email = mysqli_real_escape_string($conn, $_REQUEST['email']);
-// $activity = mysqli_real_escape_string($conn, $_REQUEST['activity']);
-// $client_type = mysqli_real_escape_string($conn, $_REQUEST['client_type']);
- 
+$active = mysqli_real_escape_string($conn, $_REQUEST['active']);
+$active = (isset($_POST['active'])) ? 1 : 0;
 // Attempt insert query execution
-$sql = "INSERT INTO Test1 (firstname, lastname, email) VALUES ('$first_name', '$last_name', '$email')";
+$sql = "INSERT INTO contacts (firstname, lastname, active) VALUES ('$first_name', '$last_name', '$active')";
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
+    echo "New record has id: " . mysqli_insert_id($conn); 
     header("location: view.php");
-    die();
+    // die();
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($conn);
 }

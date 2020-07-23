@@ -22,14 +22,14 @@ $id = $_GET["id"];
 // $client_type = mysqli_real_escape_string($conn, $_REQUEST['client_type']);
  
 // Attempt insert query execution
-// $sql = "select id, first_name, last_name, email from Test1 where id='$id';";
-$sql = "select id, firstname, lastname, email from Test1 where id='$id';";
+// $sql = "select id, first_name, last_name, email from contacts where id='$id';";
+$sql = "select id, firstname, lastname, active from contacts where id='$id';";
 $result = mysqli_query($conn, $sql);
     // output data of each row
     while ($row = mysqli_fetch_assoc($result)) {
         $firstname = $row["firstname"];
         $lastname = $row["lastname"];
-        $email = $row["email"];
+        $active = $row["active"];
     }
 
  
@@ -48,7 +48,24 @@ $result = mysqli_query($conn, $sql);
                         width: 500px;
                     margin: 0 auto;
                 }
+
             </style>
+            <script>
+                window.addEventListener('load', (event) => {
+
+                    var x = document.getElementById("active").value; 
+                    if (x == 1) {
+                        document.getElementById("active").checked = true;
+                    }else{
+                        document.getElementById("active").checked = false;
+                    }
+
+
+
+
+                });
+                    
+            </script>
     </head>
         <body>
                 <div class="wrapper">
@@ -65,8 +82,8 @@ $result = mysqli_query($conn, $sql);
                                 <input type="text" name="lastname" class="form-control" value="<?php echo $lastname; ?>">
                             </div>
                             <div class="form-group">
-                                <label>email</label>
-                                <input type="text" name="email" class="form-control" value="<?php echo $email; ?>">
+                                <label>active</label>
+                                <input type="checkbox" name="active" id="active" class="form-control" value="<?php echo $active; ?>">
                             </div>
                                 <input type="hidden" name="id" value="<?php echo $id; ?>"/>
                                 <input type="submit" class="btn btn-primary" value="Submit">
@@ -74,6 +91,9 @@ $result = mysqli_query($conn, $sql);
                                 <br>
                                 <!-- <input type="submit" class="btn btn-danger" value="Delete"> -->
                                 <a class="btn btn-danger" href="delete.php?id=<?php echo $id;?>">Delete</a>
+                                <br>
+                                <br>
+                                <a class="btn btn-default" href="view.php">Cancel</a>
                             </form>
                 </div>
     </body>

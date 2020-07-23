@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 // sql to create table
 $sql = "CREATE TABLE address (
     id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    contactId INT(8) NULL,
+    contactId VARCHAR(32) NULL,
     addressTypeId INT(8) NULL,
     street1 VARCHAR(64) NOT NULL,
     street2 VARCHAR(64) NULL,

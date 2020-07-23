@@ -17,12 +17,12 @@ if ($conn->connect_error) {
 $id = mysqli_real_escape_string($conn, $_REQUEST['id']);
 $firstname = mysqli_real_escape_string($conn, $_REQUEST['firstname']);
 $lastname = mysqli_real_escape_string($conn, $_REQUEST['lastname']);
-$email = mysqli_real_escape_string($conn, $_REQUEST['email']);
+$active = (isset($_POST['active'])) ? 1 : 0;
 // $activity = mysqli_real_escape_string($conn, $_REQUEST['activity']);
 // $client_type = mysqli_real_escape_string($conn, $_REQUEST['client_type']);
  
 // Attempt insert query execution
-$sql = "UPDATE Test1 set firstname='$firstname', lastname='$lastname', email='$email' where id='$id';";
+$sql = "UPDATE contacts set firstname='$firstname', lastname='$lastname', active='$active' where id='$id';";
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
     header("location: view.php");

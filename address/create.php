@@ -31,8 +31,8 @@ $zip2 = $_REQUEST['zip2'];
 $sql = "INSERT INTO address (street1, street2, city, shortState, zip1, zip2, country) VALUES ('$street1', '$street2', '$city', '$shortState', '$zip1', '$zip2','$country')";
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
+    echo "New record has id: " . mysqli_insert_id($conn); 
     header("location: view.php");
-    die();
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($conn);
 }
