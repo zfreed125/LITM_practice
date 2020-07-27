@@ -53,6 +53,67 @@ $result = mysqli_query($conn, $sql);
                 }
             </style>
             <script>
+                var state = [
+                {abrev: "AK" , state: "Alaska"},
+                {abrev: "AL" , state: "Alabama"}, 
+                {abrev: "AR" , state: "Arkansas"}, 
+                {abrev: "AS" , state: "American Samoa"}, 
+                {abrev: "AZ" , state: "Arizona"}, 
+                {abrev: "CA" , state: "California"}, 
+                {abrev: "CO" , state: "Colorado"}, 
+                {abrev: "CT" , state: "Connecticut"}, 
+                {abrev: "DC" , state: "District of Columbia"}, 
+                {abrev: "DE" , state: "Delaware"}, 
+                {abrev: "FL" , state: "Florida"}, 
+                {abrev: "GA" , state: "Georgia"}, 
+                {abrev: "GU" , state: "Guam"}, 
+                {abrev: "HI" , state: "Hawaii"}, 
+                {abrev: "IA" , state: "Iowa"}, 
+                {abrev: "ID" , state: "Idaho"}, 
+                {abrev: "IL" , state: "Illinois"}, 
+                {abrev: "IN" , state: "Indiana"}, 
+                {abrev: "KS" , state: "Kansas"}, 
+                {abrev: "KY" , state: "Kentucky"}, 
+                {abrev: "LA" , state: "Louisiana"}, 
+                {abrev: "MA" , state: "Massachusetts"}, 
+                {abrev: "MD" , state: "Maryland"}, 
+                {abrev: "ME" , state: "Maine"}, 
+                {abrev: "MI" , state: "Michigan"}, 
+                {abrev: "MN" , state: "Minnesota"}, 
+                {abrev: "MO" , state: "Missouri"}, 
+                {abrev: "MS" , state: "Mississippi"}, 
+                {abrev: "MT" , state: "Montana"}, 
+                {abrev: "NC" , state: "North Carolina"}, 
+                {abrev: "ND" , state: "North Dakota"}, 
+                {abrev: "NE" , state: "Nebraska"}, 
+                {abrev: "NH" , state: "New Hampshire"}, 
+                {abrev: "NJ" , state: "New Jersey"}, 
+                {abrev: "NM" , state: "New Mexico"}, 
+                {abrev: "NV" , state: "Nevada"}, 
+                {abrev: "NY" , state: "New York"}, 
+                {abrev: "OH" , state: "Ohio"}, 
+                {abrev: "OK" , state: "Oklahoma"}, 
+                {abrev: "OR" , state: "Oregon"}, 
+                {abrev: "PA" , state: "Pennsylvania"}, 
+                {abrev: "PR" , state: "Puerto Rico"}, 
+                {abrev: "RI" , state: "Rhode Island"}, 
+                {abrev: "SC" , state: "South Carolina"}, 
+                {abrev: "SD" , state: "South Dakota"}, 
+                {abrev: "TN" , state: "Tennessee"}, 
+                {abrev: "TX" , state: "Texas"}, 
+                {abrev: "UT" , state: "Utah"}, 
+                {abrev: "VA" , state: "Virginia"}, 
+                {abrev: "VI" , state: "Virgin Islands"}, 
+                {abrev: "VT" , state: "Vermont"}, 
+                {abrev: "WA" , state: "Washington"}, 
+                {abrev: "WI" , state: "Wisconsin"}, 
+                {abrev: "WV" , state: "West Virginia"}, 
+                {abrev: "WY" , state: "Wyoming"}
+                ];
+                // <option value="AL">Alabama (AL)</option>
+                // console.log(state.map(x => "adam" + x.abrev));
+                // console.log(state.map(x => "<option value='" + x.abrev + "'>" + x.state + "</option>"));
+                
                 window.addEventListener('load', (event) => {
 
                     var x = document.getElementById("active").value; 
@@ -61,6 +122,25 @@ $result = mysqli_query($conn, $sql);
                     }else{
                         document.getElementById("active").checked = false;
                     }
+                    // var y = document.getElementById('shortState');
+                    // y.append.text(state.map(x => "<option value='" + x.abrev + "'>" + x.state + "</option>"));
+                    // function addOption(selectbox,text,value)
+                    // {var optn = document.createElement("OPTION");
+                    // optn.text = text;
+                    // optn.value = value;
+                    // selectbox.options.add(optn);
+                    // }   
+                    // for (var i=0; i < state.lenght;++i){
+                    //     addOption(document.drop_list.state_list, state[i], state[i]);
+                    // }   
+                    // var cuisines = ["Chinese","Indian"];     
+                    var sel = document.getElementById('Stateslist');
+                    for(var i = 0; i < state.length; i++) {
+                    var opt = document.createElement('option');
+                    opt.innerHTML = state[i];
+                    opt.value = state[i];
+                    sel.appendChild(opt);
+                    }              
                 });
                     
             </script>
@@ -69,7 +149,7 @@ $result = mysqli_query($conn, $sql);
                 <div class="wrapper">
                         <h2>Update Record</h2>
                             <p>Please edit the input values and submit to update the record.</p>
-                            <form action="update.php" method="post">
+                            <form name="drop_list" action="update.php" method="post">
                                
                             <div class="form-group">
                                 <label>active</label>
@@ -108,8 +188,14 @@ $result = mysqli_query($conn, $sql);
                                     <input type="text" name="city" class="form-control" value="<?php echo $city; ?>">
                                 </div>
                                 <div class="form-group">
-                                    <label>shortState</label>
-                                    <input type="text" name="shortState" class="form-control" value="<?php echo $shortState; ?>">
+                                    <label>State</label>
+
+
+                                    <select name="shortState" id="shortState" value="<?php echo $shortState; ?>">
+                                        <option value="" >Select State...</option>
+                                        <!-- {state.map(x => "<option value='" + x.abrev + "'>" + x.state + "</option>");} -->
+                                    </select>
+                                    <!-- <input type="text" name="shortState" class="form-control" value="<?php echo $shortState; ?>"> -->
                                 </div>
                             </div>
 

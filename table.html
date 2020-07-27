@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<head>
+    <title>Table</title>
+</head>
+<body>
+    <style>
+        .valid {
+            /* visibility: hidden; */
+            display: none;
+        }
+    </style>
+    <script>
+        // function validateForm() {
+//   var x = document.forms["myForm"]["street1"].value;
+//   if (x == "") {
+//      const divs = document.getElementsByTagName("div")
+//       for (div of divs) {
+//             div.classList.remove("valid");
+//       }
+//     // alert("street must be filled out");
+//    console.log(document.forms["myForm"]["street1"].nextElementSibling);
+//     return false;
+//   }
+// }
+// document.forms["myForm"]["street1"].nextElementSibling
+
+// window.addEventListener('keyup', (event)=>{
+window.addEventListener('load', (event)=>{
+                // event.preventDefault();
+                // event.stopProppagation();
+                    // return false;
+                // 1. get all inputs, 
+                var inputs = document.querySelectorAll("input");
+                console.log(inputs);
+                // 2. for inputs eval .value="", 
+                for (input of inputs){
+                // 3. remove sibling class
+                if (input.value == ""){
+                input.nextElementSibling.classList.remove("valid");
+
+                }
+
+                }
+})
+// })
+
+    </script>
+    <table>
+        <tr>
+            <form name="myForm" onsubmit="return validateForm()" method="POST">
+                <td>
+                    <input type="text" name="street1" placeholder="Street #1" value="1111">
+                    <div class="valid" id="not_valid">Not Valid</div>
+                </td>
+                <td>
+                    <input type="text" name="street2" placeholder="Street #2" value="2222">
+                    <div class="valid" id="not_valid">Not Valid</div>
+                </td>
+                <td>
+                    <input type="text" name="city" placeholder="City" value="Skokie">
+                    <div class="valid" id="not_valid">Not Valid</div>
+                </td>
+                <td>
+                    <input type="text" name="shortState" placeholder="State" value="Illinois">
+                    <div class="valid" id="not_valid">Not Valid</div>
+                </td>
+                <td>
+                    <input type="text" name="zip1" placeholder="Zip #1" value="33333">
+                    <div class="valid" id="not_valid">Not Valid</div>
+                </td>
+                <td>
+                    <input type="text" name="zip2" placeholder="Zip #2" value="4444">
+                    <div class="valid" id="not_valid">Not Valid</div>
+                </td>
+                <td>
+                    <input type="text" name="country" placeholder="Country" value="USA">
+                    <div class="valid" id="not_valid">Not Valid</div>
+                </td>
+                <td>
+                    <button type="delete" name="delete">Delete</button>
+                </td>
+                <button type="submit" name="submit">Submit</button>
+            </form>
+        </tr>
+    </table>
+</body>
