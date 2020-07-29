@@ -1,18 +1,11 @@
 <?php
-
 require_once '../config.php';
-
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
-
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-
-
-
-
 $id = $_GET["id"];
 // Attempt insert query execution
 $sql = " select contacts.*, address.*, address.id as address_id from contacts, address where contacts.id = '$id' and address.contactId = '$id';
@@ -33,116 +26,47 @@ $result = mysqli_query($conn, $sql);
         $zip2 = $row["zip2"];
         $country = $row["country"];
     }
-
- 
     $conn->close();
 ?>
 <!-- // HTML Form -->
 <!DOCTYPE html>
-
 <html lang="en">
             <head>
                 <meta charset="UTF-8">
             <title>Update Record</title>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+            <script src="../helpers.js"></script>
             <style type="text/css">
                 .wrapper{
                         width: 500px;
                     margin: 0 auto;
-                    
                 }
             </style>
             <script>
-                var state = [
-                {abrev: "AK" , state: "Alaska"},
-                {abrev: "AL" , state: "Alabama"}, 
-                {abrev: "AR" , state: "Arkansas"}, 
-                {abrev: "AS" , state: "American Samoa"}, 
-                {abrev: "AZ" , state: "Arizona"}, 
-                {abrev: "CA" , state: "California"}, 
-                {abrev: "CO" , state: "Colorado"}, 
-                {abrev: "CT" , state: "Connecticut"}, 
-                {abrev: "DC" , state: "District of Columbia"}, 
-                {abrev: "DE" , state: "Delaware"}, 
-                {abrev: "FL" , state: "Florida"}, 
-                {abrev: "GA" , state: "Georgia"}, 
-                {abrev: "GU" , state: "Guam"}, 
-                {abrev: "HI" , state: "Hawaii"}, 
-                {abrev: "IA" , state: "Iowa"}, 
-                {abrev: "ID" , state: "Idaho"}, 
-                {abrev: "IL" , state: "Illinois"}, 
-                {abrev: "IN" , state: "Indiana"}, 
-                {abrev: "KS" , state: "Kansas"}, 
-                {abrev: "KY" , state: "Kentucky"}, 
-                {abrev: "LA" , state: "Louisiana"}, 
-                {abrev: "MA" , state: "Massachusetts"}, 
-                {abrev: "MD" , state: "Maryland"}, 
-                {abrev: "ME" , state: "Maine"}, 
-                {abrev: "MI" , state: "Michigan"}, 
-                {abrev: "MN" , state: "Minnesota"}, 
-                {abrev: "MO" , state: "Missouri"}, 
-                {abrev: "MS" , state: "Mississippi"}, 
-                {abrev: "MT" , state: "Montana"}, 
-                {abrev: "NC" , state: "North Carolina"}, 
-                {abrev: "ND" , state: "North Dakota"}, 
-                {abrev: "NE" , state: "Nebraska"}, 
-                {abrev: "NH" , state: "New Hampshire"}, 
-                {abrev: "NJ" , state: "New Jersey"}, 
-                {abrev: "NM" , state: "New Mexico"}, 
-                {abrev: "NV" , state: "Nevada"}, 
-                {abrev: "NY" , state: "New York"}, 
-                {abrev: "OH" , state: "Ohio"}, 
-                {abrev: "OK" , state: "Oklahoma"}, 
-                {abrev: "OR" , state: "Oregon"}, 
-                {abrev: "PA" , state: "Pennsylvania"}, 
-                {abrev: "PR" , state: "Puerto Rico"}, 
-                {abrev: "RI" , state: "Rhode Island"}, 
-                {abrev: "SC" , state: "South Carolina"}, 
-                {abrev: "SD" , state: "South Dakota"}, 
-                {abrev: "TN" , state: "Tennessee"}, 
-                {abrev: "TX" , state: "Texas"}, 
-                {abrev: "UT" , state: "Utah"}, 
-                {abrev: "VA" , state: "Virginia"}, 
-                {abrev: "VI" , state: "Virgin Islands"}, 
-                {abrev: "VT" , state: "Vermont"}, 
-                {abrev: "WA" , state: "Washington"}, 
-                {abrev: "WI" , state: "Wisconsin"}, 
-                {abrev: "WV" , state: "West Virginia"}, 
-                {abrev: "WY" , state: "Wyoming"}
-                ];
-                // <option value="AL">Alabama (AL)</option>
-                // console.log(state.map(x => "adam" + x.abrev));
-                // console.log(state.map(x => "<option value='" + x.abrev + "'>" + x.state + "</option>"));
-                
                 window.addEventListener('load', (event) => {
-
+                    // var t = "1, 2, 3, 4, 5";
+                    // console.log(`"${t}"`);
                     var x = document.getElementById("active").value; 
                     if (x == 1) {
                         document.getElementById("active").checked = true;
                     }else{
                         document.getElementById("active").checked = false;
                     }
-                    // var y = document.getElementById('shortState');
-                    // y.append.text(state.map(x => "<option value='" + x.abrev + "'>" + x.state + "</option>"));
-                    // function addOption(selectbox,text,value)
-                    // {var optn = document.createElement("OPTION");
-                    // optn.text = text;
-                    // optn.value = value;
-                    // selectbox.options.add(optn);
-                    // }   
-                    // for (var i=0; i < state.lenght;++i){
-                    //     addOption(document.drop_list.state_list, state[i], state[i]);
-                    // }   
-                    // var cuisines = ["Chinese","Indian"];     
-                    var sel = document.getElementById('Stateslist');
-                    for(var i = 0; i < state.length; i++) {
-                    var opt = document.createElement('option');
-                    opt.innerHTML = state[i];
-                    opt.value = state[i];
-                    sel.appendChild(opt);
-                    }              
+                    $(function() {
+                    var output = [];
+                    var shortState = '<?php echo $shortState; ?>';
+                    $.each(state , function(i, state){
+                    let j = "";
+                    if (state.abrev === shortState){
+                        j = 'selected';
+                    }  
+                    output.push(`<option value="${state.abrev}"${j}>${state.state}</option>`);
+                    // output.push('<option value="'+ state.abrev +'"'+ j +'>'+ state.state +'</option>');
+                    });
+                    $('#shortState').html(output.join(''));
+                }); 
                 });
-                    
             </script>
     </head>
         <body>
@@ -189,13 +113,7 @@ $result = mysqli_query($conn, $sql);
                                 </div>
                                 <div class="form-group">
                                     <label>State</label>
-
-
-                                    <select name="shortState" id="shortState" value="<?php echo $shortState; ?>">
-                                        <option value="" >Select State...</option>
-                                        <!-- {state.map(x => "<option value='" + x.abrev + "'>" + x.state + "</option>");} -->
-                                    </select>
-                                    <!-- <input type="text" name="shortState" class="form-control" value="<?php echo $shortState; ?>"> -->
+                                    <select name="shortState" id="shortState" value="<?php echo $shortState; ?>"> </select>
                                 </div>
                             </div>
 

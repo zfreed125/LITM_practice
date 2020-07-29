@@ -1,10 +1,7 @@
 <?php
-
 require_once '../config.php';
-
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
-
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
@@ -23,7 +20,5 @@ if(mysqli_query($conn, $address_sql)){
 } else{
     echo "ERROR: Not able to execute $address_sql. " . mysqli_error($conn);
 }
-
 $conn->close();
-
 ?>

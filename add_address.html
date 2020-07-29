@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js" ></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+        <title>Add Address</title>
+    </head>
+    <body>
+        <input type="text" name="firstName" placeholder="First Name">
+        <input type="text" name="lastName" placeholder="Last Name">
+        <button type="submit" id="add">Add</button>
+        <script>
+            $('#add').click(function(){
+                var addressfields = [
+                    {name: "street1" , placeholder: "Street 1"},
+                    {name: "street2" , placeholder: "Street 2"},
+                    {name: "city" , placeholder: "City"},
+                    {name: "shortState" , placeholder: "State"},
+                    {name: "zip1" , placeholder: "Zip 1"},
+                    {name: "zip2" , placeholder: "Zip2"},
+                    {name: "country" , placeholder: "Country"},
+                ];
+
+                    for (addressfield of addressfields) {
+
+                        addressfield.name = document.createElement("input");
+                        addressfield.name.setAttribute('name', addressfield.name);
+                        addressfield.name.setAttribute('placeholder', addressfield.placeholder);
+
+                    //     var txt1 = document.createElement("br");
+                    // $(txt1).clone();
+                    
+                    $("body").append(addressfield.name); 
+                    }
+                    
+                    
+                    
+                    
+                    // var txt3 = document.createElement("input");
+                    // txt3.setAttribute('name', "street1");
+                    // txt3.setAttribute('placeholder', "Street 1");
+                    
+                    // var txt2 = document.createElement("input");
+                    // txt2.setAttribute('name', "street2");
+                    // txt2.setAttribute('placeholder', "Street 2");
+
+                    // var txt4 = document.createElement("input");
+                    // txt4.setAttribute('name', "city");
+                    // txt4.setAttribute('placeholder', "City");
+
+                    // var txt5 = document.createElement("input");
+                    // txt5.setAttribute('name', "shortState");
+                    // txt5.setAttribute('placeholder', "State");
+
+                    // var txt6 = document.createElement("input");
+                    // txt6.setAttribute('name', "zip1");
+                    // txt6.setAttribute('placeholder', "Zip 1");
+
+                    // var txt7 = document.createElement("input");
+                    // txt7.setAttribute('name', "zip2");
+                    // txt7.setAttribute('placeholder', "Zip 2");
+
+                    // var txt8 = document.createElement("input");
+                    // txt8.setAttribute('name', "country");
+                    // txt8.setAttribute('placeholder', "Country");
+
+                    // var txt1 = document.createElement("br");
+                    // $(txt1).clone();
+                    
+                    // $("body").append(txt1, $(txt1).clone(),txt3,txt2, $(txt1).clone(), $(txt1).clone(),txt4,txt5, $(txt1).clone(), $(txt1).clone(),txt6,txt7, $(txt1).clone(),$(txt1).clone(),txt8,); 
+                
+                });
+
+
+                    </script>
+                    </body>
+</html>
+

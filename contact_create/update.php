@@ -1,19 +1,11 @@
 <?php
-
 require_once '../config.php';
-
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
-
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-
-
-
-
-    
 $id = $_REQUEST['id'];
 $addressid = $_REQUEST['addressid'];
 $addressContactId = $_REQUEST['addressContactId'];
@@ -27,7 +19,6 @@ $shortState = mysqli_real_escape_string($conn, $_REQUEST['shortState']);
 $zip1 = mysqli_real_escape_string($conn, $_REQUEST['zip1']);
 $zip2 = mysqli_real_escape_string($conn, $_REQUEST['zip2']);
 $country = mysqli_real_escape_string($conn, $_REQUEST['country']);
- 
 // Attempt insert query execution
 $contacts_sql = "UPDATE contacts set firstname='$firstname', lastname='$lastname', active='$active' where id='$id';";
 if(mysqli_query($conn, $contacts_sql)){
@@ -40,7 +31,5 @@ if(mysqli_query($conn, $address_sql)){
 } else{
     echo "ERROR: Not able to execute $address_sql. " . mysqli_error($conn);
 }
-    
     $conn->close();
-
 ?>
