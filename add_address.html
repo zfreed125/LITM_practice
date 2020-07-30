@@ -7,74 +7,150 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
         <title>Add Address</title>
     </head>
-    <body>
-        <input type="text" name="firstName" placeholder="First Name">
-        <input type="text" name="lastName" placeholder="Last Name">
-        <button type="submit" id="add">Add</button>
+    <style>
+        .center {
+            display: block;
+            margin-right: auto;
+            margin-left: auto;
+        }
+    </style>
+    <body style="background-color: grey;">
+    <form action="add_address.php" method="POST">
+        <div style="text-align: center; padding: 2em;">
+            <input type="text" name="firstName" placeholder="First Name">
+            <input type="text" name="lastName" placeholder="Last Name">
+        </div>
+        <div style="text-align: center;">
+            <a class="btn btn-primary" id="add">Add Address</a>
+            <!-- <a class="btn btn-primary" id="new">Add Email</a>
+            <a class="btn btn-primary" id="another">Add Phone</a> -->
+        </div><br>
         <script>
-            $('#add').click(function(){
-                var addressfields = [
-                    {name: "street1" , placeholder: "Street 1"},
-                    {name: "street2" , placeholder: "Street 2"},
-                    {name: "city" , placeholder: "City"},
-                    {name: "shortState" , placeholder: "State"},
-                    {name: "zip1" , placeholder: "Zip 1"},
-                    {name: "zip2" , placeholder: "Zip2"},
-                    {name: "country" , placeholder: "Country"},
+            //the input code for phone
+            function add_phone1(){
+                var phonefields = [
+                    // {name: "personal_phone[]" , placeholder: "Personal Phone", class:"center"},
+                    // {name: "work_phone[]" , placeholder: "Work Phone", class:"center"}
                 ];
 
-                    for (addressfield of addressfields) {
+                    // for (phonefield of phonefields) {
+                        z = document.createElement("input");
+                        z.setAttribute('name', "phone[]");
+                        z.setAttribute('placeholder', "Phone");
+                        z.setAttribute('class', "center");
 
-                        addressfield.name = document.createElement("input");
-                        addressfield.name.setAttribute('name', addressfield.name);
-                        addressfield.name.setAttribute('placeholder', addressfield.placeholder);
+                        n = document.createElement('select');
+                        n.setAttribute('name', 'phone_type[]');
+                        n.setAttribute('class', 'center');
 
-                    //     var txt1 = document.createElement("br");
-                    // $(txt1).clone();
-                    
-                    $("body").append(addressfield.name); 
-                    }
-                    
-                    
-                    
-                    
-                    // var txt3 = document.createElement("input");
-                    // txt3.setAttribute('name', "street1");
-                    // txt3.setAttribute('placeholder', "Street 1");
-                    
-                    // var txt2 = document.createElement("input");
-                    // txt2.setAttribute('name', "street2");
-                    // txt2.setAttribute('placeholder', "Street 2");
+                        let w = document.createElement('option');
+                        w.setAttribute('value', "" );
+                        w.innerHTML = 'Select...';
 
-                    // var txt4 = document.createElement("input");
-                    // txt4.setAttribute('name', "city");
-                    // txt4.setAttribute('placeholder', "City");
+                        let a = document.createElement('option');
+                        a.setAttribute('value', "work" );
+                        a.innerHTML = 'Work';
 
-                    // var txt5 = document.createElement("input");
-                    // txt5.setAttribute('name', "shortState");
-                    // txt5.setAttribute('placeholder', "State");
+                        let d = document.createElement('option');
+                        d.setAttribute('value', "cell" );
+                        d.innerHTML = 'Cell';
+                         $(n).append(w,a,d);
 
-                    // var txt6 = document.createElement("input");
-                    // txt6.setAttribute('name', "zip1");
-                    // txt6.setAttribute('placeholder', "Zip 1");
+                        $("#address1").append(z,n);
+                    // }
 
-                    // var txt7 = document.createElement("input");
-                    // txt7.setAttribute('name', "zip2");
-                    // txt7.setAttribute('placeholder', "Zip 2");
-
-                    // var txt8 = document.createElement("input");
-                    // txt8.setAttribute('name', "country");
-                    // txt8.setAttribute('placeholder', "Country");
-
-                    // var txt1 = document.createElement("br");
-                    // $(txt1).clone();
-                    
-                    // $("body").append(txt1, $(txt1).clone(),txt3,txt2, $(txt1).clone(), $(txt1).clone(),txt4,txt5, $(txt1).clone(), $(txt1).clone(),txt6,txt7, $(txt1).clone(),$(txt1).clone(),txt8,); 
+                    var br = document.createElement("br");
+                    $(br).clone();
+                    $("form").append(br,$(br).clone());
+                };
                 
+            function add_email1(){
+                console.log('clicked');
+                // var emailfields = [
+                    // {name: "personal_email[]" , placeholder: "Personal Email", class:"center"},
+                    // {name: "work_email[]" , placeholder: "Work Email", class:"center"}
+                // ];
+
+                    // for (emailfield of emailfields) {
+                        x = document.createElement("input");
+                        x.setAttribute('name', 'email');
+                        x.setAttribute('placeholder', 'Email');
+                        x.setAttribute('class', 'center');
+
+                        k = document.createElement('select');
+                        k.setAttribute('name', 'email_type[]');
+                        k.setAttribute('class', 'center');
+
+                        let e = document.createElement("option");
+                        e.setAttribute('value', '');
+                        e.innerHTML = 'Select...';
+
+                        let h = document.createElement("option");
+                        h.setAttribute('value', 'work');
+                        h.innerHTML = 'Work';
+
+                        let m = document.createElement("option");
+                        m.setAttribute('value', 'home');
+                        m.innerHTML = 'Home';
+                        $(k).append(e,h,m);
+
+                        document.getElementById('address1').append(x,k);
+                    // }
+                    // var br = document.createElement("br");
+                    // $(br).clone();
+                    // $("form").append(br,$(br).clone());
+                };
+
+            $('#add').click(function(){
+                u = document.createElement('div');
+                u.setAttribute('id' , 'address1');
+                $("form").append(u);
+                
+                var addressfields = [
+                    {name: "street1[]" , placeholder: "Street 1", class: "center"},
+                    {name: "street2[]" , placeholder: "Street 2", class: "center"},
+                    {name: "city[]" , placeholder: "City", class:"center"},
+                    {name: "shortState[]" , placeholder: "State", class:"center"},
+                    {name: "zip1[]" , placeholder: "Zip 1", class:"center"},
+                    {name: "zip2[]" , placeholder: "Zip2", class:"center"},
+                    {name: "country[]" , placeholder: "Country", class:"center"},
+                ];
+
+
+                    for (addressfield of addressfields) {
+                        let y = addressfield.name;
+                        y = document.createElement("input");
+                        y.setAttribute('name', addressfield.name);
+                        y.setAttribute('placeholder', addressfield.placeholder);
+                        y.setAttribute("class", addressfield.class);
+                        console.log(y);
+                        
+                        $("#address1").append(y);
+                        
+
+                    }
+                    //Email and Phone add buttons
+                    t = document.createElement('a');
+                    t.innerHTML = "Add Email";
+                    t.setAttribute('onclick' , 'add_email1()');
+                    t.setAttribute('class', 'btn btn-primary');
+                    $('#address1').append(t);
+
+                    l = document.createElement('a');
+                    l.innerHTML = "Add Phone";
+                    l.setAttribute('onclick' , 'add_phone1()');
+                    l.setAttribute('class', 'btn btn-primary');
+                    $('#address1').append(l);
+
+                    var br = document.createElement("br");
+                    $(br).clone();
+                    $("form").append(br,$(br).clone());
                 });
-
-
                     </script>
-                    </body>
+                    <div style="text-align: center;"> 
+                        <button type="submit" name="submit">Submit</button>
+                    </div><br>
+                </form>
+            </body>
 </html>
 
