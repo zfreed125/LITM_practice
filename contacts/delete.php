@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 }
 $id = mysqli_real_escape_string($conn, $_REQUEST['id']);
 
-$sql = "DELETE from contacts where id='$id';";
+$sql = "DELETE from contact where id='$id';";
 
 if(mysqli_query($conn, $sql)){
     echo "Record id $id was successfully deleted.";

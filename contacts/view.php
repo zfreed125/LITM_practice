@@ -8,7 +8,7 @@
 
     <meta charset="UTF-8">
 
-    <title>Contacts</title>
+    <title>contact</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
 
@@ -91,7 +91,7 @@
 
                     // Attempt select query execution
 
-                    $sql = "SELECT * FROM contacts;";
+                    $sql = "SELECT * FROM contact;";
 
                     if($result = mysqli_query($conn, $sql)){
 

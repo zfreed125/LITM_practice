@@ -22,7 +22,7 @@ $active = (isset($_POST['active'])) ? 1 : 0;
 // $client_type = mysqli_real_escape_string($conn, $_REQUEST['client_type']);
  
 // Attempt insert query execution
-$sql = "UPDATE contacts set firstname='$firstname', lastname='$lastname', active='$active' where id='$id';";
+$sql = "UPDATE contact set firstname='$firstname', lastname='$lastname', active='$active' where id='$id';";
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
     header("location: view.php");

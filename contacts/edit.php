@@ -22,8 +22,8 @@ $id = $_GET["id"];
 // $client_type = mysqli_real_escape_string($conn, $_REQUEST['client_type']);
  
 // Attempt insert query execution
-// $sql = "select id, first_name, last_name, email from contacts where id='$id';";
-$sql = "select id, firstname, lastname, active from contacts where id='$id';";
+// $sql = "select id, first_name, last_name, email from contact where id='$id';";
+$sql = "select id, firstname, lastname, active from contact where id='$id';";
 $result = mysqli_query($conn, $sql);
     // output data of each row
     while ($row = mysqli_fetch_assoc($result)) {
