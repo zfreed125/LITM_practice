@@ -14,6 +14,7 @@ $result = mysqli_query($conn, $sql);
     // output data of each row
     while ($row = mysqli_fetch_assoc($result)) {
         $addressid = $row["address_id"];
+        $birthdate = $row["birthdate"];
         $addressContactId = $row["contactId"];
         $firstname = $row["firstname"];
         $lastname = $row["lastname"];
@@ -94,7 +95,12 @@ $result = mysqli_query($conn, $sql);
                                     <input type="text" name="lastname" class="form-control" value="<?php echo $lastname; ?>">
                                 </div>
                             </div>
-
+                            <div class="input-group">
+                                <div class="form-group">
+                                    <label>Birthdate</label>
+                                   <input type="date" name="birthdate" class="form-control" value="<?php echo $birthdate; ?>">
+                                </div>
+                            </div>
                             <div class="input-group">
                                 <div class="form-group">
                                     <label>street1</label>

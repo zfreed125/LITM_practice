@@ -35,7 +35,7 @@
                         <div class="col-md-12">
                             <div class="page-header clearfix">
                                 <h2 class="pull-left">Contact List</h2>
-                            <a href="create.html" class="btn btn-success pull-right">Add New Contact</a>
+                            <a href="contact_wiz.html" class="btn btn-success pull-right">Add New Contact</a>
                     </div>
                         <?php
                         // Include config file
@@ -57,6 +57,7 @@
                                                 echo "<th>Address ContactId</th>";
                                                 echo "<th>First Name</th>";
                                                 echo "<th>Last Name</th>";
+                                                echo "<th>Birthdate</th>";
                                                 echo "<th>Active</th>";
                                                 echo "<th>Street1</th>";
                                                 echo "<th>Street2</th>";
@@ -75,6 +76,7 @@
                                                 echo "<td>" . $row['contactId'] . "</td>";
                                                 echo "<td>" . $row['firstname'] . "</td>";
                                                 echo "<td>" . $row['lastname'] . "</td>";
+                                                echo "<td>" . $row['birthdate'] . "</td>";
                                                 echo "<td>" . $row['active'] . "</td>";
                                                 echo "<td>" . $row['street1'] . "</td>";
                                                 echo "<td>" . $row['street2'] . "</td>";
