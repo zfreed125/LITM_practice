@@ -23,12 +23,14 @@ $id = $_GET["id"];
  
 // Attempt insert query execution
 // $sql = "select id, first_name, last_name, email from contact where id='$id';";
-$sql = "select id, firstname, lastname, active from contact where id='$id';";
+$sql = "select id, firstname, lastname, birthdate, active from contacts where id='$id';";
 $result = mysqli_query($conn, $sql);
     // output data of each row
     while ($row = mysqli_fetch_assoc($result)) {
+        $contactId = $row["id"];
         $firstname = $row["firstname"];
         $lastname = $row["lastname"];
+        $birthdate = $row["birthdate"];
         $active = $row["active"];
     }
 
@@ -74,12 +76,20 @@ $result = mysqli_query($conn, $sql);
                             <form action="update.php" method="post">
                               
                             <div class="form-group">
+                                <label>Contact Id</label>
+                                <label type="text" name="contactId" class="form-control"><?php echo $contactId; ?></label>
+                            </div>
+                            <div class="form-group">
                                 <label>firstname</label>
                                 <input type="text" name="firstname" class="form-control" value="<?php echo $firstname; ?>">
                             </div>
                             <div class="form-group">
                                 <label>lastname</label>
                                 <input type="text" name="lastname" class="form-control" value="<?php echo $lastname; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label>Birthdate</label>
+                                <input type="date" name="birthdate" class="form-control" value="<?php echo $birthdate; ?>">
                             </div>
                             <div class="form-group">
                                 <label>active</label>

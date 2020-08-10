@@ -23,10 +23,12 @@ $id = $_GET["id"];
  
 // Attempt insert query execution
 // $sql = "select id, first_name, last_name, email from Test1 where id='$id';";
-$sql = "select id, street1, street2, city, shortState, zip1, zip2, country from Test1 where id='$id';";
+$sql = "select id, contactId, street1, street2, city, shortState, zip1, zip2, country from addresses where id='$id';";
 $result = mysqli_query($conn, $sql);
     // output data of each row
     while ($row = mysqli_fetch_assoc($result)) {
+        $contactId = $row["contactId"];
+        $addressId = $row["id"];
         $street1 = $row["street1"];
         $street2 = $row["street2"];
         $city = $row["city"];
@@ -60,6 +62,10 @@ $result = mysqli_query($conn, $sql);
                             <p>Please edit the input values and submit to update the record.</p>
                             <form action="update.php" method="post">
                               
+                            <div class="form-group">
+                                <label>Contact Id</label>
+                                <input type="text" name="contactId" class="form-control" value="<?php echo $contactId; ?>">
+                            </div>
                             <div class="form-group">
                                 <label>street1</label>
                                 <input type="text" name="street1" class="form-control" value="<?php echo $street1; ?>">

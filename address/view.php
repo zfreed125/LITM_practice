@@ -91,7 +91,7 @@
 
                     // Attempt select query execution
 
-                    $sql = "SELECT * FROM address;";
+                    $sql = "SELECT * FROM addresses;";
 
                     if($result = mysqli_query($conn, $sql)){
 

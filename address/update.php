@@ -15,6 +15,7 @@ if ($conn->connect_error) {
 
     
 $id = mysqli_real_escape_string($conn, $_REQUEST['id']);
+$contactId = mysqli_real_escape_string($conn, $_REQUEST['contactId']);
 $street1 = mysqli_real_escape_string($conn, $_REQUEST['street1']);
 $street2 = mysqli_real_escape_string($conn, $_REQUEST['street2']);
 $city = mysqli_real_escape_string($conn, $_REQUEST['city']);
@@ -24,7 +25,7 @@ $zip2 = mysqli_real_escape_string($conn, $_REQUEST['zip2']);
 $country = mysqli_real_escape_string($conn, $_REQUEST['country']);
  
 // Attempt insert query execution
-$sql = "UPDATE address set street1='$street1', street2='$street2', city='$city', shortState='$shortState', zip1='$zip1', zip2='$zip2', country='$country' where id='$id';";
+$sql = "UPDATE addresses set contactId='$contactId', street1='$street1', street2='$street2', city='$city', shortState='$shortState', zip1='$zip1', zip2='$zip2', country='$country' where id='$id';";
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
     header("location: view.php");

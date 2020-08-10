@@ -19,7 +19,7 @@ $last_name = mysqli_real_escape_string($conn, $_REQUEST['last_name']);
 $active = mysqli_real_escape_string($conn, $_REQUEST['active']);
 $active = (isset($_POST['active'])) ? 1 : 0;
 // Attempt insert query execution
-$sql = "INSERT INTO contact (firstname, lastname, active) VALUES ('$first_name', '$last_name', '$active')";
+$sql = "INSERT INTO contacts (firstname, lastname, active) VALUES ('$first_name', '$last_name', '$active')";
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
     echo "New record has id: " . mysqli_insert_id($conn); 

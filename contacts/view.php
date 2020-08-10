@@ -91,7 +91,7 @@
 
                     // Attempt select query execution
 
-                    $sql = "SELECT * FROM contact;";
+                    $sql = "SELECT * FROM contacts;";
 
                     if($result = mysqli_query($conn, $sql)){
 

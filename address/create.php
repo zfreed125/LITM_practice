@@ -28,7 +28,7 @@ $country = mysqli_real_escape_string($conn, $_REQUEST['country']);
 $zip2 = $_REQUEST['zip2'];
 
 // Attempt insert query execution
-$sql = "INSERT INTO address (street1, street2, city, shortState, zip1, zip2, country) VALUES ('$street1', '$street2', '$city', '$shortState', '$zip1', '$zip2','$country')";
+$sql = "INSERT INTO addresses (street1, street2, city, shortState, zip1, zip2, country) VALUES ('$street1', '$street2', '$city', '$shortState', '$zip1', '$zip2','$country')";
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
     echo "New record has id: " . mysqli_insert_id($conn); 
