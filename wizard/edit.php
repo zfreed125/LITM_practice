@@ -24,7 +24,6 @@ $result = mysqli_query($conn, $sql);
         $city = $row["city"];
         $shortState = $row["shortState"];
         $zip1 = $row["zip1"];
-        $zip2 = $row["zip2"];
         $country = $row["country"];
     }
     $conn->close();

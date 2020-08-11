@@ -27,9 +27,7 @@ $country = mysqli_real_escape_string($conn, $_REQUEST['country']);
 // Attempt insert query execution
 $sql = "UPDATE addresses set contactId='$contactId', street1='$street1', street2='$street2', city='$city', shortState='$shortState', zip1='$zip1', zip2='$zip2', country='$country' where id='$id';";
 if(mysqli_query($conn, $sql)){
-    // echo "Records added successfully.";
-    header("location: view.php");
-    die();
+    header("location: ../wizard/nested_sql.php");
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($conn);
 }

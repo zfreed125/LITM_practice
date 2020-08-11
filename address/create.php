@@ -13,26 +13,23 @@ if ($conn->connect_error) {
 
 
 
-    
+$contactId = $_REQUEST['contactid'];    
 $street1 = mysqli_real_escape_string($conn, $_REQUEST['street1']);
 $street2 = mysqli_real_escape_string($conn, $_REQUEST['street2']);
 $city = mysqli_real_escape_string($conn, $_REQUEST['city']);
 $shortState = mysqli_real_escape_string($conn, $_REQUEST['shortState']);
 $zip1 = mysqli_real_escape_string($conn, $_REQUEST['zip1']);
+$country = mysqli_real_escape_string($conn, $_REQUEST['country']);
 // if(isset($_REQUEST['zip2'])) {
 //     $zip2 = 0000;
 // }else{
 //     $zip2 = $_REQUEST['zip2'];
 // }
-$country = mysqli_real_escape_string($conn, $_REQUEST['country']);
-$zip2 = $_REQUEST['zip2'];
 
 // Attempt insert query execution
-$sql = "INSERT INTO addresses (street1, street2, city, shortState, zip1, zip2, country) VALUES ('$street1', '$street2', '$city', '$shortState', '$zip1', '$zip2','$country')";
+$sql = "INSERT INTO addresses (contactId, street1, street2, city, shortState, zip1, country) VALUES ('$contactId', '$street1', '$street2', '$city', '$shortState', '$zip1', '$country')";
 if(mysqli_query($conn, $sql)){
-    // echo "Records added successfully.";
-    echo "New record has id: " . mysqli_insert_id($conn); 
-    header("location: view.php");
+    header("location: ../wizard/nested_sql.php");
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($conn);
 }

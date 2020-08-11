@@ -21,14 +21,18 @@
         <input type="text" name="shortState" placeholder="State"><br><br>
         <input style="width: 3em;" type="text" name="zip1" placeholder="Zip #1">-
         
-       <input style="width: 2.5em;" type="text" name="zip2" placeholder="Zip #2">
+       <input hidden id="contactid" style="width: 2.5em;" type="text" name="contactid">
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+
+            document.getElementById('contactid').value = urlParams.get('id');
+        </script>
         <br>
         <br>
        <input type="text" name="country" placeholder="Country">
         <br>
         <br>
          <button type="submit" name="submit">Submit</button>
-
     </form>
 </body>
 </html>

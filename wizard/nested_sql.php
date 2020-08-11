@@ -34,7 +34,7 @@
                         <div class="col-md-12">
                             <div class="page-header clearfix">
                                 <h2 class="pull-left">Contact List</h2>
-                            <!-- <a href="contact_wiz.html" class="btn btn-success pull-right">Add New Contact</a> -->
+                            <a href="contact_wiz.html" class="btn btn-success pull-right">Add New Contact</a>
                     </div>
 
 
@@ -52,72 +52,76 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
+        //contacts sql query loop table
+        $sql = "SELECT * FROM contacts;";
+        $result = mysqli_query($conn, $sql);
 
-$sql = "SELECT * FROM contacts;";
-$result = mysqli_query($conn, $sql);
-
-while ($row = mysqli_fetch_assoc($result))
-{
-    echo "<table class='table table-bordered table-striped'>";
+        while ($row = mysqli_fetch_assoc($result))
+        {
+        echo "<table class='table table-bordered table-striped'>";
         echo "<thead>";
-         echo "<tr>";
-    echo "<th>First Name</th>";
-    echo "<th>Last Name</th>";
-    echo "<th>Birthdate</th>";
-    echo "<th>Active</th>";
-         echo "</tr>";
+        echo "<tr>";
+        echo "<th>First Name</th>";
+        echo "<th>Last Name</th>";
+        echo "<th>Birthdate</th>";
+        echo "<th>Active</th>";
+        echo "</tr>";
         echo "</thead>";
-    echo "<tbody>";
-
-    echo "<tr>";
+        echo "<tbody>";
+        echo "<tr>";
         echo "<td>" . "$row[firstname]" . "</td>";
         echo "<td>" . "$row[lastname]" . "</td>";
         echo "<td>" . "$row[birthdate]" . "</td>";
         echo "<td>" . "$row[active]" . "</td>";
-            $id = $row['id'];
-    echo "</tr>";
-
-
-            $sql2 = "SELECT * FROM addresses WHERE contactId = '$id';";
-            $result2 = mysqli_query($conn, $sql2);
-
-            echo "<table style= 'position: relative; left: 50px;' class='table table-bordered table-striped'>";
-                echo "<thead>";
-                 echo "<tr>";
-            echo "<th>Street1</th>";
-            echo "<th>Street2</th>";
-            echo "<th>City</th>";
-            echo "<th>State</th>";
-            echo "<th>Zip1</th>";
-            echo "<th>Country</th>";
-            echo "<th>Reg date</th>";
-                 echo "</tr>";
-                echo "</thead>";
-            echo "<tbody>";
         
-            while ($row = mysqli_fetch_assoc($result2))
-            {
-                echo "<tr>";
-                echo "<td>" . "$row[street1]" . "</td>";
-                echo "<td>" . "$row[street2]" . "</td>";
-                echo "<td>" . "$row[city]" . "</td>";
-                echo "<td>" . "$row[shortState]" . "</td>";
-                echo "<td>" . "$row[zip1]" . "</td>";
-                echo "<td>" . "$row[country]" . "</td>";
-                echo "<td>" . "$row[regDate]" . "</td>";
-                echo "<td>";
-                echo "<a href='view.php?id=". $row['contact_id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                echo "<a href='edit.php?id=". $row['contact_id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                echo "<a href='delete.php?id=". $row['contact_id'] ."&addressid=". $row['address_id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
-                echo "</td>";
-                echo "</tr>";
-            }//end of address loop
-            echo "</tbody>";
-            echo "</table>";
-} //end of contact loop
-            echo "</tbody>";
-            echo "</table>";
-// }
+        $id = $row['id'];
+        echo "</tr>";
+        
+        
+                                            //address sql query loop table
+                                            $address_sql = "SELECT * FROM addresses WHERE contactId = '$id';";
+                                            $address_result = mysqli_query($conn, $address_sql);
+
+                                            echo "<table style= 'position: relative; left: 50px;' class='table table-bordered table-striped'>";
+                                            echo "<caption><a href='../address/create.html?id=". $row['id'] ."' title='Add Address' data-toggle='tooltip'><span class='glyphicon glyphicon-plus-sign'></span></a>Address</caption>";
+                                            echo "<thead>";
+                                            echo "<tr>";
+                                            echo "<th>Street1</th>";
+                                            echo "<th>Street2</th>";
+                                            echo "<th>City</th>";
+                                            echo "<th>State</th>";
+                                            echo "<th>Zip1</th>";
+                                            echo "<th>Country</th>";
+                                            echo "<th>Reg date</th>";
+                                            echo "</tr>";
+                                            echo "</thead>";
+                                            echo "<tbody>";
+
+                                            while ($row = mysqli_fetch_assoc($address_result))
+                                            {
+                                            echo "<tr>";
+                                            echo "<td>" . "$row[street1]" . "</td>";
+                                            echo "<td>" . "$row[street2]" . "</td>";
+                                            echo "<td>" . "$row[city]" . "</td>";
+                                            echo "<td>" . "$row[shortState]" . "</td>";
+                                            echo "<td>" . "$row[zip1]" . "</td>";
+                                            echo "<td>" . "$row[country]" . "</td>";
+                                            echo "<td>" . "$row[regDate]" . "</td>";
+                                            echo "<td>";
+                                            echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                                            echo "<a href='../address/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                                            echo "<a href='../address/delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                                            echo "</td>";
+                                            echo "</tr>";
+                                            }//end of address loop
+                                            //end of the table from the address loop
+                                            echo "</tbody>";
+                                            echo "</table>";
+
+        } //end of contact loop
+        //end of the table from the contacts loop
+        echo "</tbody>";
+        echo "</table>";
 
 
 ?>

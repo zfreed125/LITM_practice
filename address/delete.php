@@ -14,9 +14,7 @@ $id = mysqli_real_escape_string($conn, $_REQUEST['id']);
 $sql = "DELETE from addresses where id='$id';";
 
 if(mysqli_query($conn, $sql)){
-    echo "Record id $id was successfully deleted.";
-    header("location: view.php");
-    die();
+    header("location: ../wizard/nested_sql.php");
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($link);
 }

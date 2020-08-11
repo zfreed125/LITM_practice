@@ -19,7 +19,7 @@ if(mysqli_query($conn, $contacts_sql)){
     echo "ERROR: Not able to execute $contacts_sql. " . mysqli_error($conn);
 }
 if(mysqli_query($conn, $address_sql)){
-    header("location: view.php");
+    header("location: nested_sql.php");
 } else{
     echo "ERROR: Not able to execute $address_sql. " . mysqli_error($conn);
 }

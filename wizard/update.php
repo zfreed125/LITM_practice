@@ -32,7 +32,7 @@ if(mysqli_query($conn, $contacts_sql)){
 }
 $address_sql = "UPDATE addresses set contactId='$addressContactId', street1='$street1', street2='$street2', city='$city', shortState='$shortState', zip1='$zip1', zip2='$zip2', country='$country' where id='$addressid';";
 if(mysqli_query($conn, $address_sql)){
-    header("location: view.php");
+    header("location: nested_sql.php");
 } else{
     echo "ERROR: Not able to execute $address_sql. " . mysqli_error($conn);
 }
