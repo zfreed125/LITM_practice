@@ -1,9 +1,12 @@
+<?php
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Register</title>
+    <title>Email Type Register</title>
 </head>
 
 <style>
@@ -15,15 +18,9 @@
 
 <body>
 
-    <h1 class="center">Add an Email</h1>
+    <h1 class="center">Add an Email Type</h1>
     <form class="center" action="create.php" method="POST">
-        <input type="text" name="email" placeholder="Email">
-        <input hidden id="contactid" style="width: 2.5em;" type="text" name="contactid">
-        <script>
-            const urlParams = new URLSearchParams(window.location.search);
-
-            document.getElementById('contactid').value = urlParams.get('id');
-        </script>
+        <input type="text" name="emailType" placeholder="Email Type">
         <br>
         <br>
         <button type="submit" name="submit">Submit</button>
@@ -31,3 +28,4 @@
     
 </body>
 </html>
+

@@ -45,21 +45,21 @@ $(document).ready(function(){
                     die("Connection failed: " . $conn->connect_error);
                     }
                     //Attempt select query execution
-                    $sql = "SELECT * FROM emails;";
+                    $sql = "SELECT * FROM email_types;";
                     if($result = mysqli_query($conn, $sql)){
                         if(mysqli_num_rows($result) > 0){
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
                                         echo "<th>#</th>";
-                                        echo "<th>Email</th>";
+                                        echo "<th>Email Type</th>";
                                     echo "</tr>";
                                 echo "</thead>";
                                 echo "<tbody>";
                             while($row = mysqli_fetch_array($result)){
                                     echo "<tr>";
                                         echo "<td>" . $row['id'] . "</td>";
-                                        echo "<td>" . $row['email'] . "</td>";
+                                        echo "<td>" . $row['emailType'] . "</td>";
                                         echo "<td>";
                                             echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
                                             echo "<a href='edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";

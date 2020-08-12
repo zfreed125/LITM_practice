@@ -76,6 +76,36 @@ if ($conn->connect_error) {
         
         $id = $row['id'];
         echo "</tr>";
+
+                //email sql loop table
+                $email_sql = "SELECT * FROM emails where contactId = '$id';";
+                $email_result = mysqli_query($conn, $email_sql);
+
+                echo "<table style= 'position: relative; left: 50px;' class='table table-bordered table-striped'>";
+                echo "<caption><a href='../emails/add.php?id=". $row['id'] ."' title='Add Address' data-toggle='tooltip'><span class='glyphicon glyphicon-plus-sign'></span></a>Email</caption>";
+                echo "<thead>";
+                echo "<tr>";
+                echo "<th>Email</th>";
+                echo "<th>Email Type</th>";
+                echo "</tr>";
+                echo "</thead>";
+                echo "<tbody>";
+
+                while ($row = mysqli_fetch_assoc($email_result))
+                {
+                echo "<tr>";
+                echo "<td>" . "$row[email]" . "</td>";
+                // echo "<td>" . "$row[]" . "</td>";
+                echo "<td>";
+                echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                echo "<a href='../emails/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                echo "<a href='../emails/delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                echo "</td>";
+                echo "</tr>";
+                }//end of email loop
+                //end of the table from the email loop
+                echo "</tbody>";
+                echo "</table>";
         
         
                                             //address sql query loop table
