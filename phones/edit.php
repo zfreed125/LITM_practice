@@ -7,31 +7,31 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$email_types_sql = "SELECT * FROM email_types;";
-$result1 = mysqli_query($conn, $email_types_sql);
-$email_type_array = array();
+$phone_types_sql = "SELECT * FROM phone_types;";
+$result1 = mysqli_query($conn, $phone_types_sql);
+$phone_type_array = array();
 while ($row = mysqli_fetch_assoc($result1)) {
-    $email_type_array[] = array('id' => $row['id'], 'emailType' => $row['emailType']);
+    $phone_type_array[] = array('id' => $row['id'], 'phoneType' => $row['phoneType']);
 }
 
 $id = $_GET["id"];
 //attempt insert query execution
-$emails_sql = "select id, contactId, emailTypeId, email from emails where id='$id';";
-$result2 = mysqli_query($conn, $emails_sql);
+$phones_sql = "select id, contactId, phoneTypeId, phone from phones where id='$id';";
+$result2 = mysqli_query($conn, $phones_sql);
     //output data of each row
     while ($row = mysqli_fetch_assoc($result2)) {
         $contactId = $row["contactId"];
-        $emailTypeId = $row["emailTypeId"];
-        $email = $row["email"];
+        $phoneTypeId = $row["phoneTypeId"];
+        $phone = $row["phone"];
     }
-$conn->close();
+    $conn->close();
 ?>
 <!-- //HTML Form -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
             <meta charset="UTF-8">
-            <title>Update Email</title>
+            <title>Update Phone</title>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
        <style type="text/css">
             .wrapper{
@@ -42,20 +42,20 @@ $conn->close();
     </head> 
     <body>
         <div class="wrapper">
-            <h2>Update Email</h2>
+            <h2>Update Phone</h2>
                 <p>Please edit the input values and submit to update the record.</p>
                     <form action="update.php" method="POST">
                                     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
-                                        <div class="input-group-prepend"><span class="input-group-text">Email</span></div>
-                                        <input type="text" name="email" class="form-control" value="<?php echo $email; ?>">
+                                        <div class="input-group-prepend"><span class="input-group-text">Phone</span></div>
+                                        <input type="text" name="phone" class="form-control" value="<?php echo $phone; ?>">
                                     </div>
                                     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
-                                    <select class="form-control" name="emailTypeId">
+                                    <select class="form-control" name="phoneTypeId">
                                         <option selected="selected">Choose one</option>
-                                            <?php foreach($email_type_array as $item){ ?>
+                                            <?php foreach($phone_type_array as $item){ ?>
                                         <option value="<?php echo strtolower($item['id']); ?>"
-                                            <?php if($item['id'] == $emailTypeId){ echo "selected"; } ?> >
-                                        <?php echo $item['emailType']; ?></option>
+                                            <?php if($item['id'] == $phoneTypeId){ echo "selected"; } ?> >
+                                        <?php echo $item['phoneType']; ?></option>
                                             <?php } ?>
                                     </select>
                                     </div>

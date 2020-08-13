@@ -8,11 +8,11 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$sql = "SELECT * FROM email_types;";
+$sql = "SELECT * FROM phone_types;";
 $result = mysqli_query($conn, $sql);
-$email_type_array = array();
+$phone_type_array = array();
 while ($row = mysqli_fetch_assoc($result)) {
-    $email_type_array[] = array('id' => $row['id'], 'emailType' => $row['emailType']);
+    $phone_type_array[] = array('id' => $row['id'], 'phoneType' => $row['phoneType']);
 }
 $contactId = $_REQUEST['id'];
 ?>
@@ -22,25 +22,22 @@ $contactId = $_REQUEST['id'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Register</title>
+    <title>Phone Register</title>
 </head>
-
 <style>
     .center {
         text-align: center;
         background-color: violet;
     }
 </style>
-
 <body>
-
-    <h1 class="center">Add an Email</h1>
+    <h1 class="center">Add a Phone</h1>
     <form class="center" action="create.php" method="POST">
-        <input type="text" name="email" placeholder="Email">
-        <select name="emailTypeId">
+        <input type="text" name="phone" placeholder="Phone Number">
+        <select name="phoneTypeId">
             <option selected="selected">Choose one</option>
-                <?php foreach($email_type_array as $item){ ?>
-            <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['emailType']; ?></option>
+                <?php foreach($phone_type_array as $item){ ?>
+            <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['phoneType']; ?></option>
                 <?php } ?>
         </select>
         <input hidden id="contactId" style="width: 2.5em;" type="text" name="contactId" value="<?php echo $contactId; ?>">
@@ -48,7 +45,5 @@ $contactId = $_REQUEST['id'];
         <br>
         <button type="submit" name="submit">Submit</button>
     </form>
-    
 </body>
 </html>
-

@@ -62,14 +62,20 @@ if ($conn->connect_error) {
 }
 $email_types_sql = "SELECT * FROM email_types;";
 $email_types_result = mysqli_query($conn, $email_types_sql);
-$data_array = array();
+$email_type_array = array();
 while ($row = mysqli_fetch_assoc($email_types_result)) {
-    $data_array[] = array('id' => $row['id'], 'emailType' => $row['emailType']);
+    $email_type_array[] = array('id' => $row['id'], 'emailType' => $row['emailType']);
+}
+$phone_types_sql = "SELECT * FROM phone_types;";
+$phone_types_result = mysqli_query($conn, $phone_types_sql);
+$phone_type_array = array();
+while ($row = mysqli_fetch_assoc($phone_types_result)) {
+    $phone_type_array[] = array('id' => $row['id'], 'phoneType' => $row['phoneType']);
 }
 
         //contacts sql query loop table
-        $sql = "SELECT * FROM contacts;";
-        $result = mysqli_query($conn, $sql);
+        $contact_sql = "SELECT * FROM contacts;";
+        $result = mysqli_query($conn, $contact_sql);
 
         while ($row = mysqli_fetch_assoc($result))
         {
@@ -92,6 +98,43 @@ while ($row = mysqli_fetch_assoc($email_types_result)) {
         $id = $row['id'];
         echo "</tr>";
 
+
+             //phone sql loop table
+             $phone_sql = "SELECT * FROM phones where contactId = '$id';";
+             $phone_result = mysqli_query($conn, $phone_sql);
+
+             echo "<table style= 'position: relative; left: 50px;' class='table table-bordered table-striped'>";
+             echo "<caption><a href='../phones/add.php?id=". $row['id'] ."' title='Add Address' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span></a>phone</caption>";
+             echo "<thead>";
+             echo "<tr>";
+             echo "<th>Phone</th>";
+             echo "<th>Phone Type</th>";
+             echo "</tr>";
+             echo "</thead>";
+             echo "<tbody>";
+
+             while ($row = mysqli_fetch_assoc($phone_result))
+             {
+                 foreach($phone_type_array as $item){
+                     if($item['id'] == $row['phoneTypeId']){
+                         $phoneTypeId = $item['phoneType']; 
+                         }
+                 }
+             echo "<tr>";
+             echo "<td class='fitwidth'>" . "$row[phone]" . "</td>";
+             echo "<td class='fitwidth'>" . "$phoneTypeId" . "</td>";
+             echo "<td class='fitwidth'>";
+             echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
+             echo "<a href='../phones/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
+             echo "<a href='../phones/delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
+             echo "</td>";
+             echo "</tr>";
+             }//end of phone loop
+             //end of the table from the phone loop
+             echo "</tbody>";
+             echo "</table>";
+
+
                 //email sql loop table
                 $email_sql = "SELECT * FROM emails where contactId = '$id';";
                 $email_result = mysqli_query($conn, $email_sql);
@@ -108,7 +151,7 @@ while ($row = mysqli_fetch_assoc($email_types_result)) {
 
                 while ($row = mysqli_fetch_assoc($email_result))
                 {
-                    foreach($data_array as $item){
+                    foreach($email_type_array as $item){
                         if($item['id'] == $row['emailTypeId']){
                             $emailTypeId = $item['emailType']; 
                             }
