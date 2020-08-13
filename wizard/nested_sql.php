@@ -3,13 +3,16 @@
         <head>
             <meta charset="UTF-8">
         <title>Contact</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css"> -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <style type="text/css">
             .wrapper{
-                    width: 100%;
-                margin: 0 auto;
+                    width: 75%;
+                /* margin: 0 auto; */
             }
             .page-header h2{
                     margin-top: 0;
@@ -18,7 +21,12 @@
                     margin-right: 15px;
             }
             th,td{
-
+                width: 1px;
+                white-space: nowrap;
+            }
+            td.fitwidth {
+                width: 1px;
+                white-space: nowrap;
             }
         </style>
         <!-- <script type="text/javascript">
@@ -76,10 +84,10 @@ while ($row = mysqli_fetch_assoc($email_types_result)) {
         echo "</thead>";
         echo "<tbody>";
         echo "<tr>";
-        echo "<td>" . "$row[firstname]" . "</td>";
-        echo "<td>" . "$row[lastname]" . "</td>";
-        echo "<td>" . "$row[birthdate]" . "</td>";
-        echo "<td>" . "$row[active]" . "</td>";
+        echo "<td class='fitwidth'>" . "$row[firstname]" . "</td>";
+        echo "<td class='fitwidth'>" . "$row[lastname]" . "</td>";
+        echo "<td class='fitwidth'>" . "$row[birthdate]" . "</td>";
+        echo "<td class='fitwidth'>" . "$row[active]" . "</td>";
         
         $id = $row['id'];
         echo "</tr>";
@@ -89,7 +97,7 @@ while ($row = mysqli_fetch_assoc($email_types_result)) {
                 $email_result = mysqli_query($conn, $email_sql);
 
                 echo "<table style= 'position: relative; left: 50px;' class='table table-bordered table-striped'>";
-                echo "<caption><a href='../emails/add.php?id=". $row['id'] ."' title='Add Address' data-toggle='tooltip'><span class='glyphicon glyphicon-plus-sign'></span></a>Email</caption>";
+                echo "<caption><a href='../emails/add.php?id=". $row['id'] ."' title='Add Address' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span></a>Email</caption>";
                 echo "<thead>";
                 echo "<tr>";
                 echo "<th>Email</th>";
@@ -102,16 +110,16 @@ while ($row = mysqli_fetch_assoc($email_types_result)) {
                 {
                     foreach($data_array as $item){
                         if($item['id'] == $row['emailTypeId']){
-                            $emailType = $item['emailType']; 
+                            $emailTypeId = $item['emailType']; 
                             }
                     }
                 echo "<tr>";
-                echo "<td>" . "$row[email]" . "</td>";
-                echo "<td>" . "$emailType" . "</td>";
-                echo "<td>";
-                echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                echo "<a href='../emails/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                echo "<a href='../emails/delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                echo "<td class='fitwidth'>" . "$row[email]" . "</td>";
+                echo "<td class='fitwidth'>" . "$emailTypeId" . "</td>";
+                echo "<td class='fitwidth'>";
+                echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
+                echo "<a href='../emails/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
+                echo "<a href='../emails/delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
                 echo "</td>";
                 echo "</tr>";
                 }//end of email loop
@@ -125,7 +133,7 @@ while ($row = mysqli_fetch_assoc($email_types_result)) {
                                             $address_result = mysqli_query($conn, $address_sql);
 
                                             echo "<table style= 'position: relative; left: 50px;' class='table table-bordered table-striped'>";
-                                            echo "<caption><a href='../address/create.html?id=". $row['id'] ."' title='Add Address' data-toggle='tooltip'><span class='glyphicon glyphicon-plus-sign'></span></a>Address</caption>";
+                                            echo "<caption><a href='../address/create.html?id=". $row['id'] ."' title='Add Address' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span></a>Address</caption>";
                                             echo "<thead>";
                                             echo "<tr>";
                                             echo "<th>Street1</th>";
@@ -142,17 +150,17 @@ while ($row = mysqli_fetch_assoc($email_types_result)) {
                                             while ($row = mysqli_fetch_assoc($address_result))
                                             {
                                             echo "<tr>";
-                                            echo "<td>" . "$row[street1]" . "</td>";
-                                            echo "<td>" . "$row[street2]" . "</td>";
-                                            echo "<td>" . "$row[city]" . "</td>";
-                                            echo "<td>" . "$row[shortState]" . "</td>";
-                                            echo "<td>" . "$row[zip1]" . "</td>";
-                                            echo "<td>" . "$row[country]" . "</td>";
-                                            echo "<td>" . "$row[regDate]" . "</td>";
-                                            echo "<td>";
-                                            echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                                            echo "<a href='../address/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                                            echo "<a href='../address/delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                                            echo "<td class='fitwidth'>" . "$row[street1]" . "</td>";
+                                            echo "<td class='fitwidth'>" . "$row[street2]" . "</td>";
+                                            echo "<td class='fitwidth'>" . "$row[city]" . "</td>";
+                                            echo "<td class='fitwidth'>" . "$row[shortState]" . "</td>";
+                                            echo "<td class='fitwidth'>" . "$row[zip1]" . "</td>";
+                                            echo "<td class='fitwidth'>" . "$row[country]" . "</td>";
+                                            echo "<td class='fitwidth'>" . "$row[regDate]" . "</td>";
+                                            echo "<td class='fitwidth'>";
+                                            echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
+                                            echo "<a href='../address/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
+                                            echo "<a href='../address/delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
                                             echo "</td>";
                                             echo "</tr>";
                                             }//end of address loop
