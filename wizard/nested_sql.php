@@ -52,6 +52,13 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
+$email_types_sql = "SELECT * FROM email_types;";
+$email_types_result = mysqli_query($conn, $email_types_sql);
+$data_array = array();
+while ($row = mysqli_fetch_assoc($email_types_result)) {
+    $data_array[] = array('id' => $row['id'], 'emailType' => $row['emailType']);
+}
+
         //contacts sql query loop table
         $sql = "SELECT * FROM contacts;";
         $result = mysqli_query($conn, $sql);
@@ -93,9 +100,14 @@ if ($conn->connect_error) {
 
                 while ($row = mysqli_fetch_assoc($email_result))
                 {
+                    foreach($data_array as $item){
+                        if($item['id'] == $row['emailTypeId']){
+                            $emailType = $item['emailType']; 
+                            }
+                    }
                 echo "<tr>";
                 echo "<td>" . "$row[email]" . "</td>";
-                // echo "<td>" . "$row[]" . "</td>";
+                echo "<td>" . "$emailType" . "</td>";
                 echo "<td>";
                 echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
                 echo "<a href='../emails/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
