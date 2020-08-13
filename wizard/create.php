@@ -28,7 +28,7 @@ if(mysqli_query($conn, $contacts_sql)){
 $address_sql = "INSERT INTO addresses (contactId, street1, street2, city, shortState, zip1, zip2, country) VALUES ('$contactId', '$street1', '$street2', '$city', '$shortState', '$zip1', '$zip2','$country')";
 if(mysqli_query($conn, $address_sql)){
     $address_Id = mysqli_insert_id($conn); 
-    header("location: edit.php?id=$contactId");
+    header("location: nested_sql.php?id=$contactId");
 } else{
     echo "ERROR: Not able to execute $address_sql. " . mysqli_error($conn);
 }

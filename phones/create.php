@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 
 $id = $_REQUEST['id'];
 $contactId = $_REQUEST['contactId'];
-$contactId = 7;
+// $contactId = 7;
 $phoneTypeId = $_REQUEST['phoneTypeId'];
 $phone = mysqli_real_escape_string($conn, $_REQUEST['phone']);
 

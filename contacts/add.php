@@ -1,3 +1,18 @@
+<?php
+require_once '../config.php';
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+// $contactId = $_REQUEST['id'];
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,22 +36,16 @@
         <input type="text" name="last_name" placeholder="Lastname">
         <br>
         <br>
-        <!-- <input type="hidden" name="active" value="0">
-        <input type="hidden" name="active" value="1"> -->
+        <input type="date" name="birthdate" placeholder="Birth Date">
+        <br>
+        <br>
+        <input type="text" name="jobTitle" placeholder="Job Title">
+        <br>
+        <br>
         <input type="checkbox" id="active" name="active" value="active">
         <label for="active">Active</label>
         <br>
         <br>
-        <!-- <label for="client_type">Client_Type:</label>
-            <select name="client_type" id="client_type">
-                <option value="host">Host</option>
-                <option value="employee">Employee</option>
-                <option value="guest">Guest</option>
-                <option value="organization">Organization</option>
-                <option value="other">Other</option>
-            </select>
-         <br>
-         <br> -->
          <button type="submit" name="submit">Submit</button>
 
     </form>

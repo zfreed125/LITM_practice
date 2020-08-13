@@ -10,7 +10,12 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-
+$contact_type_sql = "SELECT * FROM contact_types;";
+$result = mysqli_query($conn, $contact_type_sql);
+$contact_type_array = array();
+while ($row = mysqli_fetch_assoc($result)) {
+    $contact_type_array[] = array('id' => $row['id'], 'contactType' => $row['contactType']);
+}
 
 
 $id = $_GET["id"];
@@ -23,7 +28,7 @@ $id = $_GET["id"];
  
 // Attempt insert query execution
 // $sql = "select id, first_name, last_name, email from contact where id='$id';";
-$sql = "select id, firstname, lastname, birthdate, active from contacts where id='$id';";
+$sql = "select id, firstname, lastname, birthdate, jobTitle, active from contacts where id='$id';";
 $result = mysqli_query($conn, $sql);
     // output data of each row
     while ($row = mysqli_fetch_assoc($result)) {
@@ -31,6 +36,7 @@ $result = mysqli_query($conn, $sql);
         $firstname = $row["firstname"];
         $lastname = $row["lastname"];
         $birthdate = $row["birthdate"];
+        $jobTitle = $row['jobTitle'];
         $active = $row["active"];
     }
 
@@ -90,6 +96,10 @@ $result = mysqli_query($conn, $sql);
                             <div class="form-group">
                                 <label>Birthdate</label>
                                 <input type="date" name="birthdate" class="form-control" value="<?php echo $birthdate; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label>Job Title</label>
+                                <input type="text" name="jobTitle" class="form-control" value="<?php echo $jobTitle; ?>">
                             </div>
                             <div class="form-group">
                                 <label>active</label>
