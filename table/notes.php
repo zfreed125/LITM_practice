@@ -15,6 +15,7 @@ if ($conn->connect_error) {
 // $sql2 = "DROP TABLE contacts;";
 $sql1 = "CREATE TABLE notes (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    contactId INT(6) NOT NULL,
     author VARCHAR(64) NULL,
     topic VARCHAR(64) NULL,
     created VARCHAR(64) NULL,

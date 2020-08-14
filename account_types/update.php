@@ -8,9 +8,9 @@ if ($conn->connect_error) {
 }
 
 $id = mysqli_real_escape_string($conn, $_REQUEST['id']);
-$contactType = mysqli_real_escape_string($conn, $_REQUEST['contactType']);
+$accountType = mysqli_real_escape_string($conn, $_REQUEST['accountType']);
 //Attempt insert query execution
-$sql = "UPDATE contact_types set contactType='$contactType' where id='$id';";
+$sql = "UPDATE account_types set accountType='$accountType' where id='$id';";
 if(mysqli_query($conn, $sql)){
     header("location: view.php");
 } else{

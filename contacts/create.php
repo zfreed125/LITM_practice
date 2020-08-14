@@ -24,7 +24,7 @@ $sql = "INSERT INTO contacts (firstname, lastname, birthdate, jobTitle, active) 
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
     echo "New record has id: " . mysqli_insert_id($conn); 
-    header("location: view.php");
+    header("location: ../wizard/nested_sql.php");
     // die();
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($conn);

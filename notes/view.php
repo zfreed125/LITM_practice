@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Phones</title>
+    <title>Notes</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
@@ -32,8 +32,8 @@ $(document).ready(function(){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <h2 class="pull-left">Contact Type List</h2>
-                        <a href="add.php" class="btn btn-success pull-right">Add New Contact Type</a>
+                        <h2 class="pull-left">Email List</h2>
+                        <a href="add.php" class="btn btn-success pull-right">Add New Email</a>
                     </div>
                     <?php
                     // Include config file
@@ -45,21 +45,21 @@ $(document).ready(function(){
                     die("Connection failed: " . $conn->connect_error);
                     }
                     //Attempt select query execution
-                    $sql = "SELECT * FROM contact_types;";
+                    $sql = "SELECT * FROM emails;";
                     if($result = mysqli_query($conn, $sql)){
                         if(mysqli_num_rows($result) > 0){
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
                                         echo "<th>#</th>";
-                                        echo "<th>contact Type</th>";
+                                        echo "<th>Email</th>";
                                     echo "</tr>";
                                 echo "</thead>";
                                 echo "<tbody>";
                             while($row = mysqli_fetch_array($result)){
                                     echo "<tr>";
                                         echo "<td>" . $row['id'] . "</td>";
-                                        echo "<td>" . $row['contactType'] . "</td>";
+                                        echo "<td>" . $row['email'] . "</td>";
                                         echo "<td>";
                                             echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
                                             echo "<a href='edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";

@@ -7,9 +7,9 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 $id = mysqli_real_escape_string($conn, $_REQUEST['id']);
-$sql = "DELETE from contact_types where id='$id';";
+$sql = "DELETE from accounts where id='$id';";
 if(mysqli_query($conn, $sql)){
-    header("location: view.php");
+    header("location: ../wizard/nested_sql.php");
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($link);
 }
