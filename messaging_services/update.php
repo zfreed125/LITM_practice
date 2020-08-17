@@ -9,13 +9,11 @@ if ($conn->connect_error) {
 
 $id = $_REQUEST['id'];
 $contactId = $_REQUEST['contactId'];
-$author = mysqli_real_escape_string($conn, $_REQUEST['author']);
-$topic = mysqli_real_escape_string($conn, $_REQUEST['topic']);
-$created = mysqli_real_escape_string($conn, $_REQUEST['created']);
-$modified = mysqli_real_escape_string($conn, $_REQUEST['modified']);
-$note = mysqli_real_escape_string($conn, $_REQUEST['note']);
+$serviceName = mysqli_real_escape_string($conn, $_REQUEST['serviceName']); 
+$userAccount = mysqli_real_escape_string($conn, $_REQUEST['userAccount']);
+$notes = mysqli_real_escape_string($conn, $_REQUEST['notes']);
 //Attempt insert query execution
-$sql = "UPDATE notes set contactId='$contactId', author='$author', topic='$topic', created='$created', modified='$modified', note='$note' where id='$id';";
+$sql = "UPDATE messaging_services set contactId='$contactId', serviceName='$serviceName', userAccount='$userAccount', notes='$notes' where id='$id';";
 if(mysqli_query($conn, $sql)){
     header("location: ../wizard/nested_sql.php");
 } else{

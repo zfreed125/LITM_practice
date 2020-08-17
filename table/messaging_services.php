@@ -15,9 +15,11 @@ if ($conn->connect_error) {
 // $sql2 = "DROP TABLE contacts;";
 $sql1 = "CREATE TABLE messaging_services (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    contactId INT(6) NOT NULL,
+    venueId INT(6) NULL,
     serviceName VARCHAR(64) NULL,
     userAccount VARCHAR(64) NULL,
-    notes TEXT NULL,
+    notes TEXT NULL
     )";
     
     if ($conn->query($sql1) === TRUE) {

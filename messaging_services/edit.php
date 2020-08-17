@@ -10,16 +10,14 @@ if ($conn->connect_error) {
 
 $id = $_GET["id"];
 //attempt insert query execution
-$note_sql = "select id, contactId, note from notes where id='$id';";
-$result2 = mysqli_query($conn, $note_sql);
+$messaging_services_sql = "select id, contactId, serviceName, userAccount, notes from messaging_services where id='$id';";
+$result2 = mysqli_query($conn, $messaging_services_sql);
     //output data of each row
     while ($row = mysqli_fetch_assoc($result2)) {
         $contactId = $row["contactId"];
-        $author = $row["author"];
-        $topic = $row["topic"];
-        $created = $row["created"];
-        $modified = $row["modified"];
-        $note = $row["note"];
+        $serviceName = $row["serviceName"];
+        $userAccount = $row["userAccount"];
+        $notes = $row["notes"];
     }
 $conn->close();
 ?>
@@ -28,7 +26,7 @@ $conn->close();
 <html lang="en">
     <head>
             <meta charset="UTF-8">
-            <title>Update Note</title>
+            <title>Update Info</title>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
        <style type="text/css">
             .wrapper{
@@ -39,28 +37,19 @@ $conn->close();
     </head> 
     <body>
         <div class="wrapper">
-            <h2>Update Note</h2>
+            <h2>Update Info</h2>
                 <p>Please edit the input values and submit to update the record.</p>
                     <form action="update.php" method="POST">
                                     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
-                                        <div class="input-group-prepend"><span class="input-group-text">Author</span></div>
-                                        <input type="text" name="author" class="form-control" >
+                                        <div class="input-group-prepend"><span class="input-group-text">Service Name</span></div>
+                                        <input type="text" name="serviceName" class="form-control" value="<?php echo $serviceName; ?>">
                                     </div>
                                     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
-                                        <div class="input-group-prepend"><span class="input-group-text">Topic</span></div>
-                                        <input type="text" name="topic" class="form-control" >
+                                        <div class="input-group-prepend"><span class="input-group-text">User Account</span></div>
+                                        <input type="text" name="userAccount" class="form-control" value="<?php echo $userAccount; ?>">
                                     </div>
                                     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
-                                        <div class="input-group-prepend"><span class="input-group-text">Created</span></div>
-                                        <input type="date" name="created" class="form-control" >
-                                    </div>
-                                    <!-- <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
-                                        <div class="input-group-prepend"><span class="input-group-text">Modified</span></div>
-                                        <input type="text" name="modified" class="form-control" >
-                                    </div> -->
-                                    <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
-                                    <textarea name="note" id="note" rows="4" cols="50"><?php echo $note; ?>
-                                    </textarea>
+                                    <textarea name="notes" id="notes" rows="4" cols="50"><?php echo $notes; ?></textarea>
                                     </div>
                                     <input type="hidden" name="contactId" value="<?php echo $contactId; ?>">
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">

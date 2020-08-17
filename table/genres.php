@@ -16,6 +16,7 @@ if ($conn->connect_error) {
 $sql1 = "CREATE TABLE genres (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     contactId INT(6) NULL,
+    venueId INT(6) NULL,
     genreTypeId INT(6) NOT NULL
     )";
     

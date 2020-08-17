@@ -12,8 +12,12 @@ if ($conn->connect_error) {
 $id = $_REQUEST['id'];
 $contactId = $_REQUEST['contactId'];
 // $contactId = 7;
+$author = mysqli_real_escape_string($conn, $_REQUEST['author']);
+$topic = mysqli_real_escape_string($conn, $_REQUEST['topic']);
+$created = mysqli_real_escape_string($conn, $_REQUEST['created']);
+$modified = mysqli_real_escape_string($conn, $_REQUEST['modified']);
 $note = mysqli_real_escape_string($conn, $_REQUEST['note']);
-$note_sql = "INSERT INTO notes (contactId, note) VALUES ('$contactId', '$note')";
+$note_sql = "INSERT INTO notes (contactId, author, topic, created, modified, note) VALUES ('$contactId', '$author', '$topic', '$created', '$modified', '$note')";
 if(mysqli_query($conn, $note_sql)){
     // $noteId = mysqli_insert_id($conn); 
     header("location: ../wizard/nested_sql.php");
