@@ -214,7 +214,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                     $genreRowCount = mysqli_num_rows($genre_result);
 
                     echo "<table id='tbl_genre". $id ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
-                    echo "<caption><a href='../genres/add.php?id=". $id ."' title='Add Genre' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span>genre</a></caption>";
+                    echo "<caption><a href='../genres/add.php?contactId=". $id ."' title='Add Genre' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span>genre</a></caption>";
                     echo "<a href='#' title='Show/Hide Genres'style='position: relative; left: 50px;' onclick='myFunction(tbl_genre". $id .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Genre Type (". $genreRowCount .")&nbsp</span></a>";
                     echo "<thead>";
                     echo "<tr>";
@@ -291,7 +291,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                             $addressRowCount = mysqli_num_rows($address_result);
 
                             echo "<table id='tbl_address". $id ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
-                            echo "<caption><a href='../address/create.html?id=". $id ."' title='Add Address' data-toggle='tooltip'><span><i class='fas fa-plus'></i>Address</span></a></caption>";
+                            echo "<caption><a href='../address/create.html?contactId=". $id ."' title='Add Address' data-toggle='tooltip'><span><i class='fas fa-plus'></i>Address</span></a></caption>";
                             echo "<a href='#' title='Show/Hide Addresses'style='position: relative; left: 50px;' onclick='myFunction(tbl_address". $id .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Addresses (". $addressRowCount .")&nbsp</span></a>";
                             echo "<thead>";
                             echo "<tr>";

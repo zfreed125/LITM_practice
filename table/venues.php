@@ -15,11 +15,14 @@ if ($conn->connect_error) {
 // $sql2 = "DROP TABLE contacts;";
 $sql1 = "CREATE TABLE venues (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    contactId INT(6) NULL,
-    venueName VARCHAR(64) NULL,
-    showLength VARCHAR(64) NULL,
     active INT(1) DEFAULT 1,
-    venueDate DATE NULL,
+    venueName VARCHAR(64) NULL,
+    venueTypeId INT(6) NULL,
+    contactNameId INT(6) NULL,
+    hostNameId INT(6) NULL,
+    venueDateStart DATETIME NULL,
+    venueDateEnd DATETIME NULL,
+    showLength INT(8) NULL,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP     
     )";
     

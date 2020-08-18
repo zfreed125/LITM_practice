@@ -15,7 +15,6 @@ if ($conn->connect_error) {
 // $sql2 = "DROP TABLE contacts;";
 $sql1 = "CREATE TABLE venue_types (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    venueId INT(6) NULL,
     venueType VARCHAR(64) NULL
     )";
     

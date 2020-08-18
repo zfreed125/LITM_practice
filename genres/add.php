@@ -14,7 +14,8 @@ $genre_type_array = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $genre_type_array[] = array('id' => $row['id'], 'genreType' => $row['genreType']);
 }
-$contactId = $_REQUEST['id'];
+$contactId = $_REQUEST['contactId'];
+$venueId = $_REQUEST['venueId'];
 ?>
 
 <!DOCTYPE html>
@@ -44,6 +45,7 @@ $contactId = $_REQUEST['id'];
                 <?php } ?>
         </select>
         <input hidden id="contactId" style="width: 2.5em;" type="text" name="contactId" value="<?php echo $contactId; ?>">
+        <input hidden id="venueId" style="width: 2.5em;" type="text" name="venueId" value="<?php echo $venueId; ?>">
         <br>
         <br>
         <button type="submit" name="submit">Submit</button>

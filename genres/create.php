@@ -9,14 +9,21 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$id = $_REQUEST['id'];
 $contactId = $_REQUEST['contactId'];
-// $contactId =11;
+$venueId = $_REQUEST['venueId'];
 $genreTypeId = $_REQUEST['genreTypeId'];
-$genre_sql = "INSERT INTO genres (contactId, genreTypeId) VALUES ('$contactId', '$genreTypeId')";
+if (empty($venueId)){
+    // INSERT INTO genres (contactId, genreTypeId) VALUES ('', '3'). Incorrect integer value: '' for column 'contactId' at row 1
+    $genre_sql = "INSERT INTO genres (contactId, genreTypeId) VALUES ('$contactId', '$genreTypeId')";
+    $dst = "contacts";
+}else{
+    $genre_sql = "INSERT INTO genres (venueId, genreTypeId) VALUES ('$venueId', '$genreTypeId')";
+    $dst = "venues";
+    
+}
 if(mysqli_query($conn, $genre_sql)){
     // $genreId = mysqli_insert_id($conn); 
-    header("location: ../contacts/view.php");
+    header("location: ../$dst/view.php");
 } else{
     echo "ERROR: Not able to execute $genre_sql. " . mysqli_error($conn);
 }

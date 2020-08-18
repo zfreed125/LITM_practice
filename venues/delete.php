@@ -9,8 +9,8 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-$contactId = $_REQUEST['contactId'];
-$contacts_sql = "DELETE from contacts where id='$contactId';";
+$venueId = $_REQUEST['venueId'];
+$venues_sql = "DELETE from venues where id='$venueId';";
 // $address_sql = "DELETE from addresses where contactId='$contactId';";
 // $emails_sql = "DELETE from emails where contactId='$contactId';";
 // $phones_sql = "DELETE from phones where contactId='$contactId';";
@@ -22,7 +22,7 @@ $contacts_sql = "DELETE from contacts where id='$contactId';";
 mysqli_autocommit($conn, FALSE);
 
 
-$query1 = mysqli_query($conn, $contacts_sql);
+$query1 = mysqli_query($conn, $venues_sql);
 // $query2 = mysqli_query($conn, $address_sql);
 // $query3 = mysqli_query($conn, $emails_sql);
 // $query4 = mysqli_query($conn, $phones_sql);
@@ -31,7 +31,6 @@ $query1 = mysqli_query($conn, $contacts_sql);
 // $query7 = mysqli_query($conn, $note_sql);
 // $query8 = mysqli_query($conn, $messaging_services_sql);
 
-// if ($query1 && $query2 && $query3 && $query4 && $query5 && $query6 && $query7 && $query8){
 if ($query1){
     mysqli_commit($conn);
     header("location: view.php");
