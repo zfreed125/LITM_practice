@@ -10,7 +10,7 @@ if ($conn->connect_error) {
 
 $id = $_GET["id"];
 //attempt insert query execution
-$note_sql = "select id, contactId, note from notes where id='$id';";
+$note_sql = "select id, contactId, author, topic, created, note from notes where id='$id';";
 $result2 = mysqli_query($conn, $note_sql);
     //output data of each row
     while ($row = mysqli_fetch_assoc($result2)) {
@@ -18,7 +18,7 @@ $result2 = mysqli_query($conn, $note_sql);
         $author = $row["author"];
         $topic = $row["topic"];
         $created = $row["created"];
-        $modified = $row["modified"];
+        // $modified = $row["modified"];
         $note = $row["note"];
     }
 $conn->close();
@@ -44,15 +44,15 @@ $conn->close();
                     <form action="update.php" method="POST">
                                     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
                                         <div class="input-group-prepend"><span class="input-group-text">Author</span></div>
-                                        <input type="text" name="author" class="form-control" >
+                                        <input type="text" name="author" class="form-control" value="<?php echo $author; ?>">
                                     </div>
                                     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
                                         <div class="input-group-prepend"><span class="input-group-text">Topic</span></div>
-                                        <input type="text" name="topic" class="form-control" >
+                                        <input type="text" name="topic" class="form-control" value="<?php echo $topic; ?>">
                                     </div>
                                     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
                                         <div class="input-group-prepend"><span class="input-group-text">Created</span></div>
-                                        <input type="date" name="created" class="form-control" >
+                                        <input disabled type="date" name="created" class="form-control" value="<?php echo $created; ?>">
                                     </div>
                                     <!-- <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
                                         <div class="input-group-prepend"><span class="input-group-text">Modified</span></div>

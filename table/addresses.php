@@ -24,7 +24,7 @@ $sql = "CREATE TABLE addresses (
     zip1 VARCHAR(5) NOT NULL,
     zip2 VARCHAR(4) NULL,
     country VARCHAR(64) NULL,
-    regDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
     )";
     
     if ($conn->query($sql) === TRUE) {

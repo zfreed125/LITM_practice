@@ -17,7 +17,8 @@ $sql1 = "CREATE TABLE emails (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     contactId INT(6) NOT NULL,
     emailTypeId INT(6) NOT NULL,
-    email VARCHAR(60) NOT NULL
+    email VARCHAR(60) NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
     )";
     
     if ($conn->query($sql1) === TRUE) {

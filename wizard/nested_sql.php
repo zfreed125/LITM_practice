@@ -114,6 +114,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
         echo "<th>Birthdate</th>";
         echo "<th>Job Title</th>";
         echo "<th>Active</th>";
+        echo "<th>Created</th>";
         echo "</tr>";
         echo "</thead>";
         echo "<tbody>";
@@ -123,6 +124,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
         echo "<td class='fitwidth'>" . "$row[birthdate]" . "</td>";
         echo "<td class='fitwidth'>" . "$row[jobTitle]" . "</td>";
         echo "<td class='fitwidth'>" . "$row[active]" . "</td>";
+        echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
         echo "<td class='fitwidth'>";
         echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
         echo "<a href='../contacts/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
@@ -142,6 +144,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
             echo "<tr>";
             echo "<th>Phone</th>";
             echo "<th>Phone Type</th>";
+            echo "<th>Created</th>";
             echo "</tr>";
             echo "</thead>";
             echo "<tbody>";
@@ -156,43 +159,46 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
             echo "<tr>";
             echo "<td class='fitwidth'>" . "$row[phone]" . "</td>";
             echo "<td class='fitwidth'>" . "$phoneTypeId" . "</td>";
+            echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
             echo "<td class='fitwidth'>";
             echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
             echo "<a href='../phones/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
             echo "<a href='../phones/delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
             echo "</td>";
             echo "</tr>";
-            }//end of phone loop
-            //end of the table from the phone loop
-            echo "</tbody>";
-            echo "</table>";
-
-                //account sql loop table
-                $account_sql = "SELECT * FROM accounts where contactId = '$id';";
-                $account_result = mysqli_query($conn, $account_sql);
-                $accountRowCount = mysqli_num_rows($account_result);
-
-                echo "<table id='tbl_account". $id ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
-                echo "<caption><a href='../accounts/add.php?id=". $id ."' title='Add Account' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span>Account</a></caption>";
-                echo "<a href='#' title='Show/Hide accounts'style='position: relative; left: 50px;' onclick='myFunction(tbl_account". $id .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Account Type (". $accountRowCount .")&nbsp</span></a>";
-                echo "<thead>";
-                echo "<tr>";
-                echo "<th>Account Type</th>";
-                echo "</tr>";
-                echo "</thead>";
-                echo "<tbody>";
-
-                while ($row = mysqli_fetch_assoc($account_result))
-                {
-                    foreach($account_type_array as $item){
-                        if($item['id'] == $row['accountTypeId']){
-                            $accountTypeId = $item['accountType']; 
-                            }
-                    }
-                echo "<tr>";
-                echo "<td class='fitwidth'>" . "$accountTypeId" . "</td>";
-                echo "<td class='fitwidth'>";
-                echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
+        }//end of phone loop
+        //end of the table from the phone loop
+        echo "</tbody>";
+        echo "</table>";
+        
+        //account sql loop table
+        $account_sql = "SELECT * FROM accounts where contactId = '$id';";
+        $account_result = mysqli_query($conn, $account_sql);
+        $accountRowCount = mysqli_num_rows($account_result);
+        
+        echo "<table id='tbl_account". $id ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
+        echo "<caption><a href='../accounts/add.php?id=". $id ."' title='Add Account' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span>Account</a></caption>";
+        echo "<a href='#' title='Show/Hide accounts'style='position: relative; left: 50px;' onclick='myFunction(tbl_account". $id .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Account Type (". $accountRowCount .")&nbsp</span></a>";
+        echo "<thead>";
+        echo "<tr>";
+        echo "<th>Account Type</th>";
+        echo "<th>Created</th>";
+        echo "</tr>";
+        echo "</thead>";
+        echo "<tbody>";
+        
+        while ($row = mysqli_fetch_assoc($account_result))
+        {
+            foreach($account_type_array as $item){
+                if($item['id'] == $row['accountTypeId']){
+                    $accountTypeId = $item['accountType']; 
+                }
+            }
+            echo "<tr>";
+            echo "<td class='fitwidth'>" . "$accountTypeId" . "</td>";
+            echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
+            echo "<td class='fitwidth'>";
+            echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
                 echo "<a href='../accounts/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
                 echo "<a href='../accounts/delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
                 echo "</td>";
@@ -213,6 +219,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                     echo "<thead>";
                     echo "<tr>";
                     echo "<th>Genre Type</th>";
+                    echo "<th>Created</th>";
                     echo "</tr>";
                     echo "</thead>";
                     echo "<tbody>";
@@ -226,6 +233,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                         }
                     echo "<tr>";
                     echo "<td class='fitwidth'>" . "$genreTypeId" . "</td>";
+                    echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                     echo "<td class='fitwidth'>";
                     echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
                     echo "<a href='../genres/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
@@ -249,6 +257,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                         echo "<tr>";
                         echo "<th>Email</th>";
                         echo "<th>Email Type</th>";
+                        echo "<th>Created</th>";
                         echo "</tr>";
                         echo "</thead>";
                         echo "<tbody>";
@@ -263,6 +272,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                         echo "<tr>";
                         echo "<td class='fitwidth'>" . "$row[email]" . "</td>";
                         echo "<td class='fitwidth'>" . "$emailTypeId" . "</td>";
+                        echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                         echo "<td class='fitwidth'>";
                         echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
                         echo "<a href='../emails/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
@@ -291,7 +301,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                             echo "<th>State</th>";
                             echo "<th>Zip1</th>";
                             echo "<th>Country</th>";
-                            echo "<th>Reg date</th>";
+                            echo "<th>Created</th>";
                             echo "</tr>";
                             echo "</thead>";
                             echo "<tbody>";
@@ -305,7 +315,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                             echo "<td class='fitwidth'>" . "$row[shortState]" . "</td>";
                             echo "<td class='fitwidth'>" . "$row[zip1]" . "</td>";
                             echo "<td class='fitwidth'>" . "$row[country]" . "</td>";
-                            echo "<td class='fitwidth'>" . "$row[regDate]" . "</td>";
+                            echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                             echo "<td class='fitwidth'>";
                             echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
                             echo "<a href='../address/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
@@ -330,7 +340,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                                 echo "<th>Service Name</th>";
                                 echo "<th>User Account</th>";
                                 echo "<th>Notes</th>";
-                                echo "<th>Reg date</th>";
+                                echo "<th>Created</th>";
                                 echo "</tr>";
                                 echo "</thead>";
                                 echo "<tbody>";
@@ -341,7 +351,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                                 echo "<td class='fitwidth'>" . "$row[serviceName]" . "</td>";
                                 echo "<td class='fitwidth'>" . "$row[userAccount]" . "</td>";
                                 echo "<td class='fitwidth'>" . "$row[notes]" . "</td>";
-                                echo "<td class='fitwidth'>" . "$row[regDate]" . "</td>";
+                                echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                                 echo "<td class='fitwidth'>";
                                 echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
                                 echo "<a href='../messaging_services/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
@@ -365,9 +375,8 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                                     echo "<tr>";
                                     echo "<th>Author</th>";
                                     echo "<th>Topic</th>";
-                                    echo "<th>Created</th>";
-                                    echo "<th>Modified</th>";
                                     echo "<th>Notes</th>";
+                                    echo "<th>Created</th>";
                                     echo "</tr>";
                                     echo "</thead>";
                                     echo "<tbody>";
@@ -377,9 +386,8 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                                     echo "<tr>";
                                     echo "<td class='fitwidth'>" . "$row[author]" . "</td>";
                                     echo "<td class='fitwidth'>" . "$row[topic]" . "</td>";
-                                    echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
-                                    echo "<td class='fitwidth'>" . "$row[modified]" . "</td>";
                                     echo "<td class='fitwidth'>" . "$row[note]" . "</td>";
+                                    echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                                     echo "<td class='fitwidth'>";
                                     echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
                                     echo "<a href='../notes/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";

@@ -17,7 +17,8 @@ $sql1 = "CREATE TABLE genres (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     contactId INT(6) NULL,
     venueId INT(6) NULL,
-    genreTypeId INT(6) NOT NULL
+    genreTypeId INT(6) NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
     )";
     
     if ($conn->query($sql1) === TRUE) {

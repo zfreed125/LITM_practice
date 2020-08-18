@@ -16,7 +16,8 @@ if ($conn->connect_error) {
 $sql1 = "CREATE TABLE accounts (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     contactId INT(6) NOT NULL,
-    accountTypeId INT(6) NOT NULL
+    accountTypeId INT(6) NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
     )";
     
     if ($conn->query($sql1) === TRUE) {

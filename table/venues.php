@@ -20,8 +20,7 @@ $sql1 = "CREATE TABLE venues (
     showLength VARCHAR(64) NULL,
     active INT(1) DEFAULT 1,
     venueDate DATE NULL,
-    regDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP     
     )";
     
     if ($conn->query($sql1) === TRUE) {

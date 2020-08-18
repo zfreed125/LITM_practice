@@ -21,7 +21,7 @@ $sql1 = "CREATE TABLE contacts (
     active INT(1) DEFAULT 1,
     birthdate DATE NULL,
     bookingFreq INT(3) NULL,
-    regDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
     )";
     
     if ($conn->query($sql1) === TRUE) {

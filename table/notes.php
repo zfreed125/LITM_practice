@@ -19,9 +19,8 @@ $sql1 = "CREATE TABLE notes (
     venueId INT(6) NULL,
     author VARCHAR(64) NULL,
     topic VARCHAR(64) NULL,
-    created DATE NULL,
-    modified VARCHAR(64) NULL,
-    note TEXT NOT NULL
+    note TEXT NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
     )";
     
     if ($conn->query($sql1) === TRUE) {

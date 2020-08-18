@@ -19,7 +19,8 @@ $sql1 = "CREATE TABLE messaging_services (
     venueId INT(6) NULL,
     serviceName VARCHAR(64) NULL,
     userAccount VARCHAR(64) NULL,
-    notes TEXT NULL
+    notes TEXT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
     )";
     
     if ($conn->query($sql1) === TRUE) {

@@ -33,7 +33,7 @@ $contactId = $_REQUEST['id'];
         <label>Add Notes</label>
         <input type="text" name="author" id="author" placeholder="Author">
         <input type="text" name="topic" id="topic" placeholder="Topic">
-        <input type="date" name="created" id="created" placeholder="Created">
+        <!-- <input type="date" name="created" id="created" placeholder="Created"> -->
         <!-- <input type="text" name="modified" id="modified" placeholder="Modified"> -->
         <textarea name="note" id="note" rows="4" cols="50">
         </textarea>
