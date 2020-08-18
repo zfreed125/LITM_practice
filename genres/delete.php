@@ -9,7 +9,7 @@ if ($conn->connect_error) {
 $id = mysqli_real_escape_string($conn, $_REQUEST['id']);
 $sql = "DELETE from genres where id='$id';";
 if(mysqli_query($conn, $sql)){
-    header("location: ../wizard/nested_sql.php");
+    header("location: ../contacts/view.php");
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($link);
 }

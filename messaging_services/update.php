@@ -15,7 +15,7 @@ $notes = mysqli_real_escape_string($conn, $_REQUEST['notes']);
 //Attempt insert query execution
 $sql = "UPDATE messaging_services set contactId='$contactId', serviceName='$serviceName', userAccount='$userAccount', notes='$notes' where id='$id';";
 if(mysqli_query($conn, $sql)){
-    header("location: ../wizard/nested_sql.php");
+    header("location: ../contacts/view.php");
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($conn);
 }

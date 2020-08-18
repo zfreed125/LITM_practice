@@ -44,10 +44,10 @@ $conn->close();
             <h2>Update Account</h2>
                 <p>Please edit the input values and submit to update the record.</p>
                     <form action="update.php" method="POST">
-                                    <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
+                                    <!-- <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
                                         <div class="input-group-prepend"><span class="input-group-text">Account</span></div>
                                         <input type="text" name="account" class="form-control" value="<?php echo $account; ?>">
-                                    </div>
+                                    </div> -->
                                     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
                                     <select class="form-control" name="accountTypeId">
                                         <option selected="selected">Choose one</option>

@@ -14,7 +14,7 @@ $phone = mysqli_real_escape_string($conn, $_REQUEST['phone']);
 //Attempt insert query execution
 $sql = "UPDATE phones set contactId='$contactId', phoneTypeId='$phoneTypeId', phone='$phone' where id='$id';";
 if(mysqli_query($conn, $sql)){
-    header("location: ../wizard/nested_sql.php");
+    header("location: ../contacts/view.php");
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($conn);
 }

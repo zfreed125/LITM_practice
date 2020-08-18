@@ -44,10 +44,10 @@ $conn->close();
             <h2>Update Genre</h2>
                 <p>Please edit the input values and submit to update the record.</p>
                     <form action="update.php" method="POST">
-                                    <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
+                                    <!-- <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
                                         <div class="input-group-prepend"><span class="input-group-text">Genre</span></div>
                                         <input type="text" name="genre" class="form-control" value="<?php echo $genre; ?>">
-                                    </div>
+                                    </div> -->
                                     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
                                     <select class="form-control" name="genreTypeId">
                                         <option selected="selected">Choose one</option>

@@ -13,7 +13,7 @@ $genreTypeId = $_REQUEST['genreTypeId'];
 //Attempt insert query execution
 $sql = "UPDATE genres set contactId='$contactId', genreTypeId='$genreTypeId' where id='$id';";
 if(mysqli_query($conn, $sql)){
-    header("location: ../wizard/nested_sql.php");
+    header("location: ../contacts/view.php");
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($conn);
 }

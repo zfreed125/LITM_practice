@@ -18,7 +18,7 @@ $notes = mysqli_real_escape_string($conn, $_REQUEST['notes']);
 $messaging_services_sql = "INSERT INTO messaging_services (contactId, serviceName, userAccount, notes) VALUES ('$contactId', '$serviceName', '$userAccount', '$notes')";
 if(mysqli_query($conn, $messaging_services_sql)){
     // $emailId = mysqli_insert_id($conn); 
-    header("location: ../wizard/nested_sql.php");
+    header("location: ../contacts/view.php");
 } else{
     echo "ERROR: Not able to execute $messaging_services_sql. " . mysqli_error($conn);
 }

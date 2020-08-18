@@ -16,7 +16,7 @@ $genreTypeId = $_REQUEST['genreTypeId'];
 $genre_sql = "INSERT INTO genres (contactId, genreTypeId) VALUES ('$contactId', '$genreTypeId')";
 if(mysqli_query($conn, $genre_sql)){
     // $genreId = mysqli_insert_id($conn); 
-    header("location: ../wizard/nested_sql.php");
+    header("location: ../contacts/view.php");
 } else{
     echo "ERROR: Not able to execute $genre_sql. " . mysqli_error($conn);
 }

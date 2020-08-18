@@ -17,7 +17,7 @@ $email = mysqli_real_escape_string($conn, $_REQUEST['email']);
 $email_sql = "INSERT INTO emails (contactId, emailTypeId, email) VALUES ('$contactId', '$emailTypeId', '$email')";
 if(mysqli_query($conn, $email_sql)){
     // $emailId = mysqli_insert_id($conn); 
-    header("location: ../wizard/nested_sql.php");
+    header("location: ../contacts/view.php");
 } else{
     echo "ERROR: Not able to execute $email_sql. " . mysqli_error($conn);
 }

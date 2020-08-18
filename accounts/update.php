@@ -13,7 +13,7 @@ $accountTypeId = $_REQUEST['accountTypeId'];
 //Attempt insert query execution
 $sql = "UPDATE accounts set contactId='$contactId', accountTypeId='$accountTypeId' where id='$id';";
 if(mysqli_query($conn, $sql)){
-    header("location: ../wizard/nested_sql.php");
+    header("location: ../contacts/view.php");
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($conn);
 }

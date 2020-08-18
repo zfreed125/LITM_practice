@@ -19,7 +19,7 @@ $note = mysqli_real_escape_string($conn, $_REQUEST['note']);
 $note_sql = "INSERT INTO notes (contactId, author, topic, note) VALUES ('$contactId', '$author', '$topic', '$note')";
 if(mysqli_query($conn, $note_sql)){
     // $noteId = mysqli_insert_id($conn); 
-    header("location: ../wizard/nested_sql.php");
+    header("location: ../contacts/view.php");
 } else{
     echo "ERROR: Not able to execute $note_sql. " . mysqli_error($conn);
 }

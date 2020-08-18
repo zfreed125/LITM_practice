@@ -17,7 +17,7 @@ $phone = mysqli_real_escape_string($conn, $_REQUEST['phone']);
 
 $phone_sql = "INSERT INTO phones (contactId, phoneTypeId, phone) VALUES ('$contactId', '$phoneTypeId', '$phone')";
 if(mysqli_query($conn, $phone_sql)){
-    header("location: ../wizard/nested_sql.php");
+    header("location: ../contacts/view.php");
 } else{
     echo "ERROR: Not able to execute $phone_sql. " . mysqli_error($conn);
 }

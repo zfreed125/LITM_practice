@@ -14,7 +14,7 @@ $email = mysqli_real_escape_string($conn, $_REQUEST['email']);
 //Attempt insert query execution
 $sql = "UPDATE emails set contactId='$contactId', emailTypeId='$emailTypeId', email='$email' where id='$id';";
 if(mysqli_query($conn, $sql)){
-    header("location: ../wizard/nested_sql.php");
+    header("location: ../contacts/view.php");
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($conn);
 }

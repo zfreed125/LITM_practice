@@ -27,7 +27,7 @@ $active = (isset($_POST['active'])) ? 1 : 0;
 $sql = "UPDATE contacts set firstname='$firstname', lastname='$lastname', birthdate='$birthdate', jobTitle='$jobTitle', active='$active' where id='$id';";
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
-    header("location: ../wizard/nested_sql.php");
+    header("location: view.php");
     die();
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($conn);
