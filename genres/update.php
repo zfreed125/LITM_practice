@@ -8,14 +8,11 @@ if ($conn->connect_error) {
 }
 
 $id = $_REQUEST['id'];
-$src = $_REQUEST['src'];
+$dst = $_REQUEST['src'];
 $contactId = $_REQUEST['contactId'];
 $venueId = $_REQUEST['venueId'];
 $genreTypeId = $_REQUEST['genreTypeId'];
-//Attempt insert query execution
-$sql = "UPDATE genres set contactId='$contactId', genreTypeId='$genreTypeId' where id='$id';";
 if ($src != "venues"){
-  // INSERT INTO genres (contactId, genreTypeId) VALUES ('', '3'). Incorrect integer value: '' for column 'contactId' at row 1
   $genre_sql = "UPDATE genres set contactId='$contactId', genreTypeId='$genreTypeId' where id='$id';";
   $dst = "contacts";
 }else{
@@ -23,10 +20,10 @@ if ($src != "venues"){
   $dst = "venues";
   
 }
-if(mysqli_query($conn, $sql)){
+if(mysqli_query($conn, $genre_sql)){
     header("location: ../$dst/view.php");
 } else{
-    echo "ERROR: Not able to execute $sql. " . mysqli_error($conn);
+    echo "ERROR: Not able to execute $genre_sql. " . mysqli_error($conn);
 }
 $conn->close();
 ?>

@@ -70,7 +70,7 @@
 
                         <h2 class="pull-left">Address List</h2>
 
-                        <a href="create.html" class="btn btn-success pull-right">Add New Address</a>
+                        <a href="add.php" class="btn btn-success pull-right">Add New Address</a>
 
                     </div>
 
