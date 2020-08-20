@@ -7,7 +7,7 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 $dst = $_REQUEST['src'];
-$id = mysqli_real_escape_string($conn, $_REQUEST['id']);
+$id =  $_REQUEST['id'];
 $sql = "DELETE from genres where id='$id';";
 if(mysqli_query($conn, $sql)){
     header("location: ../$dst/view.php");

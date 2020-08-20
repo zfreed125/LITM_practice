@@ -12,7 +12,7 @@ $dst = $_REQUEST['src'];
 $contactId = $_REQUEST['contactId'];
 $venueId = $_REQUEST['venueId'];
 $genreTypeId = $_REQUEST['genreTypeId'];
-if ($src != "venues"){
+if (empty($venueId)){
   $genre_sql = "UPDATE genres set contactId='$contactId', genreTypeId='$genreTypeId' where id='$id';";
   $dst = "contacts";
 }else{

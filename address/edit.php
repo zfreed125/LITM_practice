@@ -14,6 +14,7 @@ if ($conn->connect_error) {
 
 
 $id = $_GET["id"];
+$src = $_GET["src"];
 // $id = 1;
 // $firstname = mysqli_real_escape_string($conn, $_REQUEST['firstname']);
 // $lastname = mysqli_real_escape_string($conn, $_REQUEST['lastname']);
@@ -23,11 +24,12 @@ $id = $_GET["id"];
  
 // Attempt insert query execution
 // $sql = "select id, first_name, last_name, email from Test1 where id='$id';";
-$sql = "select id, contactId, street1, street2, city, shortState, zip1, country from addresses where id='$id';";
+$sql = "select id, contactId, venueId, street1, street2, city, shortState, zip1, country from addresses where id='$id';";
 $result = mysqli_query($conn, $sql);
     // output data of each row
     while ($row = mysqli_fetch_assoc($result)) {
         $contactId = $row["contactId"];
+        $venueId = $row["venueId"];
         $street1 = $row["street1"];
         $street2 = $row["street2"];
         $city = $row["city"];
@@ -172,7 +174,9 @@ $result = mysqli_query($conn, $sql);
                                             <div class="input-group-prepend"><span class="input-group-text">Country</span></div>
                                             <input type="text" name="country" class="form-control" value="<?php echo $country; ?>">
                                         </div>
+                                    <input type="hidden" name="venueId" value="<?php echo $venueId; ?>">
                                     <input type="hidden" name="contactId" value="<?php echo $contactId; ?>">
+                                    <input type="hidden" name="src" value="<?php echo $src; ?>">
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                             </div>
                         </div>

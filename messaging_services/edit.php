@@ -9,12 +9,14 @@ if ($conn->connect_error) {
 
 
 $id = $_GET["id"];
+$src = $_GET["src"];
 //attempt insert query execution
-$messaging_services_sql = "select id, contactId, serviceName, userAccount, notes from messaging_services where id='$id';";
-$result2 = mysqli_query($conn, $messaging_services_sql);
+$messaging_services_sql = "select id, contactId,venueId, serviceName, userAccount, notes from messaging_services where id='$id';";
+$messaging_services_result = mysqli_query($conn, $messaging_services_sql);
     //output data of each row
-    while ($row = mysqli_fetch_assoc($result2)) {
+    while ($row = mysqli_fetch_assoc($messaging_services_result)) {
         $contactId = $row["contactId"];
+        $venueId = $row["venueId"];
         $serviceName = $row["serviceName"];
         $userAccount = $row["userAccount"];
         $notes = $row["notes"];
@@ -52,7 +54,10 @@ $conn->close();
                                     <textarea name="notes" id="notes" rows="4" cols="50"><?php echo $notes; ?></textarea>
                                     </div>
                                     <input type="hidden" name="contactId" value="<?php echo $contactId; ?>">
+                                    <input type="hidden" name="venueId" value="<?php echo $venueId; ?>">
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">
+                                    <input type="hidden" name="src" value="<?php echo $src; ?>">
+
                             <div class="m-5">
                             <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <input type="submit" class="btn btn-primary" value="Submit">

@@ -25,7 +25,7 @@ while ($row = mysqli_fetch_assoc($venue_types_result)) {
 
 
 
-$id = $_GET["id"];
+$venues_id = $_GET["id"];
 // $id = 1;
 // $firstname = mysqli_real_escape_string($conn, $_REQUEST['firstname']);
 // $lastname = mysqli_real_escape_string($conn, $_REQUEST['lastname']);
@@ -35,10 +35,10 @@ $id = $_GET["id"];
  
 // Attempt insert query execution
 // $sql = "select id, first_name, last_name, email from contact where id='$id';";
-$sql = "SELECT * FROM venues where id='$id';";
-$result = mysqli_query($conn, $sql);
+$venues_sql = "SELECT * FROM venues where id='$venues_id';";
+$venues_result = mysqli_query($conn, $venues_sql);
     // output data of each row
-    while ($row = mysqli_fetch_assoc($result)) {
+    while ($row = mysqli_fetch_assoc($venues_result)) {
         $active = $row["active"];
         $venueName = $row["venueName"];
         $venueTypeId = $row["venueTypeId"];
@@ -46,7 +46,7 @@ $result = mysqli_query($conn, $sql);
         $hostNameId = $row["hostNameId"];
         $venueDateStart = $row["venueDateStart"];
         $venueDateEnd = $row['venueDateEnd'];
-        $showlength = $row['showlength'];
+        $showLength = $row['showLength'];
     }
 
  
@@ -97,10 +97,10 @@ $result = mysqli_query($conn, $sql);
                             <div class="form-group">
                                 <select name="venueTypeId">
                                     <option selected="selected">Select Venue Type</option>
-                                        <?php foreach($venueType_array as $item){ ?>
-                                    <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['venueType']; ?>
+                                        <?php foreach($venue_type_array as $item){ ?>
+                                    <option value="<?php echo strtolower($item['id']); ?>"
                                         <?php if($item['id'] == $venueTypeId){ echo "selected"; } ?> >
-                                        <?php echo $item['venueType']; ?></option>
+                                    <?php echo $item['venueType']; ?></option>
                                         <?php } ?>
                                 </select> 
                             </div>
@@ -108,9 +108,9 @@ $result = mysqli_query($conn, $sql);
                                 <select name="contactNameId">
                                     <option selected="selected">Select Contact Name</option>
                                         <?php foreach($contacts_array as $item){ ?>
-                                    <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['fullname']; ?>
+                                    <option value="<?php echo strtolower($item['id']); ?>"
                                         <?php if($item['id'] == $contactNameId){ echo "selected"; } ?> >
-                                        <?php echo $item['fullname']; ?></option>
+                                    <?php echo $item['fullname']; ?></option>
                                         <?php } ?>
                                 </select> 
                             </div>
@@ -118,9 +118,9 @@ $result = mysqli_query($conn, $sql);
                                 <select name="hostNameId">
                                     <option selected="selected">Select Host Name</option>
                                         <?php foreach($contacts_array as $item){ ?>
-                                    <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['fullname']; ?>
+                                    <option value="<?php echo strtolower($item['id']); ?>"
                                         <?php if($item['id'] == $hostNameId){ echo "selected"; } ?> >
-                                        <?php echo $item['fullname']; ?></option>
+                                    <?php echo $item['fullname']; ?></option>
                                         <?php } ?>
                                 </select> 
                             </div>
@@ -140,12 +140,12 @@ $result = mysqli_query($conn, $sql);
                                 <label>active</label>
                                 <input type="checkbox" name="active" id="active" class="form-control" value="<?php echo $active; ?>">
                             </div>
-                                <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+                                <input type="hidden" name="id" value="<?php echo $venues_id; ?>"/>
                                 <input type="submit" class="btn btn-primary" value="Submit">
                                 <br>
                                 <br>
                                 <!-- <input type="submit" class="btn btn-danger" value="Delete"> -->
-                                <a class="btn btn-danger" href="delete.php?id=<?php echo $id;?>">Delete</a>
+                                <a class="btn btn-danger" href="delete.php?id=<?php echo $venues_id;?>">Delete</a>
                                 <br>
                                 <br>
                                 <a class="btn btn-default" href="view.php">Cancel</a>
