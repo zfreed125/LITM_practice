@@ -9,12 +9,21 @@ if ($conn->connect_error) {
 
 $id = $_REQUEST['id'];
 $contactId = $_REQUEST['contactId'];
+$venueId = $_REQUEST['venueId'];
 $emailTypeId = $_REQUEST['emailTypeId'];
 $email = mysqli_real_escape_string($conn, $_REQUEST['email']);
-//Attempt insert query execution
-$sql = "UPDATE emails set contactId='$contactId', emailTypeId='$emailTypeId', email='$email' where id='$id';";
+
+if (empty($venueId)){
+  $sql = "UPDATE emails set contactId='$contactId', emailTypeId='$emailTypeId', email='$email' where id='$id';";
+  $dst = "contacts";
+}else{
+  $sql = "UPDATE emails set venueId='$venueId', emailTypeId='$emailTypeId', email='$email' where id='$id';";
+  $dst = "venues";
+  
+}
+
 if(mysqli_query($conn, $sql)){
-    header("location: ../contacts/view.php");
+    header("location: ../$dst/view.php");
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($conn);
 }

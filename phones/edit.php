@@ -16,11 +16,12 @@ while ($row = mysqli_fetch_assoc($result1)) {
 
 $id = $_GET["id"];
 //attempt insert query execution
-$phones_sql = "select id, contactId, phoneTypeId, phone from phones where id='$id';";
+$phones_sql = "select id, contactId, venueId, phoneTypeId, phone from phones where id='$id';";
 $result2 = mysqli_query($conn, $phones_sql);
     //output data of each row
     while ($row = mysqli_fetch_assoc($result2)) {
         $contactId = $row["contactId"];
+        $venueId = $row["venueId"];
         $phoneTypeId = $row["phoneTypeId"];
         $phone = $row["phone"];
     }
@@ -60,9 +61,9 @@ $result2 = mysqli_query($conn, $phones_sql);
                                     </select>
                                     </div>
                                     <input type="hidden" name="contactId" value="<?php echo $contactId; ?>">
+                                    <input type="hidden" name="venueId" value="<?php echo $venueId; ?>">
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <div class="m-5">
-                            <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <input type="submit" class="btn btn-primary" value="Submit">
                             <!-- </div> -->
                             <!-- <div class="mt-3 mb-1"> -->

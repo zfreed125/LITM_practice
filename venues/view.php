@@ -93,6 +93,18 @@ $genre_type_array = array();
 while ($row = mysqli_fetch_assoc($genre_types_result)) {
     $genre_type_array[] = array('id' => $row['id'], 'genreType' => $row['genreType']);
 }
+$email_types_sql = "SELECT * FROM email_types;";
+$email_types_result = mysqli_query($conn, $email_types_sql);
+$email_type_array = array();
+while ($row = mysqli_fetch_assoc($email_types_result)) {
+    $email_type_array[] = array('id' => $row['id'], 'emailType' => $row['emailType']);
+}
+$phone_types_sql = "SELECT * FROM phone_types;";
+$phone_types_result = mysqli_query($conn, $phone_types_sql);
+$phone_type_array = array();
+while ($row = mysqli_fetch_assoc($phone_types_result)) {
+    $phone_type_array[] = array('id' => $row['id'], 'phoneType' => $row['phoneType']);
+}
 
 //contacts sql query loop table
 $venues_sql = "SELECT * FROM venues;";
@@ -230,75 +242,150 @@ while ($row = mysqli_fetch_assoc($venues_result))
                             echo "</tbody>";
                             echo "</table>";
                             
-                            //Info sql query loop table
-                            $messaging_services_sql = "SELECT * FROM messaging_services WHERE venueId = '$venues_id';";
-                            $messaging_services_result = mysqli_query($conn, $messaging_services_sql);
-                            $messaging_servicesRowCount = mysqli_num_rows($messaging_services_result);
-                            
-                            echo "<table id='tbl_messaging_services". $venues_id ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
-                            echo "<caption><a href='../messaging_services/add.php?src=venues&venueId=". $venues_id ."' title='Add Messaging Services' data-toggle='tooltip'><span><i class='fas fa-plus'></i>Messaging Services</span></a></caption>";
-                            echo "<a href='#' title='Show/Hide Messaging Services'style='position: relative; left: 50px;' onclick='myFunction(tbl_messaging_services". $venues_id .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Messaging Services (". $messaging_servicesRowCount .")&nbsp</span></a>";
-                            echo "<thead>";
-                            echo "<tr>";
-                            echo "<th>Service Name</th>";
-                            echo "<th>User Account</th>";
-                            echo "<th>Notes</th>";
-                            echo "<th>Created</th>";
-                            echo "</tr>";
-                            echo "</thead>";
-                            echo "<tbody>";
-                            
-                            while ($row = mysqli_fetch_assoc($messaging_services_result))
-                            {
+                                //Info sql query loop table
+                                $messaging_services_sql = "SELECT * FROM messaging_services WHERE venueId = '$venues_id';";
+                                $messaging_services_result = mysqli_query($conn, $messaging_services_sql);
+                                $messaging_servicesRowCount = mysqli_num_rows($messaging_services_result);
+                                
+                                echo "<table id='tbl_messaging_services". $venues_id ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
+                                echo "<caption><a href='../messaging_services/add.php?src=venues&venueId=". $venues_id ."' title='Add Messaging Services' data-toggle='tooltip'><span><i class='fas fa-plus'></i>Messaging Services</span></a></caption>";
+                                echo "<a href='#' title='Show/Hide Messaging Services'style='position: relative; left: 50px;' onclick='myFunction(tbl_messaging_services". $venues_id .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Messaging Services (". $messaging_servicesRowCount .")&nbsp</span></a>";
+                                echo "<thead>";
                                 echo "<tr>";
-                                echo "<td class='fitwidth'>" . "$row[serviceName]" . "</td>";
-                                echo "<td class='fitwidth'>" . "$row[userAccount]" . "</td>";
-                                echo "<td class='fitwidth'>" . "$row[notes]" . "</td>";
-                                echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
-                                echo "<td class='fitwidth'>";
-                                echo "<a href='../messaging_services/edit.php?src=venues&id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
-                                echo "<a href='../messaging_services/delete.php?src=venues&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
-                                echo "</td>";
+                                echo "<th>Service Name</th>";
+                                echo "<th>User Account</th>";
+                                echo "<th>Notes</th>";
+                                echo "<th>Created</th>";
                                 echo "</tr>";
-                                }//end of Info loop
-                                //end of the table from the Info loop
-                                echo "</tbody>";
-                                echo "</table>";
-
-                                    //note sql query loop table
-                                    $note_sql = "SELECT * FROM notes WHERE venueId = '$venues_id';";
-                                    $note_result = mysqli_query($conn, $note_sql);
-                                    $noteRowCount = mysqli_num_rows($note_result);
-
-                                    echo "<table id='tbl_note". $venues_id ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
-                                    echo "<caption><a href='../notes/add.php?venueId=". $venues_id ."' title='Add note' data-toggle='tooltip'><span><i class='fas fa-plus'></i>note</span></a></caption>";
-                                    echo "<a href='#' title='Show/Hide Notes'style='position: relative; left: 50px;' onclick='myFunction(tbl_note". $venues_id .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Notes (". $noteRowCount .")&nbsp</span></a>";
-                                    echo "<thead>";
+                                echo "</thead>";
+                                echo "<tbody>";
+                                
+                                while ($row = mysqli_fetch_assoc($messaging_services_result))
+                                {
                                     echo "<tr>";
-                                    echo "<th>Author</th>";
-                                    echo "<th>Topic</th>";
-                                    echo "<th>Notes</th>";
-                                    echo "<th>Created</th>";
-                                    echo "</tr>";
-                                    echo "</thead>";
-                                    echo "<tbody>";
-
-                                    while ($row = mysqli_fetch_assoc($note_result))
-                                    {
-                                    echo "<tr>";
-                                    echo "<td class='fitwidth'>" . "$row[author]" . "</td>";
-                                    echo "<td class='fitwidth'>" . "$row[topic]" . "</td>";
-                                    echo "<td class='fitwidth'>" . "$row[note]" . "</td>";
+                                    echo "<td class='fitwidth'>" . "$row[serviceName]" . "</td>";
+                                    echo "<td class='fitwidth'>" . "$row[userAccount]" . "</td>";
+                                    echo "<td class='fitwidth'>" . "$row[notes]" . "</td>";
                                     echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                                     echo "<td class='fitwidth'>";
-                                    echo "<a href='../notes/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
-                                    echo "<a href='../notes/delete.php?src=venues&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
+                                    echo "<a href='../messaging_services/edit.php?src=venues&id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
+                                    echo "<a href='../messaging_services/delete.php?src=venues&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
                                     echo "</td>";
                                     echo "</tr>";
-                                    }//end of note loop
-                                    //end of the table from the note loop
+                                    }//end of Info loop
+                                    //end of the table from the Info loop
                                     echo "</tbody>";
                                     echo "</table>";
+
+                                        //note sql query loop table
+                                        $note_sql = "SELECT * FROM notes WHERE venueId = '$venues_id';";
+                                        $note_result = mysqli_query($conn, $note_sql);
+                                        $noteRowCount = mysqli_num_rows($note_result);
+
+                                        echo "<table id='tbl_note". $venues_id ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
+                                        echo "<caption><a href='../notes/add.php?venueId=". $venues_id ."' title='Add note' data-toggle='tooltip'><span><i class='fas fa-plus'></i>note</span></a></caption>";
+                                        echo "<a href='#' title='Show/Hide Notes'style='position: relative; left: 50px;' onclick='myFunction(tbl_note". $venues_id .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Notes (". $noteRowCount .")&nbsp</span></a>";
+                                        echo "<thead>";
+                                        echo "<tr>";
+                                        echo "<th>Author</th>";
+                                        echo "<th>Topic</th>";
+                                        echo "<th>Notes</th>";
+                                        echo "<th>Created</th>";
+                                        echo "</tr>";
+                                        echo "</thead>";
+                                        echo "<tbody>";
+
+                                        while ($row = mysqli_fetch_assoc($note_result))
+                                        {
+                                        echo "<tr>";
+                                        echo "<td class='fitwidth'>" . "$row[author]" . "</td>";
+                                        echo "<td class='fitwidth'>" . "$row[topic]" . "</td>";
+                                        echo "<td class='fitwidth'>" . "$row[note]" . "</td>";
+                                        echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
+                                        echo "<td class='fitwidth'>";
+                                        echo "<a href='../notes/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
+                                        echo "<a href='../notes/delete.php?src=venues&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
+                                        echo "</td>";
+                                        echo "</tr>";
+                                        }//end of note loop
+                                        //end of the table from the note loop
+                                        echo "</tbody>";
+                                        echo "</table>";
+
+                                            //email sql loop table
+                                            $email_sql = "SELECT * FROM emails where venueId = '$venues_id';";
+                                            $email_result = mysqli_query($conn, $email_sql);
+                                            $emailRowCount = mysqli_num_rows($email_result);
+
+                                            echo "<table id='tbl_email". $venues_id ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
+                                            echo "<caption><a href='../emails/add.php?venueId=". $venues_id ."' title='Add Email' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span>Email</a></caption>";
+                                            echo "<a href='#' title='Show/Hide Emails'style='position: relative; left: 50px;' onclick='myFunction(tbl_email". $venues_id .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Emails (". $emailRowCount .")&nbsp</span></a>";
+                                            echo "<thead>";
+                                            echo "<tr>";
+                                            echo "<th>Email</th>";
+                                            echo "<th>Email Type</th>";
+                                            echo "<th>Created</th>";
+                                            echo "</tr>";
+                                            echo "</thead>";
+                                            echo "<tbody>";
+
+                                            while ($row = mysqli_fetch_assoc($email_result))
+                                            {
+                                                foreach($email_type_array as $item){
+                                                    if($item['id'] == $row['emailTypeId']){
+                                                        $emailTypeId = $item['emailType']; 
+                                                        }
+                                                }
+                                            echo "<tr>";
+                                            echo "<td class='fitwidth'>" . "$row[email]" . "</td>";
+                                            echo "<td class='fitwidth'>" . "$emailTypeId" . "</td>";
+                                            echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
+                                            echo "<td class='fitwidth'>";
+                                            echo "<a href='../emails/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
+                                            echo "<a href='../emails/delete.php?src=venues&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
+                                            echo "</td>";
+                                            echo "</tr>";
+                                            }//end of email loop
+                                            //end of the table from the email loop
+                                            echo "</tbody>";
+                                            echo "</table>";
+
+                                                //phone sql loop table
+                                                $phone_sql = "SELECT * FROM phones where venueId = '$venues_id';";
+                                                $phone_result = mysqli_query($conn, $phone_sql);
+                                                $phoneRowCount = mysqli_num_rows($phone_result);
+                                                echo "<table id='tbl_phone". $venues_id ."' style='display: none; position: relative; left: 50px;' class='show table table-bordered table-striped'>";
+                                                echo "<thead>";
+                                                echo "<caption><a href='../phones/add.php?venueId=". $venues_id ."' title='Add Phone' data-toggle='tooltip'><span><i class='fas fa-plus'></i>phone</span></a></caption>";
+                                                echo "<a href='#' title='Show/Hide Phones'style='position: relative; left: 50px;' onclick='myFunction(tbl_phone". $venues_id .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Phones (". $phoneRowCount .")&nbsp</span></a>";
+                                                echo "<tr>";
+                                                echo "<th>Phone</th>";
+                                                echo "<th>Phone Type</th>";
+                                                echo "<th>Created</th>";
+                                                echo "</tr>";
+                                                echo "</thead>";
+                                                echo "<tbody>";
+
+                                                while ($row = mysqli_fetch_assoc($phone_result))
+                                                {
+                                                    foreach($phone_type_array as $item){
+                                                        if($item['id'] == $row['phoneTypeId']){
+                                                            $phoneTypeId = $item['phoneType']; 
+                                                            }
+                                                    }
+                                                echo "<tr>";
+                                                echo "<td class='fitwidth'>" . "$row[phone]" . "</td>";
+                                                echo "<td class='fitwidth'>" . "$phoneTypeId" . "</td>";
+                                                echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
+                                                echo "<td class='fitwidth'>";
+                                                echo "<a href='../phones/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
+                                                echo "<a href='../phones/delete.php?src=venues&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
+                                                echo "</td>";
+                                                echo "</tr>";
+        }//end of phone loop
+        //end of the table from the phone loop
+        echo "</tbody>";
+        echo "</table>";
 
         } //end of contact loop
         //end of the table from the contacts loop

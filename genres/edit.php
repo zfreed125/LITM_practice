@@ -63,7 +63,6 @@ $conn->close();
                                     <input type="hidden" name="venueId" value="<?php echo $venueId; ?>">
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <div class="m-5">
-                            <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <input type="submit" class="btn btn-primary" value="Submit">
                             <!-- </div> -->
                             <!-- <div class="mt-3 mb-1"> -->

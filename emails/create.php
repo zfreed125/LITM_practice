@@ -9,15 +9,23 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$id = $_REQUEST['id'];
 $contactId = $_REQUEST['contactId'];
-// $contactId = 7;
+$venueId = $_REQUEST['venueId'];
 $emailTypeId = $_REQUEST['emailTypeId'];
 $email = mysqli_real_escape_string($conn, $_REQUEST['email']);
-$email_sql = "INSERT INTO emails (contactId, emailTypeId, email) VALUES ('$contactId', '$emailTypeId', '$email')";
+
+if (empty($venueId)){
+    $email_sql = "INSERT INTO emails (contactId, emailTypeId, email) VALUES ('$contactId', '$emailTypeId', '$email')";
+    $dst = "contacts";
+}else{
+    $email_sql = "INSERT INTO emails (venueId, emailTypeId, email) VALUES ('$venueId', '$emailTypeId', '$email')";
+    $dst = "venues";
+    
+}
+
 if(mysqli_query($conn, $email_sql)){
     // $emailId = mysqli_insert_id($conn); 
-    header("location: ../contacts/view.php");
+    header("location: ../$dst/view.php");
 } else{
     echo "ERROR: Not able to execute $email_sql. " . mysqli_error($conn);
 }

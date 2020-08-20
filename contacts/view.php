@@ -139,7 +139,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
             $phoneRowCount = mysqli_num_rows($phone_result);
             echo "<table id='tbl_phone". $contactId ."' style='display: none; position: relative; left: 50px;' class='show table table-bordered table-striped'>";
             echo "<thead>";
-            echo "<caption><a href='../phones/add.php?id=". $row['id'] ."' title='Add Phone' data-toggle='tooltip'><span><i class='fas fa-plus'></i>phone</span></a></caption>";
+            echo "<caption><a href='../phones/add.php?contactId=". $row['id'] ."' title='Add Phone' data-toggle='tooltip'><span><i class='fas fa-plus'></i>phone</span></a></caption>";
             echo "<a href='#' title='Show/Hide Phones'style='position: relative; left: 50px;' onclick='myFunction(tbl_phone". $contactId .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Phones (". $phoneRowCount .")&nbsp</span></a>";
             echo "<tr>";
             echo "<th>Phone</th>";
@@ -163,7 +163,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
             echo "<td class='fitwidth'>";
             echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
             echo "<a href='../phones/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
-            echo "<a href='../phones/delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
+            echo "<a href='../phones/delete.php?src=contacts&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
             echo "</td>";
             echo "</tr>";
         }//end of phone loop
@@ -251,7 +251,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                         $emailRowCount = mysqli_num_rows($email_result);
 
                         echo "<table id='tbl_email". $contactId ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
-                        echo "<caption><a href='../emails/add.php?id=". $contactId ."' title='Add Email' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span>Email</a></caption>";
+                        echo "<caption><a href='../emails/add.php?contactId=". $contactId ."' title='Add Email' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span>Email</a></caption>";
                         echo "<a href='#' title='Show/Hide Emails'style='position: relative; left: 50px;' onclick='myFunction(tbl_email". $contactId .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Emails (". $emailRowCount .")&nbsp</span></a>";
                         echo "<thead>";
                         echo "<tr>";
@@ -276,7 +276,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                         echo "<td class='fitwidth'>";
                         echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
                         echo "<a href='../emails/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
-                        echo "<a href='../emails/delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
+                        echo "<a href='../emails/delete.php?src=contacts&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
                         echo "</td>";
                         echo "</tr>";
                         }//end of email loop

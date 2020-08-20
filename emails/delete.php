@@ -6,10 +6,11 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-$id = mysqli_real_escape_string($conn, $_REQUEST['id']);
+$id = $_REQUEST['id'];
+$dst = $_REQUEST['src'];
 $sql = "DELETE from emails where id='$id';";
 if(mysqli_query($conn, $sql)){
-    header("location: ../contacts/view.php");
+    header("location: ../$dst/view.php");
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($link);
 }
