@@ -8,7 +8,6 @@ if ($conn->connect_error) {
 }
 
 $id = $_REQUEST['id'];
-$dst = $_REQUEST['src'];
 $contactId = $_REQUEST['contactId'];
 $venueId = $_REQUEST['venueId'];
 $genreTypeId = $_REQUEST['genreTypeId'];

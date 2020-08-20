@@ -10,15 +10,15 @@ if ($conn->connect_error) {
 
 $id = $_GET["id"];
 //attempt insert query execution
-$note_sql = "select id, contactId, author, topic, created, note from notes where id='$id';";
+$note_sql = "select id, contactId, venueId, author, topic, created, note from notes where id='$id';";
 $result2 = mysqli_query($conn, $note_sql);
     //output data of each row
     while ($row = mysqli_fetch_assoc($result2)) {
         $contactId = $row["contactId"];
+        $venueId = $row["venueId"];
         $author = $row["author"];
         $topic = $row["topic"];
         $created = $row["created"];
-        // $modified = $row["modified"];
         $note = $row["note"];
     }
 $conn->close();
@@ -63,6 +63,7 @@ $conn->close();
                                     </textarea>
                                     </div>
                                     <input type="hidden" name="contactId" value="<?php echo $contactId; ?>">
+                                    <input type="hidden" name="venueId" value="<?php echo $venueId; ?>">
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <div class="m-5">
                             <input type="hidden" name="id" value="<?php echo $id; ?>">

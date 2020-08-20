@@ -14,7 +14,6 @@ $genre_type_array = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $genre_type_array[] = array('id' => $row['id'], 'genreType' => $row['genreType']);
 }
-$src = $_REQUEST['src'];
 $contactId = $_REQUEST['contactId'];
 $venueId = $_REQUEST['venueId'];
 ?>
@@ -47,7 +46,6 @@ $venueId = $_REQUEST['venueId'];
         </select>
         <input hidden id="contactId" style="width: 2.5em;" type="text" name="contactId" value="<?php echo $contactId; ?>">
         <input hidden id="venueId" style="width: 2.5em;" type="text" name="venueId" value="<?php echo $venueId; ?>">
-        <input hidden type="text" name="src" value="<?php echo $src; ?>">
 
         <br>
         <br>

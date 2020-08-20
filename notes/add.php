@@ -8,7 +8,8 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$contactId = $_REQUEST['id'];
+$contactId = $_REQUEST['contactId'];
+$venueId = $_REQUEST['venueId'];
 ?>
 
 <!DOCTYPE html>
@@ -38,6 +39,7 @@ $contactId = $_REQUEST['id'];
         <textarea name="note" id="note" rows="4" cols="50">
         </textarea>
         <input hidden id="contactId" style="width: 2.5em;" type="text" name="contactId" value="<?php echo $contactId; ?>">
+        <input hidden id="venueId" style="width: 2.5em;" type="text" name="venueId" value="<?php echo $venueId; ?>">
         <br>
         <br>
         <button type="submit" name="submit">Submit</button>

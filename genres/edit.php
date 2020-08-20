@@ -15,7 +15,6 @@ while ($row = mysqli_fetch_assoc($result1)) {
 }
 
 $id = $_GET["id"];
-$src = $_GET["src"];
 //attempt insert query execution
 $genres_sql = "select id, contactId, venueId, genreTypeId from genres where id='$id';";
 $result2 = mysqli_query($conn, $genres_sql);
@@ -63,7 +62,6 @@ $conn->close();
                                     <input type="hidden" name="contactId" value="<?php echo $contactId; ?>">
                                     <input type="hidden" name="venueId" value="<?php echo $venueId; ?>">
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">
-                                    <input type="hidden" name="src" value="<?php echo $src; ?>">
                             <div class="m-5">
                             <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <input type="submit" class="btn btn-primary" value="Submit">

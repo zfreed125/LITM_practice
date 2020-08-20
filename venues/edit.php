@@ -92,7 +92,7 @@ $venues_result = mysqli_query($conn, $venues_sql);
                               
                             <div class="form-group">
                                 <label>Venue Name</label>
-                                <label type="text" name="venueName" class="form-control"><?php echo $venueName; ?></label>
+                                <input type="text" name="venueName" class="form-control"><?php echo $venueName; ?>
                             </div>
                             <div class="form-group">
                                 <select name="venueTypeId">
