@@ -51,6 +51,9 @@ $venues_result = mysqli_query($conn, $venues_sql);
 
  
     $conn->close();
+    // $start = strtotime(str_replace('-','/',$venueDateStart));
+    $start = date("m/d/Y H:i:s", $venueDateStart);
+    echo $start;
 ?>
 <!-- // HTML Form -->
 <!DOCTYPE html>
@@ -58,8 +61,14 @@ $venues_result = mysqli_query($conn, $venues_sql);
 <html lang="en">
             <head>
                 <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Update Record</title>
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
             <style type="text/css">
                 .wrapper{
                         width: 500px;
@@ -77,7 +86,21 @@ $venues_result = mysqli_query($conn, $venues_sql);
                         document.getElementById("active").checked = false;
                     }
 
+                Number.prototype.AddZero= function(b,c){
+                    var  l= (String(b|| 10).length - String(this).length)+1;
+                    return l> 0? new Array(l).join(c|| '0')+this : this;
+                }//to add zero to less than 10,
 
+
+                var d = new Date(),
+                localDateTime= [(d.getMonth()+1).AddZero(),
+                    d.getDate().AddZero(),
+                    d.getFullYear()].join('/') +', ' +
+                    [d.getHours().AddZero(),
+                    d.getMinutes().AddZero(),
+                    d.getSeconds().AddZero()].join(':');
+                var elem=document.getElementById("startTime"); 
+                elem.value = localDateTime;
 
 
                 });
@@ -92,7 +115,7 @@ $venues_result = mysqli_query($conn, $venues_sql);
                               
                             <div class="form-group">
                                 <label>Venue Name</label>
-                                <input type="text" name="venueName" class="form-control"><?php echo $venueName; ?>
+                                <input type="text" name="venueName" class="form-control" value="<?php echo $venueName; ?>">
                             </div>
                             <div class="form-group">
                                 <select name="venueTypeId">
@@ -126,11 +149,12 @@ $venues_result = mysqli_query($conn, $venues_sql);
                             </div>
                             <div class="form-group">
                                 <label>Start Date/Time</label>
-                                <input type="datetime" name="venueDateStart" class="form-control" value="<?php echo $venueDateStart; ?>">
+                                <!-- <input id="startTime" type="datetime-local" name="venueDateStart" class="form-control" value="<?php //echo $venueDateStart; ?>"> -->
+                                <input id="startTime" type="datetime-local" name="venueDateStart" class="form-control" value="">
                             </div>
                             <div class="form-group">
                                 <label>End Date/Time</label>
-                                <input type="datetime" name="venueDateEnd" class="form-control" value="<?php echo $venueDateEnd; ?>">
+                                <input type="datetime-local" name="venueDateEnd" class="form-control" value="<?php echo $venueDateEnd; ?>">
                             </div>
                             <div class="form-group">
                                 <label>Show Length</label>

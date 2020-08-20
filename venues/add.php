@@ -32,9 +32,16 @@ while ($row = mysqli_fetch_assoc($venueType_result)) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
     <title>LITM Media Masterbase</title>
 
 </head>
@@ -74,10 +81,10 @@ while ($row = mysqli_fetch_assoc($venueType_result)) {
         </select>  
         <br>
         <br>
-        <input type="datetime" name="venueDateStart" placeholder="Start Date/Time">
+        <input type="datetime-local" name="venueDateStart" placeholder="Start Date/Time">
         <br>
         <br>
-        <input type="datetime" name="venueDateEnd" placeholder="End Date/Time">
+        <input type="datetime-local" name="venueDateEnd" placeholder="End Date/Time">
         <br>
         <br>
         <input type="number" name="showLength" placeholder="Show Length Minutes">
