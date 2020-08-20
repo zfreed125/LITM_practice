@@ -22,32 +22,34 @@ $contactId = $_REQUEST['id'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Account Register</title>
 </head>
 
 <style>
-    .center {
-        text-align: center;
-        background-color: violet;
+    .wrapper{
+    width: 500px;
+    margin: 0 auto;
     }
 </style>
 
 <body>
-
-    <h1 class="center">Add an Account</h1>
-    <form class="center" action="create.php" method="POST">
-        <!-- <input type="text" name="account" placeholder="Account"> -->
-        <select name="accountTypeId">
-            <option selected="selected">Choose one</option>
-                <?php foreach($account_type_array as $item){ ?>
-            <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['accountType']; ?></option>
-                <?php } ?>
-        </select>
-        <input hidden id="contactId" style="width: 2.5em;" type="text" name="contactId" value="<?php echo $contactId; ?>">
-        <br>
-        <br>
-        <button type="submit" name="submit">Submit</button>
-    </form>
+    <div class="wrapper">
+        <h1>Add an Account</h1>
+        <form action="create.php" method="POST">
+            <div class="input-group">
+            <div class="input-group-prepend"><select name="accountTypeId"></div>
+                    <option selected="selected">Choose one</option>
+                        <?php foreach($account_type_array as $item){ ?>
+                    <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['accountType']; ?></option>
+                        <?php } ?>
+                </select>
+            </div>
+            <input hidden id="contactId" style="width: 2.5em;" type="text" name="contactId" value="<?php echo $contactId; ?>">
+            <br>
+            <input class="btn btn-primary" type="submit" name="submit" value="Submit">
+        </form>
+    </div>
     
 </body>
 </html>

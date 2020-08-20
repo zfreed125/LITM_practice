@@ -45,28 +45,22 @@ $conn->close();
             <h2>Update Genre</h2>
                 <p>Please edit the input values and submit to update the record.</p>
                     <form action="update.php" method="POST">
-                                    <!-- <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
-                                        <div class="input-group-prepend"><span class="input-group-text">Genre</span></div>
-                                        <input type="text" name="genre" class="form-control" value="<?php echo $genre; ?>">
-                                    </div> -->
                                     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
-                                    <select class="form-control" name="genreTypeId">
-                                        <option selected="selected">Choose one</option>
-                                            <?php foreach($genre_type_array as $item){ ?>
-                                        <option value="<?php echo strtolower($item['id']); ?>"
-                                            <?php if($item['id'] == $genreTypeId){ echo "selected"; } ?> >
-                                        <?php echo $item['genreType']; ?></option>
-                                            <?php } ?>
-                                    </select>
+                                        <select class="form-control" name="genreTypeId">
+                                            <option selected="selected">Choose one</option>
+                                                <?php foreach($genre_type_array as $item){ ?>
+                                            <option value="<?php echo strtolower($item['id']); ?>"
+                                                <?php if($item['id'] == $genreTypeId){ echo "selected"; } ?> >
+                                            <?php echo $item['genreType']; ?></option>
+                                                <?php } ?>
+                                        </select>
                                     </div>
                                     <input type="hidden" name="contactId" value="<?php echo $contactId; ?>">
                                     <input type="hidden" name="venueId" value="<?php echo $venueId; ?>">
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <div class="m-5">
-                            <input type="submit" class="btn btn-primary" value="Submit">
-                            <!-- </div> -->
-                            <!-- <div class="mt-3 mb-1"> -->
-                            <a class="btn btn-danger" href="delete.php?id=<?php echo $id;?>">Delete</a>
+                                <input type="submit" class="btn btn-primary" value="Submit">
+                                <a class="btn btn-danger" href="delete.php?id=<?php echo $id;?>">Delete</a>
                             </div>
                     </form>
         </div>

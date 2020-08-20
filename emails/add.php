@@ -23,34 +23,38 @@ $venueId = $_REQUEST['venueId'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Email Register</title>
 </head>
 
 <style>
-    .center {
-        text-align: center;
-        background-color: violet;
+    .wrapper{
+    width: 500px;
+    margin: 0 auto;
     }
 </style>
 
 <body>
-
-    <h1 class="center">Add an Email</h1>
-    <form class="center" action="create.php" method="POST">
-        <input type="text" name="email" placeholder="Email">
-        <select name="emailTypeId">
-            <option selected="selected">Choose one</option>
-                <?php foreach($email_type_array as $item){ ?>
-            <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['emailType']; ?></option>
-                <?php } ?>
-        </select>
-        <input hidden id="contactId" style="width: 2.5em;" type="text" name="contactId" value="<?php echo $contactId; ?>">
-        <input hidden id="venueId" style="width: 2.5em;" type="text" name="venueId" value="<?php echo $venueId; ?>">
-        <br>
-        <br>
-        <button type="submit" name="submit">Submit</button>
-    </form>
-    
+    <div class="wrapper">
+        <h1>Add an Email</h1>
+        <form action="create.php" method="POST">
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                <div class="input-group-prepend"><span class="input-group-text">Email</span></div>
+                <input class="form-control" type="text" name="email">
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend"><select name="emailTypeId"></div>
+                        <option selected="selected">Choose one</option>
+                            <?php foreach($email_type_array as $item){ ?>
+                        <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['emailType']; ?></option>
+                            <?php } ?>
+                    </select>
+            </div>
+                <input hidden id="contactId" style="width: 2.5em;" type="text" name="contactId" value="<?php echo $contactId; ?>">
+                <input hidden id="venueId" style="width: 2.5em;" type="text" name="venueId" value="<?php echo $venueId; ?>">
+                <br>
+                <input class="btn btn-primary" type="submit" name="submit" value="Submit">
+    </div>
 </body>
 </html>
 

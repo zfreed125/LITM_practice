@@ -17,9 +17,9 @@ $src = $_REQUEST['src'];
 
 </head>
 <style>
-    .center {
-        text-align: center;
-        background-color: violet;
+    .wrapper{
+    width: 500px;
+    margin: 0 auto;
     }
 </style>
 <script>
@@ -46,25 +46,45 @@ $src = $_REQUEST['src'];
         });
     </script>
 <body>
-    <h1 class="center">Add an Address</h1>
-    <form class="center" action="create.php" method="POST">
-        <input type="text" name="street1" placeholder="Street #1">
-        <input type="text" name="street2" placeholder="Street #2"><br><br>
-        <input type="text" name="city" placeholder="City">
-        <input autocomplete="off" name="shortState" id="shortState" style="display: none;"> </input>
-        <select name="shortStateSelect" id="shortStateSelect" onchange="updateShortState(event)"></select>
-        <br><br>
-        <input style="width: 3em;" type="text" name="zip1" placeholder="Zip #1">-
-        
-       <input hidden style="width: 2.5em;" type="text" name="contactId" value="<?php echo $contactId;?>">
-       <input hidden style="width: 2.5em;" type="text" name="venueId" value="<?php echo $venueId;?>">
-       <input hidden style="width: 2.5em;" type="text" name="src" value="<?php echo $src;?>">
-        <br>
-        <br>
-       <input type="text" name="country" placeholder="Country">
-        <br>
-        <br>
-         <button type="submit" name="submit">Submit</button>
-    </form>
+    <div class="wrapper">
+        <h1>Add an Address</h1>
+        <form action="create.php" method="POST">
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                <div class="input-group-prepend"><span class="input-group-text">Street 1</span></div>
+                <input class="form-control" type="text" name="street1">
+            </div>
+
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                <div class="input-group-prepend"><span class="input-group-text">Street 2</span></div>
+                <input class="form-control" type="text" name="street2">
+            </div>
+
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                <div class="input-group-prepend"><span class="input-group-text">City</span></div>
+                <input class="form-control" type="text" name="city">
+            </div>
+
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                <div class="input-group-prepend"><span class="input-group-text">State</span></div>
+                <input class="form-control" autocomplete="off" name="shortState" id="shortState" style="display: none;"> </input>
+                <select name="shortStateSelect" id="shortStateSelect" onchange="updateShortState(event)"></select>
+            </div>   
+                
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                <div class="input-group-prepend"><span class="input-group-text">Zip Code</span></div>    
+                <input class="form-control" type="text" name="zip1">
+            </div>
+
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                <div class="input-group-prepend"><span class="input-group-text">Country</span></div>
+                <input class="form-control" type="text" name="country">
+            </div>    
+                <input hidden style="width: 2.5em;" type="text" name="contactId" value="<?php echo $contactId;?>">
+                <input hidden style="width: 2.5em;" type="text" name="venueId" value="<?php echo $venueId;?>">
+                <input hidden style="width: 2.5em;" type="text" name="src" value="<?php echo $src;?>">
+            
+                <input class="btn btn-primary" type="submit" name="submit" value="Submit">
+        </form>
+    </div>
 </body>
 </html>

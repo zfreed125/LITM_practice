@@ -53,10 +53,9 @@ $result = mysqli_query($conn, $sql);
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
             <style type="text/css">
                 .wrapper{
-                        width: 500px;
-                    margin: 0 auto;
+                width: 500px;
+                margin: 0 auto;
                 }
-
             </style>
             <script>
                 window.addEventListener('load', (event) => {
@@ -109,7 +108,6 @@ $result = mysqli_query($conn, $sql);
                                 <input type="submit" class="btn btn-primary" value="Submit">
                                 <br>
                                 <br>
-                                <!-- <input type="submit" class="btn btn-danger" value="Delete"> -->
                                 <a class="btn btn-danger" href="delete.php?id=<?php echo $id;?>">Delete</a>
                                 <br>
                                 <br>

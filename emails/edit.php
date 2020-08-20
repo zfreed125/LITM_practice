@@ -36,8 +36,8 @@ $conn->close();
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
        <style type="text/css">
             .wrapper{
-                    width: 500px;
-                margin: 0 auto;
+            width: 500px;
+            margin: 0 auto;
             }
         </style>
     </head> 
@@ -65,8 +65,6 @@ $conn->close();
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <div class="m-5">
                             <input type="submit" class="btn btn-primary" value="Submit">
-                            <!-- </div> -->
-                            <!-- <div class="mt-3 mb-1"> -->
                             <a class="btn btn-danger" href="delete.php?id=<?php echo $id;?>">Delete</a>
                             </div>
                     </form>
