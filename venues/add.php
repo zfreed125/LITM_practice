@@ -24,7 +24,7 @@ while ($row = mysqli_fetch_assoc($venueType_result)) {
 }
 ?>
 
-
+<!-- https://stackoverflow.com/questions/2086313/store-am-pm-time-string-into-time-datatype-in-mysql-and-retrieve-with-am-pm-whil -->
 
 
 
@@ -46,56 +46,86 @@ while ($row = mysqli_fetch_assoc($venueType_result)) {
 
 </head>
 <style>
-    .center {
-        text-align: center;
-        background-color: violet;
+    .wrapper{
+            width: 500px;
+        margin: 0 auto;
     }
 </style>
 <body>
+<div class="wrapper">
     <h1 class="center">Create a Venue</h1>
     <form class="center" action="create.php" method="POST">
-        <input type="text" name="venueName" placeholder="Venue Name">
-        <br>
-        <br>
-        <select name="venueTypeId">
-            <option selected="selected">Select Venue Type</option>
-                <?php foreach($venueType_array as $item){ ?>
-            <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['venueType']; ?></option>
-                <?php } ?>
-        </select>  
-        <br>
-        <br>
-        <select name="contactNameId">
-            <option selected="selected">Select Contact</option>
-                <?php foreach($contacts_array as $item){ ?>
-            <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['fullname']; ?></option>
-                <?php } ?>
-        </select>        
-        <br>
-        <br>
-        <select name="hostNameId">
-            <option selected="selected">Select Host</option>
-                <?php foreach($contacts_array as $item){ ?>
-            <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['fullname']; ?></option>
-                <?php } ?>
-        </select>  
-        <br>
-        <br>
-        <input type="datetime-local" name="venueDateStart" placeholder="Start Date/Time">
-        <br>
-        <br>
-        <input type="datetime-local" name="venueDateEnd" placeholder="End Date/Time">
-        <br>
-        <br>
+        <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+            <div class="input-group-prepend"><span class="input-group-text">Venue Name</span></div>
+            <input type="text" name="venueName" placeholder="">
+        </div>
+
+        <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+            <div class="input-group-prepend"><span class="input-group-text">Venue Type</span></div>
+            <select name="venueTypeId">
+                <option selected="selected">Select Venue Type</option>
+                    <?php foreach($venueType_array as $item){ ?>
+                <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['venueType']; ?></option>
+                    <?php } ?>
+            </select>  
+        </div>
+
+        <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+            <div class="input-group-prepend"><span class="input-group-text">Venue Contact</span></div>
+            <select name="contactNameId">
+                <option selected="selected">Select Contact</option>
+                    <?php foreach($contacts_array as $item){ ?>
+                <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['fullname']; ?></option>
+                    <?php } ?>
+            </select>   
+        </div>
+
+        <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+            <div class="input-group-prepend"><span class="input-group-text">Venue Host</span></div>
+            <select name="hostNameId">
+                <option selected="selected">Select Host</option>
+                    <?php foreach($contacts_array as $item){ ?>
+                <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['fullname']; ?></option>
+                    <?php } ?>
+            </select>  
+        </div>
+        <div class="input-group mt-3 mb-1 input-group-sm p-1 w-100">
+         <div class="input-group">
+            <div class="input-group-prepend"><span class="input-group-text">Start Date</span></div>
+            <input type="date" name="venueDateStart" class="form-control" placeholder="">
+            <div class="input-group-prepend"><span class="input-group-text">Start Time</span></div>
+            <input type="time" name="venueTimeStart" class="form-control" placeholder="">
+        </div>
+        <span class="input-group-addon">&nbsp</span>
+        <div class="input-group">
+            <div class="input-group-prepend"><span class="input-group-text">End Date</span></div>
+            <input type="date" name="venueDateEnd" class="form-control" placeholder="">
+            <div class="input-group-prepend"><span class="input-group-text">End Time</span></div>
+            <input type="time" name="venueTimeEnd" class="form-control" placeholder="">
+        </div>
+        </div>
+
+
+
+        <div class="input-group">
+        <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+            <div class="input-group-prepend"><span class="input-group-text">Show Length Minutes</span></div>
         <input type="number" name="showLength" placeholder="Show Length Minutes">
-        <br>
-        <br>
-        <input type="checkbox" id="active" name="active" value="active">
-        <label for="active">Active</label>
-        <br>
-        <br>
-         <button type="submit" name="submit">Submit</button>
+        </div>
+        </div>
+        <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+        <div class="input-group">
+            <div class="input-group-prepend"><span class="input-group-text">Active</span></div>
+        <input class="form-control" type="checkbox" id="active" name="active" value="active">
+        <!-- <label for="active">Active</label> -->
+        </div>
+        </div>
+        <!-- <div class="m-5"> -->
+        <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+         <button class="btn btn-primary" type="submit" name="submit">Submit</button>
+        </div>
 
     </form>
+</div>
 </body>
 </html>

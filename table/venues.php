@@ -21,7 +21,9 @@ $sql1 = "CREATE TABLE venues (
     contactNameId INT(6) NULL,
     hostNameId INT(6) NULL,
     venueDateStart DATETIME NULL,
+    venueTimeStart TIME NULL,
     venueDateEnd DATETIME NULL,
+    venueTimeEnd TIME NULL,
     showLength INT(8) NULL,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP     
     )";

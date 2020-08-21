@@ -120,8 +120,8 @@ while ($row = mysqli_fetch_assoc($venues_result))
     echo "<th>Contact Name</th>";
     echo "<th>Host Name</th>";
     echo "<th>Show Length</th>";
-    echo "<th>Start Date</th>";
-    echo "<th>End Date</th>";
+    echo "<th>Start Date/Time</th>";
+    echo "<th>End Date/Time</th>";
     echo "<th>Active</th>";
     echo "<th>Created</th>";
     echo "</tr>";
@@ -143,15 +143,16 @@ while ($row = mysqli_fetch_assoc($venues_result))
                 $venueType = $item['venueType'];
             }
         }
-
-
+        $StartDate = date("m-d-Y",strtotime($row['venueDateStart']));
+        $EndDate = date("m-d-Y",strtotime($row['venueDateEnd']));
+        
         echo "<td class='fitwidth'>" . "$row[venueName]" . "</td>";
         echo "<td class='fitwidth'>" . $venueType . "</td>";
         echo "<td class='fitwidth'>" . $contactFullname . "</td>";
         echo "<td class='fitwidth'>" . $hostFullname . "</td>";
+        echo "<td class='fitwidth'>" . "$StartDate" . " " . "$row[venueTimeStart]" . "</td>";
+        echo "<td class='fitwidth'>" . "$EndDate" . " " .  "$row[venueTimeEnd]" ."</td>";
         echo "<td class='fitwidth'>" . "$row[showLength]" . " Mins</td>";
-        echo "<td class='fitwidth'>" . "$row[venueDateStart]" . "</td>";
-        echo "<td class='fitwidth'>" . "$row[venueDateEnd]" . "</td>";
         echo "<td class='fitwidth'>" . "$row[active]" . "</td>";
         echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
         echo "<td class='fitwidth'>";

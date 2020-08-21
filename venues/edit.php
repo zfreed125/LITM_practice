@@ -44,16 +44,15 @@ $venues_result = mysqli_query($conn, $venues_sql);
         $venueTypeId = $row["venueTypeId"];
         $contactNameId = $row["contactNameId"];
         $hostNameId = $row["hostNameId"];
-        $venueDateStart = $row["venueDateStart"];
-        $venueDateEnd = $row['venueDateEnd'];
+        $venueDateStart = strtotime($row["venueDateStart"]);
+        $venueTimeStart = $row["venueTimeStart"];
+        $venueDateEnd = strtotime($row['venueDateEnd']);
+        $venueTimeEnd = $row['venueTimeEnd'];
         $showLength = $row['showLength'];
     }
 
  
     $conn->close();
-    // $start = strtotime(str_replace('-','/',$venueDateStart));
-    $start = date("m/d/Y H:i:s", $venueDateStart);
-    echo $start;
 ?>
 <!-- // HTML Form -->
 <!DOCTYPE html>
@@ -86,21 +85,6 @@ $venues_result = mysqli_query($conn, $venues_sql);
                         document.getElementById("active").checked = false;
                     }
 
-                Number.prototype.AddZero= function(b,c){
-                    var  l= (String(b|| 10).length - String(this).length)+1;
-                    return l> 0? new Array(l).join(c|| '0')+this : this;
-                }//to add zero to less than 10,
-
-
-                var d = new Date(),
-                localDateTime= [(d.getMonth()+1).AddZero(),
-                    d.getDate().AddZero(),
-                    d.getFullYear()].join('/') +', ' +
-                    [d.getHours().AddZero(),
-                    d.getMinutes().AddZero(),
-                    d.getSeconds().AddZero()].join(':');
-                var elem=document.getElementById("startTime"); 
-                elem.value = localDateTime;
 
 
                 });
@@ -147,14 +131,18 @@ $venues_result = mysqli_query($conn, $venues_sql);
                                         <?php } ?>
                                 </select> 
                             </div>
-                            <div class="form-group">
-                                <label>Start Date/Time</label>
-                                <!-- <input id="startTime" type="datetime-local" name="venueDateStart" class="form-control" value="<?php //echo $venueDateStart; ?>"> -->
-                                <input id="startTime" type="datetime-local" name="venueDateStart" class="form-control" value="">
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">Start Date</span></div>
+                                <input type="date" name="venueDateStart" class="form-control" value="<?php echo date("Y-m-d",$venueDateStart); ?>">
+                                <div class="input-group-prepend"><span class="input-group-text">Start Time</span></div>
+                                <input type="time" name="venueTimeStart" class="form-control" value="<?php echo $venueTimeStart; ?>">
                             </div>
-                            <div class="form-group">
-                                <label>End Date/Time</label>
-                                <input type="datetime-local" name="venueDateEnd" class="form-control" value="<?php echo $venueDateEnd; ?>">
+                            <span class="input-group-addon">&nbsp</span>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">End Date</span></div>
+                                <input type="date" name="venueDateEnd" class="form-control" value="<?php echo date("Y-m-d",$venueDateEnd); ?>">
+                                <div class="input-group-prepend"><span class="input-group-text">End Time</span></div>
+                                <input type="time" name="venueTimeEnd" class="form-control" value="<?php echo $venueTimeEnd; ?>">
                             </div>
                             <div class="form-group">
                                 <label>Show Length</label>
