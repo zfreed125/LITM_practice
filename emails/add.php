@@ -55,6 +55,7 @@ $venueId = $_REQUEST['venueId'];
                 <br>
                 <input class="btn btn-primary" type="submit" name="submit" value="Submit">
     </div>
+     </form>
 </body>
 </html>
 

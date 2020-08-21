@@ -51,7 +51,8 @@ $conn->close();
                                         <input type="text" name="userAccount" class="form-control" value="<?php echo $userAccount; ?>">
                                     </div>
                                     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
-                                    <textarea name="notes" id="notes" rows="4" cols="50"><?php echo $notes; ?></textarea>
+                                        <div class="input-group-prepend"><span class="input-group-text">Service Notes</span></div>
+                                    <textarea class="form-control" name="notes" id="notes" rows="4" cols="50"><?php echo $notes; ?></textarea>
                                     </div>
                                     <input type="hidden" name="contactId" value="<?php echo $contactId; ?>">
                                     <input type="hidden" name="venueId" value="<?php echo $venueId; ?>">
@@ -59,7 +60,6 @@ $conn->close();
                                     <input type="hidden" name="src" value="<?php echo $src; ?>">
 
                             <div class="m-5">
-                            <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <input type="submit" class="btn btn-primary" value="Submit">
                             <!-- </div> -->
                             <!-- <div class="mt-3 mb-1"> -->

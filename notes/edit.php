@@ -54,20 +54,16 @@ $conn->close();
                                         <div class="input-group-prepend"><span class="input-group-text">Created</span></div>
                                         <input disabled type="date" name="created" class="form-control" value="<?php echo $created; ?>">
                                     </div>
-                                    <!-- <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
-                                        <div class="input-group-prepend"><span class="input-group-text">Modified</span></div>
-                                        <input type="text" name="modified" class="form-control" >
-                                    </div> -->
                                     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
-                                    <textarea name="note" id="note" rows="4" cols="50"><?php echo $note; ?>
-                                    </textarea>
+                                        <div class="input-group-prepend"><span class="input-group-text">Note</span></div>
+                                        <textarea class="form-control" name="note" id="note" rows="4" cols="50"><?php echo $note; ?></textarea>
                                     </div>
                                     <input type="hidden" name="contactId" value="<?php echo $contactId; ?>">
                                     <input type="hidden" name="venueId" value="<?php echo $venueId; ?>">
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <div class="m-5">
                             <input type="hidden" name="id" value="<?php echo $id; ?>">
-                            <input type="submit" class="btn btn-primary" value="Submit">
+                            <input  class="btn btn-primary" type="submit" class="btn btn-primary" value="Submit">
                             <!-- </div> -->
                             <!-- <div class="mt-3 mb-1"> -->
                             <a class="btn btn-danger" href="delete.php?id=<?php echo $id;?>">Delete</a>

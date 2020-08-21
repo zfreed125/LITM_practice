@@ -65,8 +65,6 @@ $result2 = mysqli_query($conn, $phones_sql);
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <div class="m-5">
                             <input type="submit" class="btn btn-primary" value="Submit">
-                            <!-- </div> -->
-                            <!-- <div class="mt-3 mb-1"> -->
                             <a class="btn btn-danger" href="delete.php?id=<?php echo $id;?>">Delete</a>
                             </div>
                     </form>
