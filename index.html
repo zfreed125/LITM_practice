@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LITM Main Dashboard</title>
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 160px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+
+        .sidenav a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        .main {
+            margin-left: 160px;
+            /* Same as the width of the sidenav */
+            font-size: 28px;
+            /* Increased text to enable scrolling */
+            padding: 0px 10px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+
+        .hide {
+            /* visibility: hidden; */
+            /* background-color: cyan; */
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+    <script type="text/javascript">
+        function toggle_visibility(id) {
+            var e = document.getElementById(id);
+            if (e.style.display == 'block')
+                e.style.display = 'none';
+            else
+                e.style.display = 'block';
+        }
+        window.addEventListener('load', function () {
+
+
+            console.log('All assets are loaded')
+        })
+    </script>
+</head>
+
+<body>
+
+    <div class="sidenav">
+        <a href="#types" onclick="toggle_visibility('types');">Types</a>
+        <a href="contacts/view.php">Contacts</a>
+        <a href="venues/view.php">Venues</a>
+        <a href="#tables" onclick="toggle_visibility('tables');">Tables</a>
+    </div>
+
+    <div id="types" class="main hide">
+        <h2>View Types</h2>
+        <a href="account_types/view.php">account_types</a><br>
+        <a href="email_types/view.php">email_types</a><br>
+        <a href="genre_types/view.php">genre_types</a><br>
+        <a href="phone_types/view.php">phone_types</a><br>
+        <a href="venue_types/view.php">venue_types</a><br>
+    </div>
+    <div id="tables" class="main hide">
+        <h2>Tables to Create</h2>
+        <a href="table/accounts.php">accounts</a><br>
+        <a href="table/account_types.php">account_types</a><br>
+        <a href="table/addresses.php">addresses</a><br>
+        <a href="table/contacts.php">contacts</a><br>
+        <a href="table/emails.php">emails</a><br>
+        <a href="table/email_types.php">email_types</a><br>
+        <a href="table/genres.php">genres</a><br>
+        <a href="table/genre_types.php">genre_types</a><br>
+        <a href="table/messaging_services.php">messaging_services</a><br>
+        <a href="table/notes.php">notes</a><br>
+        <a href="table/phones.php">phones</a><br>
+        <a href="table/phone_types.php">phone_types</a><br>
+        <a href="table/venues.php">venues</a><br>
+        <a href="table/venue_types.php">venue_types</a><br>
+    </div>
+
+</body>
+
+</html>
