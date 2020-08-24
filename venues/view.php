@@ -9,6 +9,7 @@
         <link rel="shortcut icon" href="../favicon.ico">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="../tz.js"></script>
         <style type="text/css">
             .wrapper{
                     width: 75%;
@@ -49,6 +50,7 @@
                     id.style.display = "block";
                 }
             } 
+   
 
             // $(document).ready(function(){
             //         $('[data-toggle="tooltip"]').tooltip();
@@ -91,7 +93,7 @@ $genre_types_sql = "SELECT * FROM genre_types;";
 $genre_types_result = mysqli_query($conn, $genre_types_sql);
 $genre_type_array = array();
 while ($row = mysqli_fetch_assoc($genre_types_result)) {
-    $genre_type_array[] = array('id' => $row['id'], 'genreType' => $row['genreType']);
+$genre_type_array[] = array('id' => $row['id'], 'genreType' => $row['genreType']);
 }
 $email_types_sql = "SELECT * FROM email_types;";
 $email_types_result = mysqli_query($conn, $email_types_sql);
@@ -104,6 +106,12 @@ $phone_types_result = mysqli_query($conn, $phone_types_sql);
 $phone_type_array = array();
 while ($row = mysqli_fetch_assoc($phone_types_result)) {
     $phone_type_array[] = array('id' => $row['id'], 'phoneType' => $row['phoneType']);
+}
+$timezones_sql = "SELECT * FROM timezones;";
+$timezones_result = mysqli_query($conn, $timezones_sql);
+$timezones_array = array();
+while ($row = mysqli_fetch_assoc($timezones_result)) {
+    $timezones_array[] = array('id' => $row['id'], 'name' => $row['name']);
 }
 
 //contacts sql query loop table
@@ -119,9 +127,10 @@ while ($row = mysqli_fetch_assoc($venues_result))
     echo "<th>Venue Type</th>";
     echo "<th>Contact Name</th>";
     echo "<th>Host Name</th>";
-    echo "<th>Show Length</th>";
     echo "<th>Start Date/Time</th>";
     echo "<th>End Date/Time</th>";
+    echo "<th>Timezone</th>";
+    echo "<th>Show Length</th>";
     echo "<th>Active</th>";
     echo "<th>Created</th>";
     echo "</tr>";
@@ -143,6 +152,11 @@ while ($row = mysqli_fetch_assoc($venues_result))
                 $venueType = $item['venueType'];
             }
         }
+        foreach($timezones_array as $item){
+            if ($row['timezoneId'] == $item['id']){
+                $timezone = $item['name'];
+            }
+        }
         $StartDate = date("m-d-Y",strtotime($row['venueDateStart']));
         $EndDate = date("m-d-Y",strtotime($row['venueDateEnd']));
         
@@ -152,6 +166,9 @@ while ($row = mysqli_fetch_assoc($venues_result))
         echo "<td class='fitwidth'>" . $hostFullname . "</td>";
         echo "<td class='fitwidth'>" . "$StartDate" . " " . "$row[venueTimeStart]" . "</td>";
         echo "<td class='fitwidth'>" . "$EndDate" . " " .  "$row[venueTimeEnd]" ."</td>";
+        
+        
+        echo "<td class='fitwidth'>" . $timezone . "</td>";
         echo "<td class='fitwidth'>" . "$row[showLength]" . " Mins</td>";
         echo "<td class='fitwidth'>" . "$row[active]" . "</td>";
         echo "<td class='fitwidth'>" . "$row[created]" . "</td>";

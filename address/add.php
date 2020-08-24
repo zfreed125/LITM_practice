@@ -29,7 +29,7 @@ $src = $_REQUEST['src'];
          
         window.addEventListener('load', (event) => {
             //document.getElementById("shortState").value = '<?php //echo $shortState;?>';
-
+                            
 
             $(function () {
                 var output = [];

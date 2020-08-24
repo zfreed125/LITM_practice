@@ -22,6 +22,12 @@ $venue_type_array = array();
 while ($row = mysqli_fetch_assoc($venue_types_result)) {
     $venue_type_array[] = array('id' => $row['id'], 'venueType' => $row['venueType']);
 }
+$timezones_sql = "SELECT * FROM timezones;";
+$timezones_result = mysqli_query($conn, $timezones_sql);
+$timezones_array = array();
+while ($row = mysqli_fetch_assoc($timezones_result)) {
+    $timezones_array[] = array('id' => $row['id'], 'name' => $row['name']);
+}
 
 
 
@@ -48,6 +54,7 @@ $venues_result = mysqli_query($conn, $venues_sql);
         $venueTimeStart = $row["venueTimeStart"];
         $venueDateEnd = strtotime($row['venueDateEnd']);
         $venueTimeEnd = $row['venueTimeEnd'];
+        $timezoneId = $row['timezoneId'];
         $showLength = $row['showLength'];
     }
 
@@ -102,7 +109,7 @@ $venues_result = mysqli_query($conn, $venues_sql);
                                 <input type="text" name="venueName" class="form-control" value="<?php echo $venueName; ?>">
                             </div>
                             <div class="form-group">
-                                <select name="venueTypeId">
+                                <select name="venueTypeId" class="form-control">
                                     <option selected="selected">Select Venue Type</option>
                                         <?php foreach($venue_type_array as $item){ ?>
                                     <option value="<?php echo strtolower($item['id']); ?>"
@@ -112,7 +119,7 @@ $venues_result = mysqli_query($conn, $venues_sql);
                                 </select> 
                             </div>
                             <div class="form-group">
-                                <select name="contactNameId">
+                                <select name="contactNameId" class="form-control">
                                     <option selected="selected">Select Contact Name</option>
                                         <?php foreach($contacts_array as $item){ ?>
                                     <option value="<?php echo strtolower($item['id']); ?>"
@@ -122,7 +129,7 @@ $venues_result = mysqli_query($conn, $venues_sql);
                                 </select> 
                             </div>
                             <div class="form-group">
-                                <select name="hostNameId">
+                                <select name="hostNameId" class="form-control">
                                     <option selected="selected">Select Host Name</option>
                                         <?php foreach($contacts_array as $item){ ?>
                                     <option value="<?php echo strtolower($item['id']); ?>"
@@ -133,16 +140,26 @@ $venues_result = mysqli_query($conn, $venues_sql);
                             </div>
                             <div class="input-group">
                                 <div class="input-group-prepend"><span class="input-group-text">Start Date</span></div>
-                                <input type="date" name="venueDateStart" class="form-control" value="<?php echo date("Y-m-d",$venueDateStart); ?>">
+                                <input style=" width: 50px;" type="date" name="venueDateStart" class="form-control" value="<?php echo date("Y-m-d",$venueDateStart); ?>">
                                 <div class="input-group-prepend"><span class="input-group-text">Start Time</span></div>
                                 <input type="time" name="venueTimeStart" class="form-control" value="<?php echo $venueTimeStart; ?>">
                             </div>
                             <span class="input-group-addon">&nbsp</span>
                             <div class="input-group">
                                 <div class="input-group-prepend"><span class="input-group-text">End Date</span></div>
-                                <input type="date" name="venueDateEnd" class="form-control" value="<?php echo date("Y-m-d",$venueDateEnd); ?>">
+                                <input style=" width: 50px;" type="date" name="venueDateEnd" class="form-control" value="<?php echo date("Y-m-d",$venueDateEnd); ?>">
                                 <div class="input-group-prepend"><span class="input-group-text">End Time</span></div>
                                 <input type="time" name="venueTimeEnd" class="form-control" value="<?php echo $venueTimeEnd; ?>">
+                            </div>
+                            <div class="form-group">
+                                <select name="timezoneId" class="mt-4 form-control">
+                                    <option selected="selected">Select Timezone</option>
+                                        <?php foreach($timezones_array as $item){ ?>
+                                    <option value="<?php echo strtolower($item['id']); ?>"
+                                        <?php if($item['id'] == $timezoneId){ echo "selected"; } ?> >
+                                    <?php echo $item['name']; ?></option>
+                                        <?php } ?>
+                                </select> 
                             </div>
                             <div class="form-group">
                                 <label>Show Length</label>

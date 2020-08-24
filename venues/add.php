@@ -22,6 +22,12 @@ $venueType_array = array();
 while ($row = mysqli_fetch_assoc($venueType_result)) {
     $venueType_array[] = array('id' => $row['id'], 'venueType' => $row['venueType']);
 }
+$timezones_sql = "SELECT * FROM timezones;";
+$timezones_result = mysqli_query($conn, $timezones_sql);
+$timezones_array = array();
+while ($row = mysqli_fetch_assoc($timezones_result)) {
+    $timezones_array[] = array('id' => $row['id'], 'name' => $row['name']);
+}
 ?>
 
 <!-- https://stackoverflow.com/questions/2086313/store-am-pm-time-string-into-time-datatype-in-mysql-and-retrieve-with-am-pm-whil -->
@@ -39,12 +45,52 @@ while ($row = mysqli_fetch_assoc($venueType_result)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../tz.js"></script>
 
 
 
     <title>LITM Media Masterbase</title>
 
 </head>
+<!-- <script>
+ function updatetimezoneId(e) {
+                document.getElementById("timezoneId").value = e.target.value;
+            }
+window.addEventListener('load', function() {
+
+    // $(function () {
+    //             var output = [];
+    //             var shortStateSelect = '<?php //echo $shortState;?>';
+    //             $.each(state, function (i, state) {
+        //                 let j = "";
+        //                 if (state.abrev === shortStateSelect) {
+            //                     j = 'selected';
+            //                 }
+            //                 output.push(`<option value="${state.abrev}"${j}>${state.state}</option>`);
+            //             });
+            //             $('#shortStateSelect').html(output.join(''));
+            //         });
+            
+             function tzLoop(){
+                var output = [];
+                var timezoneIdSelect = '';
+                var select = document.getElementById('timezoneIdSelect');
+                for(index in timezones){
+                    console.log(index);
+                    select.options[select.options.length] = new Option(timezones[index], index);
+                }
+                // timezones.forEach((tz) => {
+                //     // console.log(tz.name);
+                //     output.push(`<option value="${tz.id}"${tz.name}</option>`);
+                //     document.getElementById('timezoneIdSelect').innerHTML(output.join(''));  
+                //     console.log(output);
+                //     })
+                }
+                tzLoop();
+
+    console.log('All assets are loaded')
+})
+</script> -->
 <style>
     .wrapper{
             width: 500px;
@@ -92,25 +138,33 @@ while ($row = mysqli_fetch_assoc($venueType_result)) {
         <div class="input-group mt-3 mb-1 input-group-sm p-1 w-100">
          <div class="input-group">
             <div class="input-group-prepend"><span class="input-group-text">Start Date</span></div>
-            <input type="date" name="venueDateStart" class="form-control" placeholder="">
+            <input style=" width: 50px;" type="date" name="venueDateStart" class="form-control" placeholder="">
             <div class="input-group-prepend"><span class="input-group-text">Start Time</span></div>
             <input type="time" name="venueTimeStart" class="form-control" placeholder="">
         </div>
         <span class="input-group-addon">&nbsp</span>
         <div class="input-group">
             <div class="input-group-prepend"><span class="input-group-text">End Date</span></div>
-            <input type="date" name="venueDateEnd" class="form-control" placeholder="">
+            <input style=" width: 50px;" type="date" name="venueDateEnd" class="form-control" placeholder="">
             <div class="input-group-prepend"><span class="input-group-text">End Time</span></div>
             <input type="time" name="venueTimeEnd" class="form-control" placeholder="">
         </div>
         </div>
+        <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+            <div class="input-group-prepend"><span class="input-group-text">Venue Timezone</span><select name="timezoneId"></div>
+                        <option selected="selected">Choose one</option>
+                            <?php foreach($timezones_array as $item){ ?>
+                        <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['name']; ?></option>
+                            <?php } ?>
+                    </select>
 
+        </div>
 
 
         <div class="input-group">
         <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
             <div class="input-group-prepend"><span class="input-group-text">Show Length Minutes</span></div>
-        <input type="number" name="showLength" placeholder="Show Length Minutes">
+        <input class="form-control" type="number" name="showLength">
         </div>
         </div>
         <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">

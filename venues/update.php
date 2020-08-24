@@ -24,9 +24,10 @@ $venueDateStart = mysqli_real_escape_string($conn, $_REQUEST['venueDateStart']);
 $venueTimeStart = $_REQUEST['venueTimeStart'];
 $venueDateEnd = mysqli_real_escape_string($conn, $_REQUEST['venueDateEnd']);
 $venueTimeEnd = $_REQUEST['venueTimeEnd'];
+$timezoneId = $_REQUEST['timezoneId'];
 $active = (isset($_POST['active'])) ? 1 : 0;
 // Attempt insert query execution
-$sql = "UPDATE venues set venueName='$venueName', venueTypeId='$venueTypeId', contactNameId='$contactNameId', hostNameId='$hostNameId', venueDateStart='$venueDateStart', venueTimeStart=CONVERT('$venueTimeStart', TIME) , venueDateEnd='$venueDateEnd', venueTimeEnd=CONVERT('$venueTimeEnd', TIME) , showLength='$showLength', active='$active' where id='$id';";
+$sql = "UPDATE venues set venueName='$venueName', venueTypeId='$venueTypeId', contactNameId='$contactNameId', hostNameId='$hostNameId', venueDateStart='$venueDateStart', venueTimeStart=CONVERT('$venueTimeStart', TIME) , venueDateEnd='$venueDateEnd', venueTimeEnd=CONVERT('$venueTimeEnd', TIME) , timezoneId='$timezoneId', showLength='$showLength', active='$active' where id='$id';";
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
     header("location: view.php");

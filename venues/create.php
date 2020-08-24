@@ -23,11 +23,12 @@ $venueDateStart = mysqli_real_escape_string($conn, $_REQUEST['venueDateStart']);
 $venueTimeStart = $_REQUEST['venueTimeStart'];
 $venueDateEnd = mysqli_real_escape_string($conn, $_REQUEST['venueDateEnd']);
 $venueTimeEnd = $_REQUEST['venueTimeEnd'];
+$timezoneId = $_REQUEST['timezoneId'];
 $active = (isset($_POST['active'])) ? 1 : 0;
 // Attempt insert query execution
 
-$sql = "INSERT INTO venues (venueName, venueTypeId, contactNameId, hostNameId, showLength, venueDateStart, venueTimeStart, venueDateEnd, venueTimeEnd, active) 
-VALUES ('$venueName', '$venueTypeId', '$contactNameId', '$hostNameId', '$showLength', '$venueDateStart', CONVERT('$venueTimeStart', TIME), '$venueDateEnd', CONVERT('$venueTimeEnd', TIME), '$active')";
+$sql = "INSERT INTO venues (venueName, venueTypeId, contactNameId, hostNameId, showLength, venueDateStart, venueTimeStart, venueDateEnd, venueTimeEnd, timezoneId, active) 
+VALUES ('$venueName', '$venueTypeId', '$contactNameId', '$hostNameId', '$showLength', '$venueDateStart', CONVERT('$venueTimeStart', TIME), '$venueDateEnd', CONVERT('$venueTimeEnd', TIME), '$timezoneId', '$active')";
 
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
