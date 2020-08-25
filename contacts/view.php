@@ -327,8 +327,8 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                                 $servicesRowCount = mysqli_num_rows($services_result);
 
                                 echo "<table id='tbl_services". $contactId ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
-                                echo "<caption><a href='../services/add.php?src=contacts&contactId=". $contactId ."' title='Add Messaging Services' data-toggle='tooltip'><span><i class='fas fa-plus'></i>Messaging Services</span></a></caption>";
-                                echo "<a href='#' title='Show/Hide Messaging Services'style='position: relative; left: 50px;' onclick='myFunction(tbl_services". $contactId .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Messaging Services (". $servicesRowCount .")&nbsp</span></a>";
+                                echo "<caption><a href='../services/add.php?src=contacts&contactId=". $contactId ."' title='Add Messaging Services' data-toggle='tooltip'><span><i class='fas fa-plus'></i>Services</span></a></caption>";
+                                echo "<a href='#' title='Show/Hide Services'style='position: relative; left: 50px;' onclick='myFunction(tbl_services". $contactId .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Services (". $servicesRowCount .")&nbsp</span></a>";
                                 echo "<thead>";
                                 echo "<tr>";
                                 echo "<th>Service Name</th>";
