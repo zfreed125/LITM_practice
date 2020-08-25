@@ -24,6 +24,10 @@ $sql1 = "CREATE TABLE venues (
     venueDateTimeEnd DATETIME NULL,
     timezoneId INT(3) NULL,
     showLength INT(8) NULL,
+    primaryAddressId INT(6) NULL,
+    primaryEmailId INT(6) NULL,
+    primaryPhoneId INT(6) NULL,
+    primaryServiceId INT(6) NULL,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )";
 

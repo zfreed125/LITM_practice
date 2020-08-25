@@ -193,6 +193,7 @@ while ($row =  mysqli_fetch_assoc($venues_result))
         $EndTime = convertDateTimeUTCtoLocal($row['venueDateTimeEnd'],$tz)[1];
         $StartDateTime = "$StartDate $StartTime";
         $EndDateTime = "$EndDate $EndTime";
+        $primaryPhoneId = $row['primaryPhoneId'];
 
         echo "<td class='fitwidth'>" . "$row[venueName]" . "</td>";
         echo "<td class='fitwidth'>" . $venueType . "</td>";
@@ -412,6 +413,7 @@ while ($row =  mysqli_fetch_assoc($venues_result))
                                                 echo "<caption><a href='../phones/add.php?venueId=". $venues_id ."' title='Add Phone' data-toggle='tooltip'><span><i class='fas fa-plus'></i>phone</span></a></caption>";
                                                 echo "<a href='#' title='Show/Hide Phones'style='position: relative; left: 50px;' onclick='myFunction(tbl_phone". $venues_id .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Phones (". $phoneRowCount .")&nbsp</span></a>";
                                                 echo "<tr>";
+                                                echo "<th></th>";
                                                 echo "<th>Phone</th>";
                                                 echo "<th>Phone Type</th>";
                                                 echo "<th>Created</th>";
@@ -426,7 +428,13 @@ while ($row =  mysqli_fetch_assoc($venues_result))
                                                             $phoneTypeId = $item['phoneType'];
                                                             }
                                                     }
+                                                    if($primaryPhoneId == $row['id']) { 
+                                                        $primary = "<span><i style='color:green'class='fas fa-star'></i></span>"; 
+                                                    }else{ 
+                                                        $primary = "";
+                                                    }
                                                 echo "<tr>";
+                                                echo "<td class='fitwidth'>" . $primary . "</td>";
                                                 echo "<td class='fitwidth'>" . "$row[phone]" . "</td>";
                                                 echo "<td class='fitwidth'>" . "$phoneTypeId" . "</td>";
                                                 echo "<td class='fitwidth'>" . "$row[created]" . "</td>";

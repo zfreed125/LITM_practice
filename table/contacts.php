@@ -21,11 +21,15 @@ $sql1 = "CREATE TABLE contacts (
     active INT(1) DEFAULT 1,
     birthdate DATE NULL,
     bookingFreq INT(3) NULL,
+    primaryAddressId INT(6) NULL,
+    primaryEmailId INT(6) NULL,
+    primaryPhoneId INT(6) NULL,
+    primaryServiceId INT(6) NULL,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
     )";
     
     if ($conn->query($sql1) === TRUE) {
-      echo "Table contacts created successfully";
+      // echo "Table contacts created successfully";
     } else {
       echo "Error creating table: " . $conn->error;
     }
