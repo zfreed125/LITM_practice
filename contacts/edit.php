@@ -10,12 +10,12 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$contact_type_sql = "SELECT * FROM contact_types;";
-$result = mysqli_query($conn, $contact_type_sql);
-$contact_type_array = array();
-while ($row = mysqli_fetch_assoc($result)) {
-    $contact_type_array[] = array('id' => $row['id'], 'contactType' => $row['contactType']);
-}
+// $contact_type_sql = "SELECT * FROM contact_types;";
+// $result = mysqli_query($conn, $contact_type_sql);
+// $contact_type_array = array();
+// while ($row = mysqli_fetch_assoc($result)) {
+//     $contact_type_array[] = array('id' => $row['id'], 'contactType' => $row['contactType']);
+// }
 
 
 $id = $_GET["id"];

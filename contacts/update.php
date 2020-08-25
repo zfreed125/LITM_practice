@@ -14,17 +14,21 @@ if ($conn->connect_error) {
 
 
     
-$id = mysqli_real_escape_string($conn, $_REQUEST['id']);
+$id = $_REQUEST['id'];
 // $contactid = mysqli_real_escape_string($conn, $_REQUEST['id']);
 $firstname = mysqli_real_escape_string($conn, $_REQUEST['firstname']);
 $lastname = mysqli_real_escape_string($conn, $_REQUEST['lastname']);
-$birthdate = mysqli_real_escape_string($conn, $_REQUEST['birthdate']);
+$birthdate = $_REQUEST['birthdate'];
 $jobTitle = $_REQUEST['jobTitle'];
 $active = (isset($_POST['active'])) ? 1 : 0;
 // $activity = mysqli_real_escape_string($conn, $_REQUEST['activity']);
  
 // Attempt insert query execution
-$sql = "UPDATE contacts set firstname='$firstname', lastname='$lastname', birthdate='$birthdate', jobTitle='$jobTitle', active='$active' where id='$id';";
+if (empty($birthdate)){
+$sql = "UPDATE contacts set firstname='$firstname', lastname='$lastname', jobTitle='$jobTitle', active='$active' where id='$id';";
+}else{
+$sql = "UPDATE contacts set firstname='$firstname', lastname='$lastname', birthdate='$birthdate' , jobTitle='$jobTitle', active='$active' where id='$id';";
+}
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
     header("location: view.php");

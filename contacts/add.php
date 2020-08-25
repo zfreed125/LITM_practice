@@ -40,10 +40,10 @@ if ($conn->connect_error) {
                 <div class="input-group-prepend"><span class="input-group-text">Last Name</span></div>
                 <input class="form-control" type="text" name="last_name">
             </div>
-            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+            <!-- <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text">Birthdate</span></div>
                 <input class="form-control" type="date" name="birthdate">
-            </div>
+            </div> -->
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text">Job Title</span></div>
                 <input class="form-control" type="text" name="jobTitle">
