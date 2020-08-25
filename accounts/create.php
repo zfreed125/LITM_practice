@@ -11,12 +11,18 @@ if ($conn->connect_error) {
 
 $id = $_REQUEST['id'];
 $contactId = $_REQUEST['contactId'];
-// $contactId =11;
+$venueId = $_REQUEST['venueId'];
 $accountTypeId = $_REQUEST['accountTypeId'];
-$account_sql = "INSERT INTO accounts (contactId, accountTypeId) VALUES ('$contactId', '$accountTypeId')";
+if (empty($venueId)){
+    $account_sql = "INSERT INTO accounts (contactId, accountTypeId) VALUES ('$contactId', '$accountTypeId')";
+    $dst = "contacts";
+}else{
+    $account_sql = "INSERT INTO accounts (venueId, accountTypeId) VALUES ('$venueId', '$accountTypeId')";
+    $dst = "venues";
+    
+}
 if(mysqli_query($conn, $account_sql)){
-    // $accountId = mysqli_insert_id($conn); 
-    header("location: ../contacts/view.php");
+    header("location: ../$dst/view.php");
 } else{
     echo "ERROR: Not able to execute $account_sql. " . mysqli_error($conn);
 }

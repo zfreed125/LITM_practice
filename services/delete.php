@@ -6,9 +6,9 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-$id = $_REQUEST['id'];
+$id = mysqli_real_escape_string($conn, $_REQUEST['id']);
 $dst = $_REQUEST['src'];
-$sql = "DELETE from accounts where id='$id';";
+$sql = "DELETE from services where id='$id';";
 if(mysqli_query($conn, $sql)){
     header("location: ../$dst/view.php");
 } else{

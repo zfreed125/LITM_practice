@@ -8,7 +8,7 @@ if ($conn->connect_error) {
 }
 $id = $_REQUEST['id'];
 $dst = $_REQUEST['src'];
-$sql = "DELETE from accounts where id='$id';";
+$sql = "DELETE from emails where id='$id';";
 if(mysqli_query($conn, $sql)){
     header("location: ../$dst/view.php");
 } else{

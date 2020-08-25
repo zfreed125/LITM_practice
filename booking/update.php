@@ -10,15 +10,18 @@ if ($conn->connect_error) {
 $id = $_REQUEST['id'];
 $contactId = $_REQUEST['contactId'];
 $venueId = $_REQUEST['venueId'];
-$accountTypeId = $_REQUEST['accountTypeId'];
+$emailTypeId = $_REQUEST['emailTypeId'];
+$email = mysqli_real_escape_string($conn, $_REQUEST['email']);
+
 if (empty($venueId)){
-  $sql = "UPDATE accounts set contactId='$contactId', accountTypeId='$accountTypeId' where id='$id';";
+  $sql = "UPDATE emails set contactId='$contactId', emailTypeId='$emailTypeId', email='$email' where id='$id';";
   $dst = "contacts";
 }else{
-  $sql = "UPDATE accounts set venueId='$venueId', accountTypeId='$accountTypeId' where id='$id';";
+  $sql = "UPDATE emails set venueId='$venueId', emailTypeId='$emailTypeId', email='$email' where id='$id';";
   $dst = "venues";
   
 }
+
 if(mysqli_query($conn, $sql)){
     header("location: ../$dst/view.php");
 } else{

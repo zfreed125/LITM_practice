@@ -32,7 +32,7 @@ $venueId = $_REQUEST['venueId'];
 
 <body>
 <div class="wrapper">
-    <h1 class="center">Add an alternative way for messaging</h1>
+    <h1 class="center">Add a Services</h1>
     <form class="center" action="create.php" method="POST">
     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text">Service Name</span></div>
@@ -41,6 +41,10 @@ $venueId = $_REQUEST['venueId'];
     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text">Service Account</span></div>
         <input type="text" name="userAccount" >
+    </div>
+    <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                <div class="input-group-prepend"><span class="input-group-text">Website</span></div>
+        <input type="text" name="website" >
     </div>
     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text">Service Notes</span></div>

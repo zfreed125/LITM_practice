@@ -126,7 +126,6 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
         echo "<td class='fitwidth'>" . "$row[active]" . "</td>";
         echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
         echo "<td class='fitwidth'>";
-        echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
         echo "<a href='edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
         echo "<a href='delete.php?contactId=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
         echo "</td>";
@@ -161,7 +160,6 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
             echo "<td class='fitwidth'>" . "$phoneTypeId" . "</td>";
             echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
             echo "<td class='fitwidth'>";
-            echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
             echo "<a href='../phones/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
             echo "<a href='../phones/delete.php?src=contacts&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
             echo "</td>";
@@ -177,7 +175,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
         $accountRowCount = mysqli_num_rows($account_result);
         
         echo "<table id='tbl_account". $contactId ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
-        echo "<caption><a href='../accounts/add.php?id=". $contactId ."' title='Add Account' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span>Account</a></caption>";
+        echo "<caption><a href='../accounts/add.php?contactId=". $contactId ."' title='Add Account' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span>Account</a></caption>";
         echo "<a href='#' title='Show/Hide accounts'style='position: relative; left: 50px;' onclick='myFunction(tbl_account". $contactId .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Account Type (". $accountRowCount .")&nbsp</span></a>";
         echo "<thead>";
         echo "<tr>";
@@ -198,9 +196,8 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
             echo "<td class='fitwidth'>" . "$accountTypeId" . "</td>";
             echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
             echo "<td class='fitwidth'>";
-            echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
                 echo "<a href='../accounts/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
-                echo "<a href='../accounts/delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
+                echo "<a href='../accounts/delete.php?src=contacts&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
                 echo "</td>";
                 echo "</tr>";
                 }//end of account loop
@@ -235,7 +232,6 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                     echo "<td class='fitwidth'>" . "$genreTypeId" . "</td>";
                     echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                     echo "<td class='fitwidth'>";
-                    echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
                     echo "<a href='../genres/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
                     echo "<a href='../genres/delete.php?src=contacts&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
                     echo "</td>";
@@ -274,7 +270,6 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                         echo "<td class='fitwidth'>" . "$emailTypeId" . "</td>";
                         echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                         echo "<td class='fitwidth'>";
-                        echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
                         echo "<a href='../emails/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
                         echo "<a href='../emails/delete.php?src=contacts&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
                         echo "</td>";
@@ -317,7 +312,6 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                             echo "<td class='fitwidth'>" . "$row[country]" . "</td>";
                             echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                             echo "<td class='fitwidth'>";
-                            echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
                             echo "<a href='../address/edit.php?src=contacts&id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
                             echo "<a href='../address/delete.php?src=contacts&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
                             echo "</td>";
@@ -327,39 +321,40 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                             echo "</tbody>";
                             echo "</table>";
 
-                                //Info sql query loop table
-                                $messaging_services_sql = "SELECT * FROM messaging_services WHERE contactId = '$contactId';";
-                                $messaging_services_result = mysqli_query($conn, $messaging_services_sql);
-                                $messaging_servicesRowCount = mysqli_num_rows($messaging_services_result);
+                                //Services sql query loop table
+                                $services_sql = "SELECT * FROM services WHERE contactId = '$contactId';";
+                                $services_result = mysqli_query($conn, $services_sql);
+                                $servicesRowCount = mysqli_num_rows($services_result);
 
-                                echo "<table id='tbl_messaging_services". $contactId ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
-                                echo "<caption><a href='../messaging_services/add.php?src=contacts&contactId=". $contactId ."' title='Add Messaging Services' data-toggle='tooltip'><span><i class='fas fa-plus'></i>Messaging Services</span></a></caption>";
-                                echo "<a href='#' title='Show/Hide Messaging Services'style='position: relative; left: 50px;' onclick='myFunction(tbl_messaging_services". $contactId .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Messaging Services (". $messaging_servicesRowCount .")&nbsp</span></a>";
+                                echo "<table id='tbl_services". $contactId ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
+                                echo "<caption><a href='../services/add.php?src=contacts&contactId=". $contactId ."' title='Add Messaging Services' data-toggle='tooltip'><span><i class='fas fa-plus'></i>Messaging Services</span></a></caption>";
+                                echo "<a href='#' title='Show/Hide Messaging Services'style='position: relative; left: 50px;' onclick='myFunction(tbl_services". $contactId .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Messaging Services (". $servicesRowCount .")&nbsp</span></a>";
                                 echo "<thead>";
                                 echo "<tr>";
                                 echo "<th>Service Name</th>";
                                 echo "<th>User Account</th>";
+                                echo "<th>Website</th>";
                                 echo "<th>Notes</th>";
                                 echo "<th>Created</th>";
                                 echo "</tr>";
                                 echo "</thead>";
                                 echo "<tbody>";
 
-                                while ($row = mysqli_fetch_assoc($messaging_services_result))
+                                while ($row = mysqli_fetch_assoc($services_result))
                                 {
                                 echo "<tr>";
                                 echo "<td class='fitwidth'>" . "$row[serviceName]" . "</td>";
                                 echo "<td class='fitwidth'>" . "$row[userAccount]" . "</td>";
+                                echo "<td class='fitwidth'>" . "$row[website]" . "</td>";
                                 echo "<td class='fitwidth'>" . "$row[notes]" . "</td>";
                                 echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                                 echo "<td class='fitwidth'>";
-                                echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
-                                echo "<a href='../messaging_services/edit.php?src=contacts&id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
-                                echo "<a href='../messaging_services/delete.php?src=contacts&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
+                                echo "<a href='../services/edit.php?src=contacts&id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
+                                echo "<a href='../services/delete.php?src=contacts&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
                                 echo "</td>";
                                 echo "</tr>";
-                                }//end of Info loop
-                                //end of the table from the Info loop
+                                }//end of Services loop
+                                //end of the table from the Services loop
                                 echo "</tbody>";
                                 echo "</table>";
 
@@ -389,7 +384,6 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                                     echo "<td class='fitwidth'>" . "$row[note]" . "</td>";
                                     echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                                     echo "<td class='fitwidth'>";
-                                    echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
                                     echo "<a href='../notes/edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
                                     echo "<a href='../notes/delete.php?src=contacts&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
                                     echo "</td>";

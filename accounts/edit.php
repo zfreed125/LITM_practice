@@ -55,6 +55,7 @@ $conn->close();
                                         </select>
                                     </div>
                                     <input type="hidden" name="contactId" value="<?php echo $contactId; ?>">
+                                    <input type="hidden" name="venueId" value="<?php echo $venueId; ?>">
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <div class="m-5">
                                 <input type="hidden" name="id" value="<?php echo $id; ?>">

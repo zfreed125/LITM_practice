@@ -11,14 +11,15 @@ if ($conn->connect_error) {
 $id = $_GET["id"];
 $src = $_GET["src"];
 //attempt insert query execution
-$messaging_services_sql = "select id, contactId,venueId, serviceName, userAccount, notes from messaging_services where id='$id';";
-$messaging_services_result = mysqli_query($conn, $messaging_services_sql);
+$services_sql = "select id, contactId,venueId, serviceName, userAccount, website, notes from services where id='$id';";
+$services_result = mysqli_query($conn, $services_sql);
     //output data of each row
-    while ($row = mysqli_fetch_assoc($messaging_services_result)) {
+    while ($row = mysqli_fetch_assoc($services_result)) {
         $contactId = $row["contactId"];
         $venueId = $row["venueId"];
         $serviceName = $row["serviceName"];
         $userAccount = $row["userAccount"];
+        $website = $row["website"];
         $notes = $row["notes"];
     }
 $conn->close();
@@ -49,6 +50,10 @@ $conn->close();
                                     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
                                         <div class="input-group-prepend"><span class="input-group-text">User Account</span></div>
                                         <input type="text" name="userAccount" class="form-control" value="<?php echo $userAccount; ?>">
+                                    </div>
+                                    <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
+                                        <div class="input-group-prepend"><span class="input-group-text">Website</span></div>
+                                        <input type="text" name="website" class="form-control" value="<?php echo $website; ?>">
                                     </div>
                                     <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
                                         <div class="input-group-prepend"><span class="input-group-text">Service Notes</span></div>

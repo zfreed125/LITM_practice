@@ -7,10 +7,9 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 $id = mysqli_real_escape_string($conn, $_REQUEST['id']);
-$dst = $_REQUEST['src'];
-$sql = "DELETE from messaging_services where id='$id';";
+$sql = "DELETE from email_types where id='$id';";
 if(mysqli_query($conn, $sql)){
-    header("location: ../$dst/view.php");
+    header("location: view.php");
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($link);
 }
