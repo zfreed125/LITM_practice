@@ -49,8 +49,8 @@
                 } else {
                     id.style.display = "block";
                 }
-            } 
-   
+            }
+
 
             // $(document).ready(function(){
             //         $('[data-toggle="tooltip"]').tooltip();
@@ -69,7 +69,23 @@
 <?php
 
 require_once '../config.php';
+function convertDateTimeUTCtoLocal($venueDateTime,$tz){
+            $utc_date = DateTime::createFromFormat(
+                    'Y-m-d H:i:s',  // this the format from mysql
+                    // 'Y-m-d G:i',  // this the format from mysql
+                    $venueDateTime, // this is the output from mysql $venueDateTime...
+                    new DateTimeZone('UTC')
+            );
+            //
+            $local_date = $utc_date;
+            $local_date->setTimeZone(new DateTimeZone($tz));
+            //
+            $venueDate = $local_date->format('m-d-Y'); // output: 08-25-2020
+            $venueTime = $local_date->format('H:i'); // output: 10:45 PM
+            // $venueTime = $local_date->format('g:i A'); // output: 10:45 PM
 
+            return array($venueDate,$venueTime);
+        }
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
 
@@ -111,14 +127,16 @@ $timezones_sql = "SELECT * FROM timezones;";
 $timezones_result = mysqli_query($conn, $timezones_sql);
 $timezones_array = array();
 while ($row = mysqli_fetch_assoc($timezones_result)) {
-    $timezones_array[] = array('id' => $row['id'], 'name' => $row['name']);
+    $timezones_array[] = array('id' => $row['id'], 'name' => $row['name'], 'timezone' => $row['timezone']);
 }
 
 //contacts sql query loop table
 $venues_sql = "SELECT * FROM venues;";
+// $venues_sql = "SELECT venues.*, timezones.timezone as tz FROM venues join timezones on timezones.id = venues.timezoneId;";
 $venues_result = mysqli_query($conn, $venues_sql);
 
-while ($row = mysqli_fetch_assoc($venues_result))
+while ($row =  mysqli_fetch_assoc($venues_result))
+// while ($row = (object) mysqli_fetch_assoc($venues_result))
 {
     echo "<table class='table table-bordered table-striped'>";
     echo "<thead>";
@@ -137,7 +155,7 @@ while ($row = mysqli_fetch_assoc($venues_result))
     echo "</thead>";
     echo "<tbody>";
     echo "<tr>";
-    
+
     $venues_id = $row['id'];
         foreach($contacts_array as $item){
             if ($row['contactNameId'] == $item['id']){
@@ -155,25 +173,34 @@ while ($row = mysqli_fetch_assoc($venues_result))
         foreach($timezones_array as $item){
             if ($row['timezoneId'] == $item['id']){
                 $timezone = $item['name'];
+                $tz = $item['timezone'];
             }
         }
-        $StartDate = date("m-d-Y",strtotime($row['venueDateStart']));
-        $EndDate = date("m-d-Y",strtotime($row['venueDateEnd']));
+
         
+
+
+
+        $StartDate = convertDateTimeUTCtoLocal($row['venueDateTimeStart'],$tz)[0];
+        $StartTime = convertDateTimeUTCtoLocal($row['venueDateTimeStart'],$tz)[1];
+        $EndDate = convertDateTimeUTCtoLocal($row['venueDateTimeEnd'],$tz)[0];
+        $EndTime = convertDateTimeUTCtoLocal($row['venueDateTimeEnd'],$tz)[1];
+        $StartDateTime = "$StartDate $StartTime";
+        $EndDateTime = "$EndDate $EndTime";
+
         echo "<td class='fitwidth'>" . "$row[venueName]" . "</td>";
         echo "<td class='fitwidth'>" . $venueType . "</td>";
         echo "<td class='fitwidth'>" . $contactFullname . "</td>";
         echo "<td class='fitwidth'>" . $hostFullname . "</td>";
-        echo "<td class='fitwidth'>" . "$StartDate" . " " . "$row[venueTimeStart]" . "</td>";
-        echo "<td class='fitwidth'>" . "$EndDate" . " " .  "$row[venueTimeEnd]" ."</td>";
-        
-        
+        echo "<td class='fitwidth'>" . "$StartDateTime" . "</td>";
+        echo "<td class='fitwidth'>" . "$EndDateTime" . "</td>";
+
+
         echo "<td class='fitwidth'>" . $timezone . "</td>";
         echo "<td class='fitwidth'>" . "$row[showLength]" . " Mins</td>";
         echo "<td class='fitwidth'>" . "$row[active]" . "</td>";
         echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
         echo "<td class='fitwidth'>";
-        // echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
         echo "<a href='edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
         echo "<a href='delete.php?venueId=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
         echo "</td>";
@@ -200,7 +227,7 @@ while ($row = mysqli_fetch_assoc($venues_result))
                     {
                         foreach($genre_type_array as $item){
                             if($item['id'] == $row['genreTypeId']){
-                                $genreTypeId = $item['genreType']; 
+                                $genreTypeId = $item['genreType'];
                                 }
                         }
                     echo "<tr>";
@@ -216,9 +243,9 @@ while ($row = mysqli_fetch_assoc($venues_result))
                     //end of the table from the genre loop
                     echo "</tbody>";
                     echo "</table>";
-        
-        
-        
+
+
+
                             //address sql query loop table
                             $address_sql = "SELECT * FROM addresses WHERE venueId = '$venues_id';";
                             $address_result = mysqli_query($conn, $address_sql);
@@ -239,7 +266,7 @@ while ($row = mysqli_fetch_assoc($venues_result))
                             echo "</tr>";
                             echo "</thead>";
                             echo "<tbody>";
-                            
+
                             while ($row = mysqli_fetch_assoc($address_result))
                             {
                                 echo "<tr>";
@@ -259,12 +286,12 @@ while ($row = mysqli_fetch_assoc($venues_result))
                             //end of the table from the address loop
                             echo "</tbody>";
                             echo "</table>";
-                            
+
                                 //Info sql query loop table
                                 $messaging_services_sql = "SELECT * FROM messaging_services WHERE venueId = '$venues_id';";
                                 $messaging_services_result = mysqli_query($conn, $messaging_services_sql);
                                 $messaging_servicesRowCount = mysqli_num_rows($messaging_services_result);
-                                
+
                                 echo "<table id='tbl_messaging_services". $venues_id ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
                                 echo "<caption><a href='../messaging_services/add.php?src=venues&venueId=". $venues_id ."' title='Add Messaging Services' data-toggle='tooltip'><span><i class='fas fa-plus'></i>Messaging Services</span></a></caption>";
                                 echo "<a href='#' title='Show/Hide Messaging Services'style='position: relative; left: 50px;' onclick='myFunction(tbl_messaging_services". $venues_id .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Messaging Services (". $messaging_servicesRowCount .")&nbsp</span></a>";
@@ -277,7 +304,7 @@ while ($row = mysqli_fetch_assoc($venues_result))
                                 echo "</tr>";
                                 echo "</thead>";
                                 echo "<tbody>";
-                                
+
                                 while ($row = mysqli_fetch_assoc($messaging_services_result))
                                 {
                                     echo "<tr>";
@@ -351,7 +378,7 @@ while ($row = mysqli_fetch_assoc($venues_result))
                                             {
                                                 foreach($email_type_array as $item){
                                                     if($item['id'] == $row['emailTypeId']){
-                                                        $emailTypeId = $item['emailType']; 
+                                                        $emailTypeId = $item['emailType'];
                                                         }
                                                 }
                                             echo "<tr>";
@@ -388,7 +415,7 @@ while ($row = mysqli_fetch_assoc($venues_result))
                                                 {
                                                     foreach($phone_type_array as $item){
                                                         if($item['id'] == $row['phoneTypeId']){
-                                                            $phoneTypeId = $item['phoneType']; 
+                                                            $phoneTypeId = $item['phoneType'];
                                                             }
                                                     }
                                                 echo "<tr>";

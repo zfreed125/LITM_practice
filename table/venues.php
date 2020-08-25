@@ -20,21 +20,19 @@ $sql1 = "CREATE TABLE venues (
     venueTypeId INT(6) NULL,
     contactNameId INT(6) NULL,
     hostNameId INT(6) NULL,
-    venueDateStart DATE NULL,
-    venueTimeStart TIME NULL,
-    venueDateEnd DATE NULL,
-    venueTimeEnd TIME NULL,
+    venueDateTimeStart DATETIME NULL,
+    venueDateTimeEnd DATETIME NULL,
     timezoneId INT(3) NULL,
     showLength INT(8) NULL,
-    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP     
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )";
-    
+
     if ($conn->query($sql1) === TRUE) {
       echo "Table venues created successfully";
     } else {
       echo "Error creating table: " . $conn->error;
     }
 
-    
+
 
 ?>

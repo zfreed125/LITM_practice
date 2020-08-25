@@ -50,14 +50,35 @@ $venues_result = mysqli_query($conn, $venues_sql);
         $venueTypeId = $row["venueTypeId"];
         $contactNameId = $row["contactNameId"];
         $hostNameId = $row["hostNameId"];
-        $venueDateStart = strtotime($row["venueDateStart"]);
-        $venueTimeStart = $row["venueTimeStart"];
-        $venueDateEnd = strtotime($row['venueDateEnd']);
-        $venueTimeEnd = $row['venueTimeEnd'];
+        $venueDateTimeStart = $row["venueDateTimeStart"];
+        $venueDateTimeEnd = $row['venueDateTimeEnd'];
         $timezoneId = $row['timezoneId'];
         $showLength = $row['showLength'];
     }
+$timezone_sql = "SELECT timezone from timezones where id='$timezoneId';";
+$timezone_result = mysqli_query($conn, $timezone_sql);
+    if(mysqli_num_rows($timezone_result) > 0) {
+        $row = mysqli_fetch_assoc($timezone_result);
+        $tz = $row['timezone'];
+    }
 
+function convertDateTimeUTCtoLocal($venueDateTime,$tz){
+    $utc_date = DateTime::createFromFormat(
+                    'Y-m-d H:i:s',  // this the format from mysql
+                    // 'Y-m-d G:i',  // this the format from mysql
+                    $venueDateTime, // this is the output from mysql $venueDateTime...
+                    new DateTimeZone('UTC')
+    );
+    //
+    $local_date = $utc_date;
+    $local_date->setTimeZone(new DateTimeZone($tz));
+    //
+    $venueDate = $local_date->format('Y-m-d'); // output: 08-25-2020
+    $venueTime = $local_date->format('H:i'); // output: 10:45 PM
+
+    return array($venueDate,$venueTime);
+
+}
  
     $conn->close();
 ?>
@@ -140,16 +161,16 @@ $venues_result = mysqli_query($conn, $venues_sql);
                             </div>
                             <div class="input-group">
                                 <div class="input-group-prepend"><span class="input-group-text">Start Date</span></div>
-                                <input style=" width: 50px;" type="date" name="venueDateStart" class="form-control" value="<?php echo date("Y-m-d",$venueDateStart); ?>">
+                                <input style=" width: 50px;" type="date" name="venueDateStart" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeStart,$tz)[0]; ?>">
                                 <div class="input-group-prepend"><span class="input-group-text">Start Time</span></div>
-                                <input type="time" name="venueTimeStart" class="form-control" value="<?php echo $venueTimeStart; ?>">
+                                <input type="time" name="venueTimeStart" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeStart,$tz)[1]; ?>">
                             </div>
                             <span class="input-group-addon">&nbsp</span>
                             <div class="input-group">
                                 <div class="input-group-prepend"><span class="input-group-text">End Date</span></div>
-                                <input style=" width: 50px;" type="date" name="venueDateEnd" class="form-control" value="<?php echo date("Y-m-d",$venueDateEnd); ?>">
+                                <input style=" width: 50px;" type="date" name="venueDateEnd" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeEnd,$tz)[0]; ?>">
                                 <div class="input-group-prepend"><span class="input-group-text">End Time</span></div>
-                                <input type="time" name="venueTimeEnd" class="form-control" value="<?php echo $venueTimeEnd; ?>">
+                                <input type="time" name="venueTimeEnd" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeEnd,$tz)[1]; ?>">
                             </div>
                             <div class="form-group">
                                 <select name="timezoneId" class="mt-4 form-control">
