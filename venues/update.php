@@ -15,6 +15,7 @@ if ($conn->connect_error) {
 
     
 $id = $_REQUEST['id'];
+$is_client = $_REQUEST['is_client'];
 $venueName = mysqli_real_escape_string($conn, $_REQUEST['venueName']);
 $venueTypeId = $_REQUEST['venueTypeId'];
 $contactNameId =  $_REQUEST['contactNameId'];
@@ -25,6 +26,17 @@ $venueTimeStart = $_REQUEST['venueTimeStart'];
 $venueDateEnd = mysqli_real_escape_string($conn, $_REQUEST['venueDateEnd']);
 $venueTimeEnd = $_REQUEST['venueTimeEnd'];
 $timezoneId = $_REQUEST['timezoneId'];
+if ($is_client){
+    $bookingAuto = (isset($_POST['bookingAuto'])) ? 1 : 0;
+    $bookingCount = $_REQUEST['bookingCount'];
+    $bookingColor = $_REQUEST['bookingColor'];
+    
+}else{
+    $bookingAuto = 0;
+    $bookingCount = 0;
+    $bookingColor = 0;
+
+}
 $active = (isset($_POST['active'])) ? 1 : 0;
 
 $timezone_sql = "SELECT timezone from timezones where id='$timezoneId';";
@@ -46,7 +58,7 @@ $venueDateTimeStart = convertTimeDateTimezone($venueDateStart,$venueTimeStart,$t
 $venueDateTimeEnd = convertTimeDateTimezone($venueDateEnd,$venueTimeEnd,$tz);
 
 // Attempt insert query execution
-$sql = "UPDATE venues set venueName='$venueName', venueTypeId='$venueTypeId', contactNameId='$contactNameId', hostNameId='$hostNameId', venueDateTimeStart='$venueDateTimeStart', venueDateTimeEnd='$venueDateTimeEnd', timezoneId='$timezoneId', showLength='$showLength', active='$active' where id='$id';";
+$sql = "UPDATE venues set venueName='$venueName', venueTypeId='$venueTypeId', contactNameId='$contactNameId', hostNameId='$hostNameId', venueDateTimeStart='$venueDateTimeStart', venueDateTimeEnd='$venueDateTimeEnd', timezoneId='$timezoneId', showLength='$showLength', bookingAuto='$bookingAuto', bookingCount='$bookingCount', bookingColor='$bookingColor', active='$active' where id='$id';";
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
     header("location: view.php");

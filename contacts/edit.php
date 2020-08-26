@@ -31,7 +31,6 @@ $result = mysqli_query($conn, $sql);
 $account_sql = "SELECT accounts.accountTypeId, account_types.id, account_types.accountType as typeName  FROM accounts 
 INNER JOIN account_types ON accounts.accountTypeId=account_types.id WHERE accounts.contactId=$id;";
 $account_result = mysqli_query($conn, $account_sql);
-$contact_type_array = array();
 $is_client = False;
 while ($row = mysqli_fetch_assoc($account_result)) {
     if ($row['typeName'] == 'Client'){

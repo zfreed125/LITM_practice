@@ -31,17 +31,8 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
 
 
 
-$venues_id = $_GET["id"];
-// $id = 1;
-// $firstname = mysqli_real_escape_string($conn, $_REQUEST['firstname']);
-// $lastname = mysqli_real_escape_string($conn, $_REQUEST['lastname']);
-// $email = mysqli_real_escape_string($conn, $_REQUEST['email']);
-// $activity = mysqli_real_escape_string($conn, $_REQUEST['activity']);
-// $client_type = mysqli_real_escape_string($conn, $_REQUEST['client_type']);
- 
-// Attempt insert query execution
-// $sql = "select id, first_name, last_name, email from contact where id='$id';";
-$venues_sql = "SELECT * FROM venues where id='$venues_id';";
+$id = $_GET["id"];
+$venues_sql = "SELECT * FROM venues where id='$id';";
 $venues_result = mysqli_query($conn, $venues_sql);
     // output data of each row
     while ($row = mysqli_fetch_assoc($venues_result)) {
@@ -54,6 +45,9 @@ $venues_result = mysqli_query($conn, $venues_sql);
         $venueDateTimeEnd = $row['venueDateTimeEnd'];
         $timezoneId = $row['timezoneId'];
         $showLength = $row['showLength'];
+        $bookingAuto = $row['bookingAuto'];
+        $bookingCount = $row['bookingCount'];
+        $bookingColor = $row['bookingColor'];
     }
 $timezone_sql = "SELECT timezone from timezones where id='$timezoneId';";
 $timezone_result = mysqli_query($conn, $timezone_sql);
@@ -79,7 +73,15 @@ function convertDateTimeUTCtoLocal($venueDateTime,$tz){
     return array($venueDate,$venueTime);
 
 }
- 
+$account_sql = "SELECT accounts.accountTypeId, account_types.id, account_types.accountType as typeName  FROM accounts 
+INNER JOIN account_types ON accounts.accountTypeId=account_types.id WHERE accounts.venueId=$id;";
+$account_result = mysqli_query($conn, $account_sql);
+$is_client = False;
+while ($row = mysqli_fetch_assoc($account_result)) {
+    if ($row['typeName'] == 'Client'){
+        $is_client = True;
+    }
+}
     $conn->close();
 ?>
 <!-- // HTML Form -->
@@ -112,6 +114,16 @@ function convertDateTimeUTCtoLocal($venueDateTime,$tz){
                     }else{
                         document.getElementById("active").checked = false;
                     }
+                    var x = document.getElementById("bookingAuto").value; 
+                    if (x == 1) {
+                        document.getElementById("bookingAuto").checked = true;
+                    }else{
+                        document.getElementById("bookingAuto").checked = false;
+                    }
+
+                    if ('<?php echo $is_client;?>' !== '1'){
+                        document.getElementById("client").style.display = "none"; 
+                    }
 
 
 
@@ -125,11 +137,12 @@ function convertDateTimeUTCtoLocal($venueDateTime,$tz){
                             <p>Please edit the input values and submit to update the record.</p>
                             <form action="update.php" method="post">
                               
-                            <div class="form-group">
-                                <label>Venue Name</label>
+                            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                            <div class="input-group-prepend"><span class="input-group-text">Venue Name</span></div>
                                 <input type="text" name="venueName" class="form-control" value="<?php echo $venueName; ?>">
                             </div>
-                            <div class="form-group">
+                            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                            <div class="input-group-prepend"><span class="input-group-text">Venue Type</span></div>
                                 <select name="venueTypeId" class="form-control">
                                     <option selected="selected">Select Venue Type</option>
                                         <?php foreach($venue_type_array as $item){ ?>
@@ -139,7 +152,8 @@ function convertDateTimeUTCtoLocal($venueDateTime,$tz){
                                         <?php } ?>
                                 </select> 
                             </div>
-                            <div class="form-group">
+                            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                            <div class="input-group-prepend"><span class="input-group-text">Contact</span></div>
                                 <select name="contactNameId" class="form-control">
                                     <option selected="selected">Select Contact Name</option>
                                         <?php foreach($contacts_array as $item){ ?>
@@ -149,7 +163,8 @@ function convertDateTimeUTCtoLocal($venueDateTime,$tz){
                                         <?php } ?>
                                 </select> 
                             </div>
-                            <div class="form-group">
+                            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                            <div class="input-group-prepend"><span class="input-group-text">Host</span></div>
                                 <select name="hostNameId" class="form-control">
                                     <option selected="selected">Select Host Name</option>
                                         <?php foreach($contacts_array as $item){ ?>
@@ -159,7 +174,7 @@ function convertDateTimeUTCtoLocal($venueDateTime,$tz){
                                         <?php } ?>
                                 </select> 
                             </div>
-                            <div class="input-group">
+                            <div class="input-group mt-4">
                                 <div class="input-group-prepend"><span class="input-group-text">Start Date</span></div>
                                 <input style=" width: 50px;" type="date" name="venueDateStart" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeStart,$tz)[0]; ?>">
                                 <div class="input-group-prepend"><span class="input-group-text">Start Time</span></div>
@@ -172,8 +187,9 @@ function convertDateTimeUTCtoLocal($venueDateTime,$tz){
                                 <div class="input-group-prepend"><span class="input-group-text">End Time</span></div>
                                 <input type="time" name="venueTimeEnd" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeEnd,$tz)[1]; ?>">
                             </div>
-                            <div class="form-group">
-                                <select name="timezoneId" class="mt-4 form-control">
+                            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                            <div class="input-group-prepend"><span class="input-group-text">Timezone</span></div>
+                                <select name="timezoneId" class="form-control">
                                     <option selected="selected">Select Timezone</option>
                                         <?php foreach($timezones_array as $item){ ?>
                                     <option value="<?php echo strtolower($item['id']); ?>"
@@ -182,20 +198,35 @@ function convertDateTimeUTCtoLocal($venueDateTime,$tz){
                                         <?php } ?>
                                 </select> 
                             </div>
-                            <div class="form-group">
-                                <label>Show Length</label>
+                            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                            <div class="input-group-prepend"><span class="input-group-text">Show Length</span></div>
                                 <input type="number" name="showLength" class="form-control" value="<?php echo $showLength; ?>">
                             </div>
-                            <div class="form-group">
-                                <label>active</label>
+                            <div id="client">
+                                <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                                <div class="input-group-prepend"><span class="input-group-text">Auto Monthly Bookings</span></div>
+                                    <input type="checkbox" name="bookingAuto" id="bookingAuto" class="form-control" value="<?php echo $bookingAuto; ?>">
+                                </div>
+                                <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                                <div class="input-group-prepend"><span class="input-group-text">Booking Amount Per Month</span></div>
+                                    <input type="number" id="bookingCount" name="bookingCount" class="form-control w-25" value="<?php echo $bookingCount; ?>">
+                                </div>
+                                <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                                <div class="input-group-prepend"><span class="input-group-text">Booking Color</span></div>
+                                    <input type="color" id="bookingColor" class="form-control" name="bookingColor" value="<?php echo $bookingColor; ?>">
+                                </div>
+                            </div>
+                            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                            <div class="input-group-prepend"><span class="input-group-text">Active</span></div>
                                 <input type="checkbox" name="active" id="active" class="form-control" value="<?php echo $active; ?>">
                             </div>
-                                <input type="hidden" name="id" value="<?php echo $venues_id; ?>"/>
+                                <input type="hidden" name="id" value="<?php echo $id; ?>"/>
+                                <input type="hidden" name="is_client" value="<?php echo $is_client; ?>"/>
                                 <input type="submit" class="btn btn-primary" value="Submit">
                                 <br>
                                 <br>
                                 <!-- <input type="submit" class="btn btn-danger" value="Delete"> -->
-                                <a class="btn btn-danger" href="delete.php?id=<?php echo $venues_id;?>">Delete</a>
+                                <a class="btn btn-danger" href="delete.php?id=<?php echo $id;?>">Delete</a>
                                 <br>
                                 <br>
                                 <a class="btn btn-default" href="view.php">Cancel</a>
