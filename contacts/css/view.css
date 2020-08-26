@@ -1,0 +1,27 @@
+.wrapper{
+    width: 75%;
+/* margin: 0 auto; */
+}
+.page-header h2{
+    margin-top: 0;
+}
+table tr td:last-child a{
+    margin-right: 15px;
+}
+th,td{
+width: 1px;
+white-space: nowrap;
+}
+td.fitwidth {
+width: 1px;
+white-space: nowrap;
+}
+.details,
+.show,
+.hide:target {
+display: none;
+}
+.hide:target + .show,
+.hide:target ~ .details {
+display: block;
+}
