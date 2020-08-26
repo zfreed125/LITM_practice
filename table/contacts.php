@@ -20,7 +20,9 @@ $sql1 = "CREATE TABLE contacts (
     jobTitle VARCHAR(30) NULL,
     active INT(1) DEFAULT 1,
     birthdate DATE NULL,
-    bookingFreq INT(3) NULL,
+    bookingCount INT(3) NULL,
+    bookingAuto INT(1) NULL,
+    bookingColor VARCHAR(32) NULL,
     primaryAddressId INT(6) NULL,
     primaryEmailId INT(6) NULL,
     primaryPhoneId INT(6) NULL,
@@ -29,7 +31,7 @@ $sql1 = "CREATE TABLE contacts (
     )";
     
     if ($conn->query($sql1) === TRUE) {
-      // echo "Table contacts created successfully";
+      echo "Table contacts created successfully";
     } else {
       echo "Error creating table: " . $conn->error;
     }
