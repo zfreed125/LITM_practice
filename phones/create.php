@@ -9,7 +9,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$primary = $_REQUEST['primary'];
 $contactId = $_REQUEST['contactId'];
 $venueId = $_REQUEST['venueId'];
 $phoneTypeId = $_REQUEST['phoneTypeId'];
@@ -25,26 +24,9 @@ if (empty($venueId)){
 }
 
 if(mysqli_query($conn, $phone_sql)){
-    $primaryPhoneId = mysqli_insert_id($conn);
+    header("location: ../$dst/view.php");
 }else{
     echo "ERROR: Not able to execute $phone_sql. " . mysqli_error($conn);
-}
-if (empty($venueId)){
-    $primary_sql = "UPDATE contacts set primaryPhoneId='$primaryPhoneId' where id='$contactId';";
-
-}else{
-    $primary_sql = "UPDATE venues set primaryPhoneId='$primaryPhoneId' where id='$venueId';";
-
-}
-if ($primary == 1) {
-    if(mysqli_query($conn, $primary_sql)){
-        header("location: ../$dst/view.php");
-    }else{
-        echo "ERROR: Not able to execute $primary_sql. " . mysqli_error($conn);
-    }
-}else{
-    header("location: ../$dst/view.php");
-
 }
     $conn->close();
 ?>

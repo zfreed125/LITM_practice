@@ -27,23 +27,6 @@ $result2 = mysqli_query($conn, $phones_sql);
         $phoneTypeId = $row["phoneTypeId"];
         $phone = $row["phone"];
     }
-if(empty($venueId)){
-    $primary_sql = "SELECT primaryPhoneId FROM contacts WHERE id='$contactId';";
-}else{
-    $primary_sql = "SELECT primaryPhoneId FROM venues WHERE id='$venueId';";
-}
-$primary_result = mysqli_query($conn, $primary_sql);
-while ($row = mysqli_fetch_assoc($primary_result)) {
-    $primaryPhoneId = $row['primaryPhoneId'];
-   if($id == $primaryPhoneId) {
-    //    echo "do nothing";
-       $setPrimary = 1;
-    }else{
-        // echo "set primary";
-        $setPrimary = 0;
-
-   };
-}
 
 
 
@@ -64,16 +47,6 @@ while ($row = mysqli_fetch_assoc($primary_result)) {
         </style>
          <script>
                 window.addEventListener('load', (event) => {
-
-                    var x = document.getElementById("primary").value; 
-                    if (<?php echo $setPrimary;?> == 1) {
-                        document.getElementById("primary").checked = true;
-                    }else{
-                        // document.getElementById("primarydiv").style.display = "none";
-                        document.getElementById("primary").checked = false;
-                    }
-
-
 
 
                 });
@@ -98,10 +71,6 @@ while ($row = mysqli_fetch_assoc($primary_result)) {
                                         <?php echo $item['phoneType']; ?></option>
                                             <?php } ?>
                                     </select>
-                                    </div>
-                                    <div id="primarydiv" class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                                        <div class="input-group-prepend"><span class="input-group-text">Primary</span></div>
-                                        <input class="form-control" type="checkbox" id="primary" name="primary">
                                     </div>
                                     <input type="hidden" name="contactId" value="<?php echo $contactId; ?>">
                                     <input type="hidden" name="venueId" value="<?php echo $venueId; ?>">

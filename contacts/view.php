@@ -40,15 +40,26 @@
         </style>
         <script type="text/javascript">
 
+            show = [];    
             function myFunction(id) {
-                console.log(id);
-                // var x = document.getElementById('tbl_phone1');
                 if (id.style.display === "block") {
                     id.style.display = "none";
+                show.pop(id['id']);
                 } else {
+                show.push(id['id']);
                     id.style.display = "block";
                 }
-            } 
+                sessionStorage.setItem("contacts_uncollapsed", JSON.stringify(show));
+            }
+            window.addEventListener('load', (event) => {
+                var uncollapsed = JSON.parse(sessionStorage.getItem("contacts_uncollapsed"));
+                for (i = 0; i < uncollapsed.length; i++) {
+                    id = document.getElementById(uncollapsed[i]);
+                    myFunction(id);
+                } 
+
+
+            });
 
             // $(document).ready(function(){
             //         $('[data-toggle="tooltip"]').tooltip();
@@ -130,6 +141,9 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
         echo "<a href='delete.php?contactId=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
         echo "</td>";
         $primaryPhoneId = $row['primaryPhoneId'];
+        $primaryEmailId = $row['primaryEmailId'];
+        $primaryAddressId = $row['primaryAddressId'];
+        $primaryServiceId = $row['primaryServiceId'];
         $contactId = $row['id'];
         echo "</tr>";
 
@@ -154,16 +168,16 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
             {
                 foreach($phone_type_array as $item){
                     if($item['id'] == $row['phoneTypeId']){
-                        $phoneTypeId = $item['phoneType']; 
+                        $phoneTypeId = $item['phoneType'];
                         }
                 }
-                if($primaryPhoneId == $row['id']) { 
-                    $primary = "<span><i style='color:green'class='fas fa-star'></i></span>"; 
-                }else{ 
-                    $primary = "";
+                if($primaryPhoneId == $row['id']) {
+                    $phone_primary = "<span><i style='color:green'class='fas fa-star'></i></span>";
+                }else{
+                    $phone_primary = "<a href='primary.php?phoneId=".$row['id']."&contactId=".$contactId."'><span><i style='color:green'class='far fa-star'></i></span></a>";
                 }
             echo "<tr>";
-            echo "<td class='fitwidth'>" . $primary . "</td>";
+            echo "<td class='fitwidth'>" . "$phone_primary" . "</td>";
             echo "<td class='fitwidth'>" . "$row[phone]" . "</td>";
             echo "<td class='fitwidth'>" . "$phoneTypeId" . "</td>";
             echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
@@ -176,12 +190,12 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
         //end of the table from the phone loop
         echo "</tbody>";
         echo "</table>";
-        
+
         //account sql loop table
         $account_sql = "SELECT * FROM accounts where contactId = '$contactId';";
         $account_result = mysqli_query($conn, $account_sql);
         $accountRowCount = mysqli_num_rows($account_result);
-        
+
         echo "<table id='tbl_account". $contactId ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
         echo "<caption><a href='../accounts/add.php?contactId=". $contactId ."' title='Add Account' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span>Account</a></caption>";
         echo "<a href='#' title='Show/Hide accounts'style='position: relative; left: 50px;' onclick='myFunction(tbl_account". $contactId .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Account Type (". $accountRowCount .")&nbsp</span></a>";
@@ -192,12 +206,12 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
         echo "</tr>";
         echo "</thead>";
         echo "<tbody>";
-        
+
         while ($row = mysqli_fetch_assoc($account_result))
         {
             foreach($account_type_array as $item){
                 if($item['id'] == $row['accountTypeId']){
-                    $accountTypeId = $item['accountType']; 
+                    $accountTypeId = $item['accountType'];
                 }
             }
             echo "<tr>";
@@ -233,7 +247,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                     {
                         foreach($genre_type_array as $item){
                             if($item['id'] == $row['genreTypeId']){
-                                $genreTypeId = $item['genreType']; 
+                                $genreTypeId = $item['genreType'];
                                 }
                         }
                     echo "<tr>";
@@ -248,17 +262,19 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                     //end of the table from the genre loop
                     echo "</tbody>";
                     echo "</table>";
-        
+
                         //email sql loop table
                         $email_sql = "SELECT * FROM emails where contactId = '$contactId';";
                         $email_result = mysqli_query($conn, $email_sql);
                         $emailRowCount = mysqli_num_rows($email_result);
+
 
                         echo "<table id='tbl_email". $contactId ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
                         echo "<caption><a href='../emails/add.php?contactId=". $contactId ."' title='Add Email' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span>Email</a></caption>";
                         echo "<a href='#' title='Show/Hide Emails'style='position: relative; left: 50px;' onclick='myFunction(tbl_email". $contactId .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Emails (". $emailRowCount .")&nbsp</span></a>";
                         echo "<thead>";
                         echo "<tr>";
+                        echo "<th></th>";
                         echo "<th>Email</th>";
                         echo "<th>Email Type</th>";
                         echo "<th>Created</th>";
@@ -270,10 +286,16 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                         {
                             foreach($email_type_array as $item){
                                 if($item['id'] == $row['emailTypeId']){
-                                    $emailTypeId = $item['emailType']; 
+                                    $emailTypeId = $item['emailType'];
                                     }
                             }
+                            if($primaryEmailId == $row['id']) {
+                                $email_primary = "<span><i style='color:green'class='fas fa-star'></i></span>";
+                            }else{
+                                $email_primary = "<a href='primary.php?emailId=".$row['id']."&contactId=".$contactId."'><span><i style='color:green'class='far fa-star'></i></span></a>";
+                            }
                         echo "<tr>";
+                        echo "<td class='fitwidth'>" .  "$email_primary" . "</td>";
                         echo "<td class='fitwidth'>" . "$row[email]" . "</td>";
                         echo "<td class='fitwidth'>" . "$emailTypeId" . "</td>";
                         echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
@@ -286,8 +308,8 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                         //end of the table from the email loop
                         echo "</tbody>";
                         echo "</table>";
-        
-        
+
+
                             //address sql query loop table
                             $address_sql = "SELECT * FROM addresses WHERE contactId = '$contactId';";
                             $address_result = mysqli_query($conn, $address_sql);
@@ -298,6 +320,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                             echo "<a href='#' title='Show/Hide Addresses'style='position: relative; left: 50px;' onclick='myFunction(tbl_address". $contactId .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Addresses (". $addressRowCount .")&nbsp</span></a>";
                             echo "<thead>";
                             echo "<tr>";
+                            echo "<th></th>";
                             echo "<th>Street1</th>";
                             echo "<th>Street2</th>";
                             echo "<th>City</th>";
@@ -311,7 +334,13 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
 
                             while ($row = mysqli_fetch_assoc($address_result))
                             {
+                              if($primaryAddressId == $row['id']) {
+                                  $address_primary = "<span><i style='color:green'class='fas fa-star'></i></span>";
+                              }else{
+                                  $address_primary = "<a href='primary.php?addressId=".$row['id']."&contactId=".$contactId."'><span><i style='color:green'class='far fa-star'></i></span></a>";
+                              }
                             echo "<tr>";
+                            echo "<td class='fitwidth'>" . "$address_primary" . "</td>";
                             echo "<td class='fitwidth'>" . "$row[street1]" . "</td>";
                             echo "<td class='fitwidth'>" . "$row[street2]" . "</td>";
                             echo "<td class='fitwidth'>" . "$row[city]" . "</td>";
@@ -339,6 +368,7 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
                                 echo "<a href='#' title='Show/Hide Services'style='position: relative; left: 50px;' onclick='myFunction(tbl_services". $contactId .")'><span><i class='fas fa-chevron-down'></i>&nbspShow Services (". $servicesRowCount .")&nbsp</span></a>";
                                 echo "<thead>";
                                 echo "<tr>";
+                                echo "<th></th>";
                                 echo "<th>Service Name</th>";
                                 echo "<th>User Account</th>";
                                 echo "<th>Website</th>";
@@ -350,7 +380,13 @@ while ($row = mysqli_fetch_assoc($genre_types_result)) {
 
                                 while ($row = mysqli_fetch_assoc($services_result))
                                 {
+                                if($primaryServiceId == $row['id']) {
+                                    $service_primary = "<span><i style='color:green'class='fas fa-star'></i></span>";
+                                }else{
+                                    $service_primary = "<a href='primary.php?serviceId=".$row['id']."&contactId=".$contactId."'><span><i style='color:green'class='far fa-star'></i></span></a>";
+                                }
                                 echo "<tr>";
+                                echo "<td class='fitwidth'>" . "$service_primary" . "</td>";
                                 echo "<td class='fitwidth'>" . "$row[serviceName]" . "</td>";
                                 echo "<td class='fitwidth'>" . "$row[userAccount]" . "</td>";
                                 echo "<td class='fitwidth'>" . "$row[website]" . "</td>";
