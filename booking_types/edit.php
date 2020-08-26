@@ -7,10 +7,10 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 $id = $_GET["id"];
-$sql = "select id, emailType from email_types where id='$id';";
+$sql = "select id, bookingType from booking_types where id='$id';";
 $result = mysqli_query($conn, $sql);
     while ($row = mysqli_fetch_assoc($result)) {
-        $emailType = $row["emailType"];
+        $bookingType = $row["bookingType"];
     }
     $conn->close();
 ?>
@@ -36,7 +36,7 @@ $result = mysqli_query($conn, $sql);
                     <form action="update.php" method="POST">
                         <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                             <div class="input-group-prepend"><span class="input-group-text">Email</span></div>
-                            <input type="text" name="emailType" class="form-control" value="<?php echo $emailType; ?>">
+                            <input type="text" name="bookingType" class="form-control" value="<?php echo $bookingType; ?>">
                         </div>
                         <input type="hidden" name="id" value="<?php echo $id; ?>">
                         <input type="hidden" name="id" value="<?php echo $id; ?>">

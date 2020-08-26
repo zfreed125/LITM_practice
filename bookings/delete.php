@@ -7,10 +7,10 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 $id = $_REQUEST['id'];
-$dst = $_REQUEST['src'];
-$sql = "DELETE from emails where id='$id';";
+
+$sql = "DELETE from bookings where id='$id';";
 if(mysqli_query($conn, $sql)){
-    header("location: ../$dst/view.php");
+    header("location: view.php");
 } else{
     echo "ERROR: Not able to execute $sql. " . mysqli_error($link);
 }

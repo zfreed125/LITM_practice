@@ -13,13 +13,13 @@ if ($conn->connect_error) {
 
 // sql to create table
 // $sql2 = "DROP TABLE contacts;";
-$sql1 = "CREATE TABLE venue_types (
+$sql1 = "CREATE TABLE booking_types (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     bookingType VARCHAR(64) NULL
     )";
     
     if ($conn->query($sql1) === TRUE) {
-      echo "Table venue_types created successfully";
+      echo "Table booking_types created successfully";
     } else {
       echo "Error creating table: " . $conn->error;
     }

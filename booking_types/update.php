@@ -8,9 +8,9 @@ if ($conn->connect_error) {
 }
 
 $id = mysqli_real_escape_string($conn, $_REQUEST['id']);
-$emailType = mysqli_real_escape_string($conn, $_REQUEST['emailType']);
+$bookingType = mysqli_real_escape_string($conn, $_REQUEST['bookingType']);
 //Attempt insert query execution
-$sql = "UPDATE email_types set emailType='$emailType' where id='$id';";
+$sql = "UPDATE booking_types set bookingType='$bookingType' where id='$id';";
 if(mysqli_query($conn, $sql)){
     header("location: view.php");
 } else{

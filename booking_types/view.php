@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Emails</title>
+    <title>Bookings</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
@@ -32,8 +32,8 @@ $(document).ready(function(){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <h2 class="pull-left">Email List</h2>
-                        <a href="add.php" class="btn btn-success pull-right">Add New Email</a>
+                        <h2 class="pull-left">Booking List</h2>
+                        <a href="add.php" class="btn btn-success pull-right">Add New Booking</a>
                     </div>
                     <?php
                     // Include config file
@@ -45,21 +45,21 @@ $(document).ready(function(){
                     die("Connection failed: " . $conn->connect_error);
                     }
                     //Attempt select query execution
-                    $sql = "SELECT * FROM email_types;";
+                    $sql = "SELECT * FROM booking_types;";
                     if($result = mysqli_query($conn, $sql)){
                         if(mysqli_num_rows($result) > 0){
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
                                         echo "<th>#</th>";
-                                        echo "<th>Email Type</th>";
+                                        echo "<th>Booking Type</th>";
                                     echo "</tr>";
                                 echo "</thead>";
                                 echo "<tbody>";
                             while($row = mysqli_fetch_array($result)){
                                     echo "<tr>";
                                         echo "<td>" . $row['id'] . "</td>";
-                                        echo "<td>" . $row['emailType'] . "</td>";
+                                        echo "<td>" . $row['bookingType'] . "</td>";
                                         echo "<td>";
                                             echo "<a href='view.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
                                             echo "<a href='edit.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";

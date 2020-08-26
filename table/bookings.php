@@ -13,22 +13,23 @@ if ($conn->connect_error) {
 
 // sql to create table
 // $sql2 = "DROP TABLE contacts;";
-$sql1 = "CREATE TABLE booking (
+$sql1 = "CREATE TABLE bookings (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     bookingTypeId INT(6) NULL,
-    bookingDateTime DATETIME NOT NULL,
+    bookingDateTimeStart DATETIME NULL,
+    bookingDateTimeEnd DATETIME NULL,
+    timezoneId INT(3) NULL,
     bookingLength INT(8) NULL,
-    recurring INT(3) NOT NULL,
-    autoMonthly INT(1) NOT NULL,
-    clientNameId INT(6) NOT NULL,
+    clientNameId INT(6) NULL,
     clientConfirm INT(1) NOT NULL,
-    venueNameId INT(6) NOT NULL,
+    venueNameId INT(6) NULL,
     venueConfirm INT(1) NOT NULL,
-    bookingStatus INT(5) NOT NULL
+    bookingStatus VARCHAR(32) DEFAULT 'Initialized',
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )";
     
     if ($conn->query($sql1) === TRUE) {
-      echo "Table booking created successfully";
+      echo "Table bookings created successfully";
     } else {
       echo "Error creating table: " . $conn->error;
     }

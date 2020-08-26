@@ -7,7 +7,7 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 $id = mysqli_real_escape_string($conn, $_REQUEST['id']);
-$sql = "DELETE from email_types where id='$id';";
+$sql = "DELETE from booking_types where id='$id';";
 if(mysqli_query($conn, $sql)){
     header("location: view.php");
 } else{
