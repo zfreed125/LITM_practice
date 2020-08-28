@@ -14,12 +14,8 @@ $booking_type_array = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $booking_type_array[] = array('id' => $row['id'], 'bookingType' => $row['bookingType']);
 }
-$contact_sql = "SELECT id, CONCAT(firstname, ' ', lastname) AS fullname FROM contacts;";
-$contact_result = mysqli_query($conn, $contact_sql);
-$contacts_array = array();
-while ($row = mysqli_fetch_assoc($contact_result)) {
-    $contacts_array[] = array('id' => $row['id'], 'fullname' => $row['fullname']);
-}
+require_once './includes/client_array.php';
+
 $venue_name_sql = "SELECT id, venueName FROM venues;";
 $result = mysqli_query($conn, $venue_name_sql);
 $venue_name_array = array();
@@ -66,7 +62,7 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-100">
             <div class="input-group">
                 <div class="input-group-prepend"><span class="input-group-text">Start Date</span></div>
-                <input style=" width: 65px;" type="date" name="bookingDateStart" class="form-control">
+                <input style=" width: 65px;" type="date" name="bookingDateStart" class="form-control" value="NULL">
                 <div class="input-group-prepend"><span class="input-group-text">Start Time</span></div>
                 <input type="time" name="bookingTimeStart" class="form-control">
             </div>
@@ -79,8 +75,8 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
             </div>
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-            <div class="input-group-prepend"><span class="input-group-text">Booking Timezone</span><select name="timezoneId"></div>
-                        <option selected="selected">Choose one</option>
+            <div class="input-group-prepend"><span class="input-group-text">Booking Timezone</span><select class="form-control" name="timezoneId"></div>
+                        <option value="12" selected="selected">Default *(CST)</option>
                             <?php foreach($timezones_array as $item){ ?>
                         <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['name']; ?></option>
                             <?php } ?>
@@ -97,8 +93,8 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
                 <div class="input-group-prepend"><span class="input-group-text">Client</span></div>
                     <select class="form-control" name="clientNameId">
                         <option selected="selected">Select Client</option>
-                            <?php foreach($contacts_array as $item){ ?>
-                        <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['fullname']; ?></option>
+                            <?php asort($client_array);foreach($client_array as $item){$client = $item['client']; $type = $item['type']; $clientId = $item['id'];$bookId = $type . $clientId; ?>
+                        <option value="<?php echo $bookId; ?>"><?php echo "$client ($type)"; ?></option>
                             <?php } ?>
                     </select>   
             </div>
@@ -111,7 +107,7 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text">Venue</span></div>
                     <select class="form-control" name="venueNameId">
-                        <option selected="selected">Select Venue</option>
+                        <option value="0" selected="selected">Select Venue</option>
                             <?php foreach($venue_name_array as $item){ ?>
                         <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['venueName']; ?></option>
                             <?php } ?>

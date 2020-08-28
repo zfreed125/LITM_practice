@@ -38,6 +38,23 @@ $(document).ready(function(){
                     <?php
                     // Include config file
                     require_once '../config.php';
+                    function convertDateTimeUTCtoLocal($venueDateTime,$tz){
+                        $utc_date = DateTime::createFromFormat(
+                                'Y-m-d H:i:s',  // this the format from mysql
+                                // 'Y-m-d G:i',  // this the format from mysql
+                                $venueDateTime, // this is the output from mysql $venueDateTime...
+                                new DateTimeZone('UTC')
+                        );
+                        //
+                        $local_date = $utc_date;
+                        $local_date->setTimeZone(new DateTimeZone($tz));
+                        //
+                        $venueDate = $local_date->format('m-d-Y'); // output: 08-25-2020
+                        $venueTime = $local_date->format('g:i A'); // output: 10:45 PM
+                        // $venueTime = $local_date->format('g:i A'); // output: 10:45 PM
+
+                        return array($venueDate,$venueTime);
+                    }
                     // Create connection
                     $conn = new mysqli($servername, $username, $password, $database);
                     // Check connection
@@ -50,12 +67,9 @@ $(document).ready(function(){
                     while ($row = mysqli_fetch_assoc($result)) {
                         $booking_type_array[] = array('id' => $row['id'], 'bookingType' => $row['bookingType']);
                     }
-                    $contact_sql = "SELECT id, CONCAT(firstname, ' ', lastname) AS fullname FROM contacts;";
-                    $contact_result = mysqli_query($conn, $contact_sql);
-                    $contacts_array = array();
-                    while ($row = mysqli_fetch_assoc($contact_result)) {
-                        $contacts_array[] = array('id' => $row['id'], 'fullname' => $row['fullname']);
-                    }
+                    
+                    require './includes/client_array.php';
+                   
                     $venue_name_sql = "SELECT id, venueName FROM venues;";
                     $result = mysqli_query($conn, $venue_name_sql);
                     $venue_name_array = array();
@@ -76,16 +90,16 @@ $(document).ready(function(){
                                 echo "<thead>";
                                     echo "<tr>";
                                         echo "<th>#</th>";
-                                        echo "<th>bookingTypeId</th>";
-                                        echo "<th>bookingDateTimeStart</th>";
-                                        echo "<th>bookingDateTimeEnd</th>";
-                                        echo "<th>timezoneId</th>";
-                                        echo "<th>bookingLength</th>";
-                                        echo "<th>clientNameId</th>";
-                                        echo "<th>clientConfirm</th>";
-                                        echo "<th>venueNameId</th>";
-                                        echo "<th>venueConfirm</th>";
-                                        echo "<th>bookingStatus</th>";
+                                        echo "<th>Type</th>";
+                                        echo "<th>Start Date/Time</th>";
+                                        echo "<th>End Date/Time</th>";
+                                        echo "<th>Timezone</th>";
+                                        echo "<th>Length</th>";
+                                        echo "<th>Client Name</th>";
+                                        echo "<th>Client Confirm</th>";
+                                        echo "<th>Venue Name</th>";
+                                        echo "<th>Venue Confirm</th>";
+                                        echo "<th>Status</th>";
                                     echo "</tr>";
                                 echo "</thead>";
                                 echo "<tbody>";
@@ -94,12 +108,12 @@ $(document).ready(function(){
                                     if($item['id'] == $row['bookingTypeId']){
                                         $bookingType = $item['bookingType']; 
                                     }
-                                }  
-                                foreach($contacts_array as $item){
-                                    if($item['id'] == $row['clientNameId']){
-                                        $client = $item['fullname']; 
-                                    }
-                                }  
+                                }
+                                foreach($client_array as $item){
+                                    if(($item['type'].$item['id']) == $row['clientNameId']){
+                                         $client = $item['client']; 
+                                        } 
+                                }
                                 foreach($venue_name_array as $item){
                                     if($item['id'] == $row['venueNameId']){
                                         $venue = $item['venueName']; 
@@ -110,15 +124,26 @@ $(document).ready(function(){
                                         $timezone = $item['timezone']; 
                                     }
                                 }
-                                
+                                if($row['clientNameId'] == '0'){
+                                    $cl = '';
+                                }else{
+                                    (empty($client)) ? $cl = "Orphaned Client ($row[clientNameId])" : $cl = $client;
+                                }
+                                (empty($row['bookingDateTimeStart'])) ? $StartDate = 'unset': $StartDate = convertDateTimeUTCtoLocal($row['bookingDateTimeStart'],$timezone)[0];
+                                (empty($row['bookingDateTimeStart'])) ? $StartTime = 'unset': $StartTime = convertDateTimeUTCtoLocal($row['bookingDateTimeStart'],$timezone)[1];
+                                (empty($row['bookingDateTimeEnd'])) ? $EndDate = 'unset': $EndDate = convertDateTimeUTCtoLocal($row['bookingDateTimeEnd'],$timezone)[0];
+                                (empty($row['bookingDateTimeEnd'])) ? $EndTime = 'unset': $EndTime = convertDateTimeUTCtoLocal($row['bookingDateTimeEnd'],$timezone)[1];
+                                $StartDateTime = "$StartDate $StartTime";
+                                $EndDateTime = "$EndDate $EndTime";
                                     echo "<tr>";
                                         echo "<td>" . $row['id'] . "</td>";
                                         echo "<td>" . $bookingType . "</td>";
-                                        echo "<td>" . $row['bookingDateTimeStart'] . "</td>";
-                                        echo "<td>" . $row['bookingDateTimeEnd'] . "</td>";
+                                        echo "<td>" . $StartDateTime . "</td>";
+                                        echo "<td>" . $EndDateTime . "</td>";
                                         echo "<td>" . $timezone . "</td>";
                                         echo "<td>" . $row['bookingLength'] . "</td>";
-                                        echo "<td>" . $client . "</td>";
+                                        echo "<td>" . $cl . "</td>";
+                                        // echo "<td>" . (!empty($client)) ? $row['clientNameId'] : $client . "</td>";
                                         echo "<td>" . $row['clientConfirm'] . "</td>";
                                         echo "<td>" . $venue . "</td>";
                                         echo "<td>" . $row['venueConfirm'] . "</td>";

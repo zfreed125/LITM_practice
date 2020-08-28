@@ -13,12 +13,8 @@ $booking_type_array = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $booking_type_array[] = array('id' => $row['id'], 'bookingType' => $row['bookingType']);
 }
-$contact_sql = "SELECT id, CONCAT(firstname, ' ', lastname) AS fullname FROM contacts;";
-$contact_result = mysqli_query($conn, $contact_sql);
-$contacts_array = array();
-while ($row = mysqli_fetch_assoc($contact_result)) {
-    $contacts_array[] = array('id' => $row['id'], 'fullname' => $row['fullname']);
-}
+require_once './includes/client_array.php';
+
 $venue_name_sql = "SELECT id, venueName FROM venues;";
 $result = mysqli_query($conn, $venue_name_sql);
 $venue_name_array = array();
@@ -50,7 +46,31 @@ $result2 = mysqli_query($conn, $emails_sql);
         $bookingStatus = $row["bookingStatus"];
         
     }
-    $timezone_sql = "SELECT timezone from timezones where id='$timezoneId';";
+$client_options = array();
+asort($client_array);
+foreach($client_array as $item){
+        $client = $item['client'];
+        $type = $item['type'];
+        $clientId = $item['id'];
+        $bookId = $type . $clientId;
+
+        if ("$bookId" == "$clientNameId"){
+            $client_options[] = array("<option style='background-color: white;' value='0'>Select Client</option>");
+            $client_options[] = array("<option style='background-color: white;' value='$bookId' selected='selected'>$client ($type)</option>");
+        }else{
+            $client_options[] = array( "<option style='background-color: white;' value='$bookId'>$client ($type)</option>");
+
+        }
+    
+        
+    }
+$f = 0;
+foreach($client_array as $item){
+    $bookId = $item['type'] . $item['id'];
+    if ("$bookId" == "$clientNameId"){ $f += 1; }
+}
+
+$timezone_sql = "SELECT timezone from timezones where id='$timezoneId';";
 $timezone_result = mysqli_query($conn, $timezone_sql);
     if(mysqli_num_rows($timezone_result) > 0) {
         $row = mysqli_fetch_assoc($timezone_result);
@@ -74,6 +94,12 @@ function convertDateTimeUTCtoLocal($bookingDateTime,$tz){
     return array($bookingDate,$bookingTime);
 
 }
+
+    (empty($bookingDateTimeStart)) ? $StartDate = 'unset': $StartDate = convertDateTimeUTCtoLocal($bookingDateTimeStart,$tz)[0];
+    (empty($bookingDateTimeStart)) ? $StartTime = 'unset': $StartTime = convertDateTimeUTCtoLocal($bookingDateTimeStart,$tz)[1];
+    (empty($bookingDateTimeEnd)) ? $EndDate = 'unset': $EndDate = convertDateTimeUTCtoLocal($bookingDateTimeEnd,$tz)[0];
+    (empty($bookingDateTimeEnd)) ? $EndTime = 'unset': $EndTime = convertDateTimeUTCtoLocal($bookingDateTimeEnd,$tz)[1];
+
 $conn->close();
 ?>
 <!-- //HTML Form -->
@@ -81,7 +107,7 @@ $conn->close();
 <html lang="en">
     <head>
             <meta charset="UTF-8">
-            <title>Update Email</title>
+            <title>Update Booking</title>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
        <style type="text/css">
             .wrapper{
@@ -111,7 +137,7 @@ $conn->close();
     </head> 
     <body>
         <div class="wrapper">
-            <h2>Update Email</h2>
+            <h2>Update Booking</h2>
                 <p>Please edit the input values and submit to update the record.</p>
                     <form action="update.php" method="POST">
                     <div class="input-group">
@@ -127,25 +153,23 @@ $conn->close();
             </div>
                         <div class="input-group mt-4">
                                 <div class="input-group-prepend"><span class="input-group-text">Start Date</span></div>
-                                <input style=" width: 50px;" type="date" name="bookingDateStart" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($bookingDateTimeStart,$tz)[0]; ?>">
+                                <input style=" width: 50px;" type="date" name="bookingDateStart" class="form-control" value="<?php echo $StartDate; ?>">
                                 <div class="input-group-prepend"><span class="input-group-text">Start Time</span></div>
-                                <input type="time" name="bookingTimeStart" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($bookingDateTimeStart,$tz)[1]; ?>">
+                                <input type="time" name="bookingTimeStart" class="form-control" value="<?php echo $StartTime; ?>">
                             </div>
                             <span class="input-group-addon">&nbsp</span>
                             <div class="input-group">
                                 <div class="input-group-prepend"><span class="input-group-text">End Date</span></div>
-                                <input style=" width: 50px;" type="date" name="bookingDateEnd" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($bookingDateTimeEnd,$tz)[0]; ?>">
+                                <input style=" width: 50px;" type="date" name="bookingDateEnd" class="form-control" value="<?php echo $EndDate; ?>">
                                 <div class="input-group-prepend"><span class="input-group-text">End Time</span></div>
-                                <input type="time" name="bookingTimeEnd" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($bookingDateTimeEnd,$tz)[1]; ?>">
+                                <input type="time" name="bookingTimeEnd" class="form-control" value="<?php echo $EndTime; ?>">
                         </div>
                         <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                             <div class="input-group-prepend"><span class="input-group-text">Timezone</span></div>
                                 <select name="timezoneId" class="form-control">
                                     <option selected="selected">Select Timezone</option>
                                         <?php foreach($timezones_array as $item){ ?>
-                                    <option value="<?php echo strtolower($item['id']); ?>"
-                                        <?php if($item['id'] == $timezoneId){ echo "selected"; } ?> >
-                                    <?php echo $item['name']; ?></option>
+                                    <option value="<?php echo strtolower($item['id']); ?>" <?php if($item['id'] == $timezoneId){ echo "selected"; } ?> > <?php echo $item['name']; ?></option>
                                         <?php } ?>
                                 </select> 
                             </div>
@@ -157,14 +181,25 @@ $conn->close();
             </div>  
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text">Client</span></div>
-                    <select class="form-control" name="clientNameId">
-                        <option selected="selected">Select Client</option>
-                            <?php foreach($contacts_array as $item){ ?>
-                        <option value="<?php echo strtolower($item['id']); ?>"
-                            <?php if($item['id'] == $clientNameId){ echo "selected"; } ?> >
-                        <?php echo $item['fullname']; ?></option>
-                            <?php } ?>
-                    </select>   
+                <?php
+                if (!empty($clientNameId) && ($f < 1)){
+                    $selectOrphan = "style='background-color: #ff6347;'";
+                }else{
+                    $selectOrphan ='';
+                }
+                ?>
+                <select <?php echo $selectOrphan; ?> class="form-control" name="clientNameId">
+                        
+                        <?php
+                            if (!empty($clientNameId) && ($f < 1)){
+                                echo "<option $selectOrphan value='$clientNameId' selected='selected'>Orphaned Client ($clientNameId)</option>";
+                            }
+                            foreach($client_options as $option){
+                                
+                                echo $option[0];
+                            }
+                        ?>
+                    </select>
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group">
@@ -175,7 +210,7 @@ $conn->close();
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text">Venue</span></div>
                     <select class="form-control" name="venueNameId">
-                        <option selected="selected">Select Venue</option>
+                        <option value="0" selected="selected">Select Venue</option>
                             <?php foreach($venue_name_array as $item){ ?>
                         <option value="<?php echo strtolower($item['id']); ?>"
                         <?php if($item['id'] == $venueNameId){ echo "selected"; } ?> >

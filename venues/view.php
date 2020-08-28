@@ -35,7 +35,7 @@ function convertDateTimeUTCtoLocal($venueDateTime,$tz){
             $local_date->setTimeZone(new DateTimeZone($tz));
             //
             $venueDate = $local_date->format('m-d-Y'); // output: 08-25-2020
-            $venueTime = $local_date->format('H:i'); // output: 10:45 PM
+            $venueTime = $local_date->format('g:i A'); // output: 10:45 PM
             // $venueTime = $local_date->format('g:i A'); // output: 10:45 PM
 
             return array($venueDate,$venueTime);
@@ -73,6 +73,7 @@ while ($row =  mysqli_fetch_assoc($venues_result))
 echo "<table class='table table-bordered table-striped'>";
 echo "<thead>";
 echo "<tr>";
+echo "<th>#</th>";
 echo "<th>Venue Name</th>";
 echo "<th>Venue Type</th>";
 echo "<th>Contact Name</th>";
@@ -117,6 +118,7 @@ $venuesId = $row['id'];
     $primaryEmailId = $row['primaryEmailId'];
     $primaryAddressId = $row['primaryAddressId'];
     $primaryServiceId = $row['primaryServiceId'];
+    echo "<td class='fitwidth'>" . "$row[id]" . "</td>";
     echo "<td class='fitwidth'>" . "$row[venueName]" . "</td>";
     echo "<td class='fitwidth'>" . $venueType . "</td>";
     echo "<td class='fitwidth'>" . $contactFullname . "</td>";

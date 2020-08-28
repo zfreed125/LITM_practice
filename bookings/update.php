@@ -37,11 +37,27 @@ function convertTimeDateTimezone($date,$time,$tz){
 }
 
 
-$bookingDateTimeStart = convertTimeDateTimezone($bookingDateStart,$bookingTimeStart,$tz);
-$bookingDateTimeEnd = convertTimeDateTimezone($bookingDateEnd,$bookingTimeEnd,$tz);
-
-$sql = "UPDATE bookings set bookingTypeId='$bookingTypeId', bookingDateTimeStart='$bookingDateTimeStart', bookingDateTimeEnd='$bookingDateTimeEnd', timezoneId='$timezoneId', bookingLength='$bookingLength', clientNameId='$clientNameId', clientConfirm='$clientConfirm', venueNameId='$venueNameId', venueConfirm='$venueConfirm', bookingStatus='$bookingStatus' where id='$id';";
-
+(empty($bookingDateStart)) ? $bookingDateTimeStart = 'NULL': $bookingDateTimeStart = "'" .convertTimeDateTimezone($bookingDateStart,$bookingTimeStart,$tz). "'";
+(empty($bookingDateEnd)) ? $bookingDateTimeEnd = 'NULL': $bookingDateTimeEnd = "'" .convertTimeDateTimezone($bookingDateEnd,$bookingTimeEnd,$tz). "'";
+if (strpos($clientNameId, 'contact') !== false) {
+    // echo 'Contact';
+    $contactId = explode("contact", $clientNameId)[1];
+    $sql = "UPDATE bookings set bookingTypeId='$bookingTypeId', bookingDateTimeStart=".$bookingDateTimeStart.", bookingDateTimeEnd=".$bookingDateTimeEnd.", timezoneId='$timezoneId', bookingLength='$bookingLength', 
+        clientNameId='$clientNameId', contactId='$contactId', clientConfirm='$clientConfirm', venueNameId='$venueNameId', venueConfirm='$venueConfirm', bookingStatus='$bookingStatus' where id='$id';";
+    }else if (strpos($clientNameId, 'venue') !== false)
+    {
+        // echo 'Venue';
+        $venueId = explode("venue", $clientNameId)[1];
+        $sql = "UPDATE bookings set bookingTypeId='$bookingTypeId', bookingDateTimeStart=".$bookingDateTimeStart.", bookingDateTimeEnd=".$bookingDateTimeEnd.", timezoneId='$timezoneId', bookingLength='$bookingLength', 
+            clientNameId='$clientNameId', venueId='$venueId', clientConfirm='$clientConfirm', venueNameId='$venueNameId', venueConfirm='$venueConfirm', bookingStatus='$bookingStatus' where id='$id';";
+    }
+if($clientNameId == '0'){
+    $sql = "UPDATE bookings set bookingTypeId='$bookingTypeId', bookingDateTimeStart=".$bookingDateTimeStart.", bookingDateTimeEnd=".$bookingDateTimeEnd.", timezoneId='$timezoneId', bookingLength='$bookingLength', 
+        clientConfirm='$clientConfirm', venueNameId='$venueNameId', venueConfirm='$venueConfirm', bookingStatus='$bookingStatus' where id='$id';";
+}else{
+    $sql = "UPDATE bookings set bookingTypeId='$bookingTypeId', bookingDateTimeStart=".$bookingDateTimeStart.", bookingDateTimeEnd=".$bookingDateTimeEnd.", timezoneId='$timezoneId', bookingLength='$bookingLength', 
+        clientNameId='$clientNameId', clientConfirm='$clientConfirm', venueNameId='$venueNameId', venueConfirm='$venueConfirm', bookingStatus='$bookingStatus' where id='$id';";
+}
 
 
 if(mysqli_query($conn, $sql)){

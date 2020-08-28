@@ -41,6 +41,7 @@ while ($row = mysqli_fetch_assoc($result))
 echo "<table class='table table-bordered table-striped'>";
 echo "<thead>";
 echo "<tr>";
+echo "<th>#</th>";
 echo "<th>First Name</th>";
 echo "<th>Last Name</th>";
 echo "<th>Birthdate</th>";
@@ -51,6 +52,7 @@ echo "</tr>";
 echo "</thead>";
 echo "<tbody>";
 echo "<tr>";
+echo "<td class='fitwidth'>" . "$row[id]" . "</td>";
 echo "<td class='fitwidth'>" . "$row[firstname]" . "</td>";
 echo "<td class='fitwidth'>" . "$row[lastname]" . "</td>";
 echo "<td class='fitwidth'>" . "$row[birthdate]" . "</td>";
