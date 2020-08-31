@@ -14,7 +14,10 @@ $booking_type_array = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $booking_type_array[] = array('id' => $row['id'], 'bookingType' => $row['bookingType']);
 }
-require_once './includes/client_array.php';
+require_once './includes/guest_array.php';
+        arsort($guest_array);
+        
+require_once './includes/venue_array.php';
 
 $venue_name_sql = "SELECT id, venueName FROM venues;";
 $result = mysqli_query($conn, $venue_name_sql);
@@ -22,6 +25,17 @@ $venue_name_array = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $venue_name_array[] = array('id' => $row['id'], 'venueName' => $row['venueName']);
 }
+$contact_sql = "SELECT id, CONCAT(firstname, ' ', lastname) as fullname FROM contacts;";
+$contact_result = mysqli_query($conn, $contact_sql);
+$contacts_array = array();
+while ($row = mysqli_fetch_assoc($contact_result)) {
+    $contacts_array[] = array('id' => $row['id'], 'fullname' => $row['fullname']);
+}
+        arsort($contacts_array);
+        foreach($contacts_array as $item){
+        $contact = $item['fullname'];
+        $contactId = $item['id'];
+        }
 $timezones_sql = "SELECT * FROM timezones;";
 $timezones_result = mysqli_query($conn, $timezones_sql);
 $timezones_array = array();
@@ -52,7 +66,7 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
         <form action="create.php" method="POST">
             <div class="input-group">
                 <div class="input-group-prepend"><span class="input-group-text">Booking Type</span></div>
-                    <select class="form-control" name="bookingTypeId">
+                    <select class="form-control" name="bookingTypeId" id="bookingTypeId">
                         <option selected="selected">Choose one</option>
                             <?php foreach($booking_type_array as $item){ ?>
                         <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['bookingType']; ?></option>
@@ -89,13 +103,38 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
                     <input class="form-control" type="number" name="bookingLength">
                 </div>
             </div>  
+            <script>
+
+            document.getElementById('bookingTypeId').addEventListener('change', function() {
+            console.log('You selected: ', this.value);
+            if(this.value === '1'){
+                <?php  foreach($guest_array as $item){
+                $client = $item['client'];
+                $clientContactId = $item['contactId'];
+                ?> 
+
+                clientNameId = document.getElementById('clientNameId');
+                    for (var i = min; i<=max; i++){
+                    var opt = document.createElement('option');
+                    opt.value = i;
+                    opt.innerHTML = i;
+                    clientNameId.appendChild(opt);
+                    }
+                    
+                console.log('<?php echo $client;?>');
+                <?php } ?>
+            }
+            });
+
+            // what is bookingTypeId
+            //if bookingtypeId is guest then 
+                                // dispaly options for client of contacts else 
+                                // displlay optins for all contacts
+            </script>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Client</span></div>
-                    <select class="form-control" name="clientNameId">
+                <div class="input-group-prepend"><span class="input-group-text">Contact/Client</span></div>
+                    <select class="form-control" name="clientNameId" id="clientNameId">
                         <option selected="selected">Select Client</option>
-                            <?php asort($client_array);foreach($client_array as $item){$client = $item['client']; $type = $item['type']; $clientId = $item['id'];$bookId = $type . $clientId; ?>
-                        <option value="<?php echo $bookId; ?>"><?php echo "$client ($type)"; ?></option>
-                            <?php } ?>
                     </select>   
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
@@ -104,8 +143,14 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
                     <input class="form-control" type="checkbox" id="clientConfirm" name="clientConfirm">
                 </div>
             </div>
+            <script>
+            // what is bookingTypeId
+            //if bookingtypeId is venue then 
+                                // dispaly options for client of venues else 
+                                // displlay optins for all venues
+            </script>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Venue</span></div>
+                <div class="input-group-prepend"><span class="input-group-text">Venue/Venue Client</span></div>
                     <select class="form-control" name="venueNameId">
                         <option value="0" selected="selected">Select Venue</option>
                             <?php foreach($venue_name_array as $item){ ?>
