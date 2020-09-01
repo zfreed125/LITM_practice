@@ -7,7 +7,7 @@ $genre_type_array[] = array('id' => $row['id'], 'genreType' => $row['genreType']
 }
 
  //genre sql loop table
- $genre_sql = "SELECT * FROM genres where venueId = '$row[id]';";
+ $genre_sql = "SELECT * FROM genres where venueId = '$venuesId';";
  $genre_result = mysqli_query($conn, $genre_sql);
  $genreRowCount = mysqli_num_rows($genre_result);
 
