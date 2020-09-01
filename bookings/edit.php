@@ -112,8 +112,8 @@ $conn->close();
         .btn-delete {
             display: inline-block;
             margin-left: 1em;
-            background: white;
-            color: tomato;
+            background: red;
+            color: white;
             font-weight: bold;
             padding: 0.25em;
         }
@@ -256,9 +256,9 @@ $conn->close();
                 <div class="input-group-prepend"><span class="input-group-text">End Time</span></div>
                 <input type="time" name="bookingTimeEnd" class="form-control" value="<?php echo $EndTime; ?>">
             </div>
-            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+            <div class="input-group mt-3 mb-1 input-group-sm p-1">
                 <div class="input-group-prepend"><span class="input-group-text">Timezone</span></div>
-                <select name="timezoneId" class="form-control">
+                <select style=" width: 375px;" name="timezoneId" class="form-control">
                     <option selected="selected">Select Timezone</option>
                     <?php foreach ($timezones_array as $item) { ?>
                         <option value="<?php echo strtolower($item['id']); ?>" <?php if ($item['id'] == $timezoneId) {
@@ -279,24 +279,30 @@ $conn->close();
                     <option value=''>Select Client</option>
                 </select>
             </div>
-            <div id="genreContactTags" style="border: 1px solid black; ">
-
+            <div style=" position: absolute; left: 840px; top: 370px;" class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                <div style="height: 40px;" class="input-group-prepend"><span class="input-group-text">Client Genre Tags</span></div>
+                <div id="genreContactTags" style="border: 1px solid black; max-width: 250px;"> </div>
             </div>
-            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+            <!-- <div id="genreContactTags" style=" position: absolute; left: 850px; top: 400px; border: 1px solid black; ">
+
+            </div> -->
+            <div class="input-group mt-5 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group">
                     <div class="input-group-prepend"><span class="input-group-text">Client Confirm</span></div>
                     <input class="form-control" type="checkbox" id="clientConfirm" name="clientConfirm">
                 </div>
             </div>
-            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+            <div class="input-group mt-5 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text">Venue/Venue Client</span></div>
                 <select class="form-control" name="venueNameId" id='venueNameId' onchange="getValueFromVenueSelect(this.value)">
                     <option value=''>Select Venue</option>
                 </select>
             </div>
-            <div id="genreVenueTags" style="border: 1px solid black; ">
-
+            <div style=" position: absolute; left: 840px; top: 550px;" class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                <div style="height: 40px;" class="input-group-prepend"><span class="input-group-text">Venue Genre Tags</span></div>
+                <div id="genreVenueTags" style="border: 1px solid black; max-width: 250px;"> </div>
             </div>
+
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group">
                     <div class="input-group-prepend"><span class="input-group-text">Venue Confirm</span></div>
