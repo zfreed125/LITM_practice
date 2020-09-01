@@ -67,9 +67,13 @@ $(document).ready(function(){
                     while ($row = mysqli_fetch_assoc($result)) {
                         $booking_type_array[] = array('id' => $row['id'], 'bookingType' => $row['bookingType']);
                     }
-                    
-                    require './includes/client_array.php';
-                   
+
+                    $contact_sql = "SELECT id, CONCAT(firstname, ' ', lastname) as fullname FROM contacts ORDER BY lastname ASC, firstname ASC;";
+                    $contact_result = mysqli_query($conn, $contact_sql);
+                    $contacts_array = array();
+                    while ($row = mysqli_fetch_assoc($contact_result)) {
+                        $contacts_array[] = array('id' => $row['id'], 'fullname' => $row['fullname']);
+                    }
                     $venue_name_sql = "SELECT id, venueName FROM venues;";
                     $result = mysqli_query($conn, $venue_name_sql);
                     $venue_name_array = array();
@@ -106,28 +110,24 @@ $(document).ready(function(){
                             while($row = mysqli_fetch_array($result)){
                                 foreach($booking_type_array as $item){
                                     if($item['id'] == $row['bookingTypeId']){
-                                        $bookingType = $item['bookingType']; 
+                                        $bookingType = $item['bookingType'];
                                     }
                                 }
-                                foreach($client_array as $item){
-                                    if(($item['type'].$item['id']) == $row['clientNameId']){
-                                         $client = $item['client']; 
-                                        } 
+                                foreach($contacts_array as $item){
+                                    if(($item['id']) == $row['clientNameId']){
+                                         $client = $item['fullname'];
+                                        }
                                 }
                                 foreach($venue_name_array as $item){
                                     if($item['id'] == $row['venueNameId']){
-                                        $venue = $item['venueName']; 
-                                    }
-                                }  
-                                foreach($timezones_array as $item){
-                                    if($item['id'] == $row['timezoneId']){
-                                        $timezone = $item['timezone']; 
+                                        $venue = $item['venueName'];
+                                        $venueNameId = $row['venueNameId'];
                                     }
                                 }
-                                if($row['clientNameId'] == '0'){
-                                    $cl = '';
-                                }else{
-                                    (empty($client)) ? $cl = "Orphaned Client ($row[clientNameId])" : $cl = $client;
+                                foreach($timezones_array as $item){
+                                    if($item['id'] == $row['timezoneId']){
+                                        $timezone = $item['timezone'];
+                                    }
                                 }
                                 (empty($row['bookingDateTimeStart'])) ? $StartDate = 'unset': $StartDate = convertDateTimeUTCtoLocal($row['bookingDateTimeStart'],$timezone)[0];
                                 (empty($row['bookingDateTimeStart'])) ? $StartTime = 'unset': $StartTime = convertDateTimeUTCtoLocal($row['bookingDateTimeStart'],$timezone)[1];
@@ -142,7 +142,7 @@ $(document).ready(function(){
                                         echo "<td>" . $EndDateTime . "</td>";
                                         echo "<td>" . $timezone . "</td>";
                                         echo "<td>" . $row['bookingLength'] . "</td>";
-                                        echo "<td>" . $cl . "</td>";
+                                        echo "<td>" . $client . "</td>";
                                         // echo "<td>" . (!empty($client)) ? $row['clientNameId'] : $client . "</td>";
                                         echo "<td>" . $row['clientConfirm'] . "</td>";
                                         echo "<td>" . $venue . "</td>";
@@ -154,9 +154,28 @@ $(document).ready(function(){
                                             echo "<a href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                                         echo "</td>";
                                     echo "</tr>";
-                            }
+                                    $venues_sql = "SELECT * FROM venues WHERE id='$venueNameId';";
+                                    $venues_result = mysqli_query($conn, $venues_sql);
+                                    while ($row =  mysqli_fetch_assoc($venues_result))
+                                    {
+                                        // $venue_array[] = array('id' => $row['id'], 'venueName' => $row['venueName']);
+                                        echo "<input disabled class='' value='".$row['venueName']."'>" ;
+                                        echo "<input disabled class='' value='".$row['venueTypeId']."'>" ; ;
+                                        echo "<input disabled class='' value='".$row['contactNameId']."'>" ; ;
+                                        echo "<input disabled class='' value='".$row['hostNameId']."'>" ; ;
+                                        echo "<input disabled class='' value='".$row['venueDateTimeStart']."'>" ; ;
+                                        echo "<input disabled class='' value='".$row['venueDateTimeEnd']."'>" ; ;
+                                        echo "<input disabled class='' value='".$row['timezoneId']."'>" ; ;
+                                        echo "<input disabled class='' value='".$row['showLength']."'><br><br>" ; ;
+
+                                    }
+                                  }
                                 echo "</tbody>";
                             echo "</table>";
+
+
+                            //Close connection
+                            mysqli_close($conn);
                             //Free result set
                             mysqli_free_result($result);
                         }else{
@@ -165,12 +184,12 @@ $(document).ready(function(){
                     }else{
                         echo "ERROR: Not able to execute $sql. " . mysqli_error($conn);
                     }
-                    //Close connection
-                    mysqli_close($conn);
                     ?>
                 </div>
             </div>
         </div>
     </div>
+    <?php
+     ?>
 </body>
 </html>

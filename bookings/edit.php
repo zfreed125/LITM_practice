@@ -13,7 +13,13 @@ $booking_type_array = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $booking_type_array[] = array('id' => $row['id'], 'bookingType' => $row['bookingType']);
 }
-require_once './includes/client_array.php';
+$contact_sql = "SELECT id, CONCAT(firstname, ' ', lastname) as fullname FROM contacts ORDER BY lastname ASC, firstname ASC;";
+$contact_result = mysqli_query($conn, $contact_sql);
+$contacts_array = array();
+while ($row = mysqli_fetch_assoc($contact_result)) {
+    $contacts_array[] = array('id' => $row['id'], 'fullname' => $row['fullname']);
+}
+
 
 $venue_name_sql = "SELECT id, venueName FROM venues;";
 $result = mysqli_query($conn, $venue_name_sql);
@@ -44,31 +50,9 @@ $result2 = mysqli_query($conn, $emails_sql);
         $venueNameId = $row["venueNameId"];
         $venueConfirm = $row["venueConfirm"];
         $bookingStatus = $row["bookingStatus"];
-        
-    }
-$client_options = array();
-asort($client_array);
-foreach($client_array as $item){
-        $client = $item['client'];
-        $type = $item['type'];
-        $clientId = $item['id'];
-        $bookId = $type . $clientId;
 
-        if ("$bookId" == "$clientNameId"){
-            $client_options[] = array("<option style='background-color: white;' value='0'>Select Client</option>");
-            $client_options[] = array("<option style='background-color: white;' value='$bookId' selected='selected'>$client ($type)</option>");
-        }else{
-            $client_options[] = array( "<option style='background-color: white;' value='$bookId'>$client ($type)</option>");
-
-        }
-    
-        
     }
-$f = 0;
-foreach($client_array as $item){
-    $bookId = $item['type'] . $item['id'];
-    if ("$bookId" == "$clientNameId"){ $f += 1; }
-}
+
 
 $timezone_sql = "SELECT timezone from timezones where id='$timezoneId';";
 $timezone_result = mysqli_query($conn, $timezone_sql);
@@ -117,14 +101,43 @@ $conn->close();
         </style>
           <script>
                 window.addEventListener('load', (event) => {
+                  var contacts_array = <?php echo json_encode($contacts_array) ?>;
+                  var client_select = document.getElementById('clientNameId');
+                  var i;
+                  for (i = 0; i < contacts_array.length; i++) {
+                        var opt = contacts_array[i];
+                        var el = document.createElement("option");
+                        var selected_contact = '<?php echo $clientNameId; ?>';
+                        if (opt['id'] === selected_contact){
+                          el.selected = true;
+                        }
+                        el.textContent = opt['fullname'];
+                        el.value = opt['id'];
+                        client_select.appendChild(el);
+                  }
+                  var venue_name_array = <?php echo json_encode($venue_name_array) ?>;
+                  var venue_select = document.getElementById('venueNameId');
+                  var j;
+                  for (j = 0; j < venue_name_array.length; j++) {
+                    var opt = venue_name_array[j];
+                    var el = document.createElement("option");
+                    var selected_venue = '<?php echo $venueNameId; ?>';
+                    if (opt['id'] === selected_venue){
+                      el.selected = true;
+                    }
+                    el.textContent = opt['venueName'];
+                    el.value = opt['id'];
+                    venue_select.appendChild(el);
+                  }
 
-                    var x = document.getElementById("clientConfirm").value; 
+
+                    var x = document.getElementById("clientConfirm").value;
                     if ('<?php echo $clientConfirm;?>' === '1'){
                         document.getElementById("clientConfirm").checked = true;
                     }else{
                         document.getElementById("clientConfirm").checked = false;
                     }
-                    var y = document.getElementById("venueConfirm").value; 
+                    var y = document.getElementById("venueConfirm").value;
                     if ('<?php echo $venueConfirm;?>' === '1'){
                         document.getElementById("venueConfirm").checked = true;
                     }else{
@@ -132,9 +145,9 @@ $conn->close();
                     }
 
                 });
-                    
+
             </script>
-    </head> 
+    </head>
     <body>
         <div class="wrapper">
             <h2>Update Booking</h2>
@@ -171,34 +184,18 @@ $conn->close();
                                         <?php foreach($timezones_array as $item){ ?>
                                     <option value="<?php echo strtolower($item['id']); ?>" <?php if($item['id'] == $timezoneId){ echo "selected"; } ?> > <?php echo $item['name']; ?></option>
                                         <?php } ?>
-                                </select> 
+                                </select>
                             </div>
             <div class="input-group">
                 <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                     <div class="input-group-prepend"><span class="input-group-text">Booking Length Minutes</span></div>
                     <input class="form-control" type="number" name="bookingLength" value="<?php echo $bookingLength;?>">
                 </div>
-            </div>  
+            </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Client</span></div>
-                <?php
-                if (!empty($clientNameId) && ($f < 1)){
-                    $selectOrphan = "style='background-color: #ff6347;'";
-                }else{
-                    $selectOrphan ='';
-                }
-                ?>
-                <select <?php echo $selectOrphan; ?> class="form-control" name="clientNameId">
-                        
-                        <?php
-                            if (!empty($clientNameId) && ($f < 1)){
-                                echo "<option $selectOrphan value='$clientNameId' selected='selected'>Orphaned Client ($clientNameId)</option>";
-                            }
-                            foreach($client_options as $option){
-                                
-                                echo $option[0];
-                            }
-                        ?>
+                <div class="input-group-prepend"><span class="input-group-text">Contact/Client</span></div>
+                    <select class="form-control" name="clientNameId" id="clientNameId">
+                        <option value='' >Select Client</option>
                     </select>
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
@@ -208,15 +205,10 @@ $conn->close();
                 </div>
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Venue</span></div>
-                    <select class="form-control" name="venueNameId">
-                        <option value="0" selected="selected">Select Venue</option>
-                            <?php foreach($venue_name_array as $item){ ?>
-                        <option value="<?php echo strtolower($item['id']); ?>"
-                        <?php if($item['id'] == $venueNameId){ echo "selected"; } ?> >
-                        <?php echo $item['venueName']; ?></option>
-                            <?php } ?>
-                    </select>  
+                <div class="input-group-prepend"><span class="input-group-text">Venue/Venue Client</span></div>
+                    <select class="form-control" name="venueNameId" id='venueNameId'>
+                        <option value=''  >Select Venue</option>
+                    </select>
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group">
@@ -238,5 +230,5 @@ $conn->close();
                             </div>
                     </form>
         </div>
-    </body>       
-</html>    
+    </body>
+</html>

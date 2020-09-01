@@ -21,8 +21,6 @@ $sql1 = "CREATE TABLE bookings (
     timezoneId INT(3) NULL,
     bookingLength INT(8) NULL,
     clientNameId VARCHAR(16) NULL,
-    contactId INT(6) NULL,
-    venueId INT(6) NULL,
     clientConfirm INT(1) NOT NULL,
     venueNameId INT(6) NULL,
     venueConfirm INT(1) NOT NULL,

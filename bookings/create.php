@@ -15,9 +15,9 @@ $bookingDateEnd = $_REQUEST['bookingDateEnd'];
 $bookingTimeEnd = $_REQUEST['bookingTimeEnd'];
 $timezoneId = $_REQUEST['timezoneId'];
 $bookingLength = (empty($_REQUEST['bookingLength'])) ? 0 : $_REQUEST['bookingLength'];
-$clientNameId = $_REQUEST['clientNameId'];
+$clientNameId = (empty($_REQUEST['clientNameId'])) ? 'NULL' : $_REQUEST['clientNameId'];
 $clientConfirm = (isset($_POST['clientConfirm'])) ? 1 : 0;
-$venueNameId = $_REQUEST['venueNameId'];
+$venueNameId = (empty($_REQUEST['venueNameId'])) ? 'NULL' : $_REQUEST['venueNameId'];
 $venueConfirm = (isset($_POST['venueConfirm'])) ? 1 : 0;
 $bookingStatus = $_REQUEST['bookingStatus'];
 // echo $bookingDateStart;
@@ -38,25 +38,10 @@ function convertTimeDateTimezone($date,$time,$tz){
     return $bookingDateTimeUtc;
 }
 
-
-// $bookingDateTimeStart = 'NULL';
-// $bookingDateTimeEnd = 'NULL';
 (empty($bookingDateStart)) ? $bookingDateTimeStart = 'NULL': $bookingDateTimeStart = "'" .convertTimeDateTimezone($bookingDateStart,$bookingTimeStart,$tz). "'";
 (empty($bookingDateEnd)) ? $bookingDateTimeEnd = 'NULL': $bookingDateTimeEnd = "'" .convertTimeDateTimezone($bookingDateEnd,$bookingTimeEnd,$tz). "'";
-if (strpos($clientNameId, 'contact') !== false) {
-    // echo 'Contact';
-    $contactId = explode("contact", $clientNameId)[1];
-    $sql = "INSERT INTO bookings (bookingTypeId, bookingDateTimeStart, bookingDateTimeEnd, timezoneId, bookingLength, clientNameId, contactId, venueId, clientConfirm, venueNameId, venueConfirm, bookingStatus) 
-        VALUES ('$bookingTypeId', `$bookingDateTimeStart`, '$bookingDateTimeEnd', '$timezoneId', '$bookingLength', '$clientNameId', '$contactId', NULL, '$clientConfirm', '$venueNameId', '$venueConfirm', 'Initialized');";
-}else if (strpos($clientNameId, 'venue') !== false)
-    {
-        // echo 'Venue';
-        $venueId = explode("venue", $clientNameId)[1];
-        $sql = "INSERT INTO bookings (bookingTypeId, bookingDateTimeStart, bookingDateTimeEnd, timezoneId, bookingLength, clientNameId, contactId, venueId, clientConfirm, venueNameId, venueConfirm, bookingStatus) 
-            VALUES ('$bookingTypeId', '$bookingDateTimeStart', '$bookingDateTimeEnd', '$timezoneId', '$bookingLength', '$clientNameId', NULL, '$venueId', '$clientConfirm', '$venueNameId', '$venueConfirm', 'Initialized');";
-    }
-$sql = "INSERT INTO bookings (bookingTypeId, bookingDateTimeStart, bookingDateTimeEnd, timezoneId, bookingLength, clientNameId, contactId, venueId, clientConfirm, venueNameId, venueConfirm, bookingStatus) 
-    VALUES ('$bookingTypeId', ".$bookingDateTimeStart.", ".$bookingDateTimeEnd.", '$timezoneId', '$bookingLength', '$clientNameId', NULL, NULL, '$clientConfirm', '$venueNameId', '$venueConfirm', 'Initialized');";
+$sql = "INSERT INTO bookings (bookingTypeId, bookingDateTimeStart, bookingDateTimeEnd, timezoneId, bookingLength, clientNameId, clientConfirm, venueNameId, venueConfirm, bookingStatus)
+    VALUES ('$bookingTypeId', ".$bookingDateTimeStart.", ".$bookingDateTimeEnd.", '$timezoneId', '$bookingLength', ".$clientNameId.", ".$clientConfirm.", ".$venueNameId.", '$venueConfirm', 'Initialized');";
 
 
 if(mysqli_query($conn, $sql)){
