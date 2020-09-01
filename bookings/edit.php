@@ -29,8 +29,6 @@ while ($row = mysqli_fetch_assoc($genre_results)) {
         'contactId' => $row['contactId'],
         'venueId' => $row['venueId']
     );
-    //         echo $row['genreId'];
-    //         echo $row['genreType'];
 }
 
 $venue_name_sql = "SELECT id, venueName FROM venues;";
@@ -63,17 +61,6 @@ while ($row = mysqli_fetch_assoc($result2)) {
     $venueConfirm = $row["venueConfirm"];
     $bookingStatus = $row["bookingStatus"];
 }
-
-$sql3 = "SELECT genres.genreTypeId, genre_types.genreType FROM genres
-    INNER JOIN genre_types ON genres.genreTypeId=genre_types.id WHERE genres.contactId='$clientNameId'";
-$result3 = mysqli_query($conn, $sql3);
-$client_genre_array = array();
-while ($row = mysqli_fetch_assoc($result3)) {
-    $client_genre_array[] = array('id' => $row['genreTypeId'], 'genreType' => $row['genreType']);
-    // echo $row['genreTypeId'];
-    // echo $row['genreType'];
-}
-
 
 $timezone_sql = "SELECT timezone from timezones where id='$timezoneId';";
 $timezone_result = mysqli_query($conn, $timezone_sql);
@@ -134,10 +121,11 @@ $conn->close();
 </head>
 <script>
     var selected_contact = '<?php echo $clientNameId; ?>';
+    var selected_venue = '<?php echo $venueNameId; ?>';
 
-    function updateGenreTags(clientNameId) {
+    function updateClientGenreTags(clientNameId) {
         let genre_array = <?php echo json_encode($genre_array) ?>;
-        let genreTagDiv = document.getElementById('genreTags');
+        let genreTagDiv = document.getElementById('genreContactTags');
         while (genreTagDiv.hasChildNodes()) {
             genreTagDiv.removeChild(genreTagDiv.lastChild);
         }
@@ -158,13 +146,40 @@ $conn->close();
 
     }
 
-    function getValueFromSelect(clientId) {
-        updateGenreTags(clientId);
+    function updateVenueGenreTags(venueNameId) {
+        let genre_array = <?php echo json_encode($genre_array) ?>;
+        let genreTagDiv = document.getElementById('genreVenueTags');
+        while (genreTagDiv.hasChildNodes()) {
+            genreTagDiv.removeChild(genreTagDiv.lastChild);
+        }
+        let h;
+        for (h = 0; h < genre_array.length; h++) {
+            let el = document.createElement("span");
+            let tag = genre_array[h];
+            if (tag['venueId'] === venueNameId) {
+                el.innerHTML = tag['genreName'] + ' <span class="btn-delete">X</span>';
+                el.className = 'badge badge-primary p-2 m-1 fu';
+                el.addEventListener('click', () => {
+                    console.log(tag['genreName']);
+                    genreTagDiv.removeChild(el);
+                })
+                genreTagDiv.appendChild(el);
+            }
+        }
+
+    }
+
+    function getValueFromClientSelect(clientId) {
+        updateClientGenreTags(clientId);
+    }
+
+    function getValueFromVenueSelect(venueId) {
+        updateVenueGenreTags(venueId);
     }
     window.addEventListener('load', (event) => {
-        var clientNameId = document.getElementById('clientNameId');
 
-        updateGenreTags(selected_contact);
+        updateClientGenreTags(selected_contact);
+        updateVenueGenreTags(selected_venue);
 
 
         var contacts_array = <?php echo json_encode($contacts_array) ?>;
@@ -173,8 +188,6 @@ $conn->close();
         for (i = 0; i < contacts_array.length; i++) {
             var opt = contacts_array[i];
             var el = document.createElement("option");
-            // var selected_contact = '<?php //echo $clientNameId; 
-                                        ?>';
             if (opt['id'] === selected_contact) {
                 el.selected = true;
             }
@@ -188,7 +201,6 @@ $conn->close();
         for (j = 0; j < venue_name_array.length; j++) {
             var opt = venue_name_array[j];
             var el = document.createElement("option");
-            var selected_venue = '<?php echo $venueNameId; ?>';
             if (opt['id'] === selected_venue) {
                 el.selected = true;
             }
@@ -263,11 +275,11 @@ $conn->close();
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text">Contact/Client</span></div>
-                <select class="form-control" name="clientNameId" id="clientNameId" onchange="getValueFromSelect(this.value)">
+                <select class="form-control" name="clientNameId" id="clientNameId" onchange="getValueFromClientSelect(this.value)">
                     <option value=''>Select Client</option>
                 </select>
             </div>
-            <div id="genreTags" style="border: 1px solid black; ">
+            <div id="genreContactTags" style="border: 1px solid black; ">
 
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
@@ -278,9 +290,12 @@ $conn->close();
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text">Venue/Venue Client</span></div>
-                <select class="form-control" name="venueNameId" id='venueNameId'>
+                <select class="form-control" name="venueNameId" id='venueNameId' onchange="getValueFromVenueSelect(this.value)">
                     <option value=''>Select Venue</option>
                 </select>
+            </div>
+            <div id="genreVenueTags" style="border: 1px solid black; ">
+
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group">
