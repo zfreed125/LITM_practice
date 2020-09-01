@@ -10,17 +10,30 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-echo 'hi';
-$field0 = "0;"
-$field1 = "2;"
-$field2 = "1;"
+// echo 'hi';
+// $field0 = "0;"
+// $field1 = "2;"
+// $field2 = "1;"
 
-$sql = "INSERT INTO bookings () VALUES ();";
-
-echo $sql;
+// $sql = "INSERT INTO bookings () VALUES ();";
 
 
 
+// $sql = "SELECT genreTypeId FROM genres WHERE contactId='3'";
+// // echo $sql;
+// $result = mysqli_query($conn, $sql);
+// while ($row = mysqli_fetch_assoc($result)){
+// $sql2 = "SELECT genreType FROM genre_types WHERE id='$row[genreTypeId]'";
+
+// }
+
+$sql3 = "SELECT genres.genreTypeId, genre_types.genreType FROM genres
+INNER JOIN genre_types ON genres.genreTypeId=genre_types.id WHERE genres.contactId='3'";
+$result3 = mysqli_query($conn, $sql3);
+while($row = mysqli_fetch_assoc($result3)){
+  // echo $row['genreTypeId'];
+  echo $row['genreType'];
+}
 
 
 
