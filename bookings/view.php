@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script src="./js/view.js"></script>
+    <link rel="stylesheet" href="./css/view.css">
 <style type="text/css">
 .wrapper{
 width: 100%;
@@ -90,6 +92,7 @@ $(document).ready(function(){
                     $sql = "SELECT * FROM bookings;";
                     if($result = mysqli_query($conn, $sql)){
                         if(mysqli_num_rows($result) > 0){
+                            while($row = mysqli_fetch_array($result)){
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
@@ -107,7 +110,6 @@ $(document).ready(function(){
                                     echo "</tr>";
                                 echo "</thead>";
                                 echo "<tbody>";
-                            while($row = mysqli_fetch_array($result)){
                                 foreach($booking_type_array as $item){
                                     if($item['id'] == $row['bookingTypeId']){
                                         $bookingType = $item['bookingType'];
@@ -116,6 +118,7 @@ $(document).ready(function(){
                                 foreach($contacts_array as $item){
                                     if(($item['id']) == $row['clientNameId']){
                                          $client = $item['fullname'];
+                                         $clientNameId = $item['id'];
                                         }
                                 }
                                 foreach($venue_name_array as $item){
@@ -135,17 +138,19 @@ $(document).ready(function(){
                                 (empty($row['bookingDateTimeEnd'])) ? $EndTime = 'unset': $EndTime = convertDateTimeUTCtoLocal($row['bookingDateTimeEnd'],$timezone)[1];
                                 $StartDateTime = "$StartDate $StartTime";
                                 $EndDateTime = "$EndDate $EndTime";
-                                    echo "<tr>";
+                                $bookingId = $row['id'];
+                                        echo "<tr>";
                                         echo "<td>" . $row['id'] . "</td>";
                                         echo "<td>" . $bookingType . "</td>";
                                         echo "<td>" . $StartDateTime . "</td>";
                                         echo "<td>" . $EndDateTime . "</td>";
                                         echo "<td>" . $timezone . "</td>";
                                         echo "<td>" . $row['bookingLength'] . "</td>";
-                                        echo "<td>" . $client . "</td>";
+                                        echo "<td><a href='#' title='Show/Hide accounts'onclick='myFunction(tbl_client". $row['id'] .")'>$client</a></td>";
                                         // echo "<td>" . (!empty($client)) ? $row['clientNameId'] : $client . "</td>";
                                         echo "<td>" . $row['clientConfirm'] . "</td>";
-                                        echo "<td>" . $venue . "</td>";
+                                        // echo "<td>" . $venue . "</td>";
+                                        echo "<td><a href='#' title='Show/Hide accounts'onclick='myFunction(tbl_venue". $row['id'] .")'>$venue</a></td>";
                                         echo "<td>" . $row['venueConfirm'] . "</td>";
                                         echo "<td>" . $row['bookingStatus'] . "</td>";
                                         echo "<td>";
@@ -154,24 +159,13 @@ $(document).ready(function(){
                                             echo "<a href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                                         echo "</td>";
                                     echo "</tr>";
-                                    $venues_sql = "SELECT * FROM venues WHERE id='$venueNameId';";
-                                    $venues_result = mysqli_query($conn, $venues_sql);
-                                    while ($row =  mysqli_fetch_assoc($venues_result))
-                                    {
-                                        // $venue_array[] = array('id' => $row['id'], 'venueName' => $row['venueName']);
-                                        echo "<input disabled class='' value='".$row['venueName']."'>" ;
-                                        echo "<input disabled class='' value='".$row['venueTypeId']."'>" ; ;
-                                        echo "<input disabled class='' value='".$row['contactNameId']."'>" ; ;
-                                        echo "<input disabled class='' value='".$row['hostNameId']."'>" ; ;
-                                        echo "<input disabled class='' value='".$row['venueDateTimeStart']."'>" ; ;
-                                        echo "<input disabled class='' value='".$row['venueDateTimeEnd']."'>" ; ;
-                                        echo "<input disabled class='' value='".$row['timezoneId']."'>" ; ;
-                                        echo "<input disabled class='' value='".$row['showLength']."'><br><br>" ; ;
 
-                                    }
-                                  }
+                                    require "./includes/venue_loop.php";
+
+                                    require "./includes/client_loop.php";
+                                }
                                 echo "</tbody>";
-                            echo "</table>";
+                                echo "</table>";
 
 
                             //Close connection
