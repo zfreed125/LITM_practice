@@ -25,7 +25,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 //attempt insert query execution
-$bookings_sql = "select * from bookings;";
+$bookings_sql = "select * from bookings WHERE clientNameId IS NOT NULL;";
 $result = mysqli_query($conn, $bookings_sql);
 //output data of each row
 $bookings_array = array();
@@ -40,7 +40,6 @@ while ($row = mysqli_fetch_assoc($result)) {
     $venueNameId = $row["venueNameId"];
     $venueConfirm = $row["venueConfirm"];
     $bookingStatus = $row["bookingStatus"];
-
     $contact_sql = "SELECT id,bookingColor, CONCAT(firstname, ' ', lastname) as fullname FROM contacts WHERE id='$clientNameId';";
     $contact_result = mysqli_query($conn, $contact_sql);
     while ($row = mysqli_fetch_assoc($contact_result)) {
@@ -50,7 +49,8 @@ while ($row = mysqli_fetch_assoc($result)) {
     $venue_name_sql = "SELECT id, venueName FROM venues WHERE id='$venueNameId';";
     $venue_result = mysqli_query($conn, $venue_name_sql);
     while ($row = mysqli_fetch_assoc($venue_result)) {
-        $venueName = $row['venueName'];
+        $venue_name_array[] = [$row['id'] => $row['venueName']];
+        // $venueName = $row['venueName'];
     }
     $booking_sql = "SELECT * FROM booking_types WHERE id='$bookingTypeId';";
     $booking_result = mysqli_query($conn, $booking_sql);
@@ -70,7 +70,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     (empty($bookingDateTimeStart)) ? $StartTime = 'unset' : $StartTime = convertDateTimeUTCtoLocal($bookingDateTimeStart, $tz)[1];
     (empty($bookingDateTimeEnd)) ? $EndDate = 'unset' : $EndDate = convertDateTimeUTCtoLocal($bookingDateTimeEnd, $tz)[0];
     (empty($bookingDateTimeEnd)) ? $EndTime = 'unset' : $EndTime = convertDateTimeUTCtoLocal($bookingDateTimeEnd, $tz)[1];
-    
+    for ($i = 0; $i < count($venue_name_array); $i++) { $venueName = $venue_name_array[$i][$venueNameId]; }
     $bookings_array[] = array(
         'bookingType' => $bookingType,
         'StartDate' => $StartDate,

@@ -12,10 +12,22 @@ require 'data.php';
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
           integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+    <!-- LITM -->
+    <script>window.booking_array = <?php echo json_encode($bookings_array);?>;</script>
+    <script type="module" src="./js/scripts.js" defer></script>
+
 <style media="screen">
   #calendar-body  td{
     height: 100px;
     width: 175px;
+  }
+  #sideDetails {
+      position: absolute;
+      height: 668px;
+      width: 325px;
+      left: 1230px;
+      border: 1px solid black;
   }
 </style>
 </head>
@@ -24,8 +36,8 @@ require 'data.php';
     <div style="width:max-content" class="card">
         <h3 style="text-align: center;" class="card-header" id="monthAndYear"></h3>
         <div class="form-inline">
-            <button class="btn btn-outline-primary col-sm-6" id="previous" onclick="previous()">Previous</button>
-            <button class="btn btn-outline-primary col-sm-6" id="next" onclick="next()">Next</button>
+            <button class="btn btn-outline-primary col-sm-6" id="previous">Previous</button>
+            <button class="btn btn-outline-primary col-sm-6" id="next">Next</button>
         </div>
 
         <table class="table table-bordered table-responsive-sm" id="calendar">
@@ -46,6 +58,7 @@ require 'data.php';
             </tbody>
         </table>
         <br/>
+        <div id="sideDetails"></div>
         <form hidden class="form-inline">
             <label class="lead mr-2 ml-2" for="month">Jump To: </label>
             <select class="form-control col-sm-4" name="month" id="month" onchange="jump()">
@@ -80,20 +93,7 @@ require 'data.php';
     </div>
 </div>
 <!-- <button name="jump" onclick="jump()">Go</button> -->
-<script src="./js/scripts.js"></script>
-<script>
-const booking_array = <?php echo json_encode($bookings_array);?>;
-window.addEventListener('load', (event) => {
-    for (let i = 0; i < booking_array.length; i++) {
-        startDate = booking_array[i]['StartDate'];
-        clientFullName = booking_array[i]['clientFullName'];
-        color = (booking_array[i]['bookingColor'] === null) ? 'rgb(0, 0, 0)' : booking_array[i]['bookingColor'];
-        title = JSON.stringify(booking_array[i]);
-        createBooking(startDate,clientFullName,color,title);
-    }
-}); //window load
-
-</script>
+<!-- <script src="./js/scripts.js"></script> -->
 
 </body>
 </html>

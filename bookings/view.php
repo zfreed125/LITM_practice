@@ -77,13 +77,15 @@
                     $contact_result = mysqli_query($conn, $contact_sql);
                     $contacts_array = array();
                     while ($row = mysqli_fetch_assoc($contact_result)) {
-                        $contacts_array[] = array('id' => $row['id'], 'fullname' => $row['fullname']);
+                        // $contacts_array[] = array('id' => $row['id'], 'fullname' => $row['fullname']);
+                        $contacts_array[] = [$row['id'] => $row['fullname']];
                     }
                     $venue_name_sql = "SELECT id, venueName FROM venues;";
                     $result = mysqli_query($conn, $venue_name_sql);
                     $venue_name_array = array();
                     while ($row = mysqli_fetch_assoc($result)) {
-                        $venue_name_array[] = array('id' => $row['id'], 'venueName' => $row['venueName']);
+                        $venue_name_array[] = [$row['id'] => $row['venueName']];
+                        // $venue_name_array[] = array('id' => $row['id'], 'venueName' => $row['venueName']);
                     }
                     $timezones_sql = "SELECT * FROM timezones;";
                     $timezones_result = mysqli_query($conn, $timezones_sql);
@@ -96,6 +98,9 @@
                     if ($result = mysqli_query($conn, $sql)) {
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_array($result)) {
+                                $clientNameId = $row['clientNameId'];
+                                $venueNameId = $row['venueNameId'];
+                                // echo "$clientNameId";
                                 echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                 echo "<tr>";
@@ -118,18 +123,16 @@
                                         $bookingType = $item['bookingType'];
                                     }
                                 }
-                                foreach ($contacts_array as $item) {
-                                    if (($item['id']) == $row['clientNameId']) {
-                                        $client = $item['fullname'];
-                                        $clientNameId = $item['id'];
-                                    }
-                                }
-                                foreach ($venue_name_array as $item) {
-                                    if ($item['id'] == $row['venueNameId']) {
-                                        $venue = $item['venueName'];
-                                        $venueNameId = $row['venueNameId'];
-                                    }
-                                }
+                                // echo "<pre>";
+                                // print_r($contacts_array);
+                                // echo "</pre>";
+                                // for ($h = 0; $h < count($contacts_array); $h++) { echo $contacts_array[$h][$clientNameId]; }
+                                // foreach ($venue_name_array as $item) {
+                                //     if ($item['id'] == $row['venueNameId']) {
+                                //         $venue = $item['venueName'];
+                                //         $venueNameId = $row['venueNameId'];
+                                //     }
+                                // }
                                 foreach ($timezones_array as $item) {
                                     if ($item['id'] == $row['timezoneId']) {
                                         $timezone = $item['timezone'];
@@ -142,6 +145,7 @@
                                 $StartDateTime = "$StartDate $StartTime";
                                 $EndDateTime = "$EndDate $EndTime";
                                 $bookingId = $row['id'];
+                                
                                 echo "<tr>";
                                 echo "<td>" . $row['id'] . "</td>";
                                 echo "<td>" . $bookingType . "</td>";
@@ -149,11 +153,16 @@
                                 echo "<td>" . $EndDateTime . "</td>";
                                 echo "<td>" . $timezone . "</td>";
                                 echo "<td>" . $row['bookingLength'] . "</td>";
-                                echo "<td><a href='#' title='Show/Hide accounts'onclick='myFunction(tbl_client" . $row['id'] . ")'>$client</a></td>";
+                                $html = htmlspecialchars('window.location.href="../contacts/edit.php?id='.$clientNameId.'"',ENT_QUOTES);
+                                echo "<td><a href='#' title='Show/Hide accounts' ondblclick='$html' onclick='myFunction(tbl_client" . $row['id'] . ")'>";
+                                for ($h = 0; $h < count($contacts_array); $h++) { $client = $contacts_array[$h][$clientNameId]; echo $client; }
+                                echo "</a></td>";
                                 // echo "<td>" . (!empty($client)) ? $row['clientNameId'] : $client . "</td>";
                                 echo "<td>" . $row['clientConfirm'] . "</td>";
                                 // echo "<td>" . $venue . "</td>";
-                                echo "<td><a href='#' title='Show/Hide accounts'onclick='myFunction(tbl_venue" . $row['id'] . ")'>$venue</a></td>";
+                                echo "<td><a href='#' title='Show/Hide accounts'onclick='myFunction(tbl_venue" . $row['id'] . ")'>";
+                                for ($i = 0; $i < count($venue_name_array); $i++) { $venue = $venue_name_array[$i][$venueNameId]; echo $venue; }
+                                echo "</a></td>";
                                 echo "<td>" . $row['venueConfirm'] . "</td>";
                                 echo "<td>" . $row['bookingStatus'] . "</td>";
                                 echo "<td>";

@@ -12,7 +12,7 @@ while ($row = mysqli_fetch_assoc($phone_types_result)) {
   $phoneRowCount = mysqli_num_rows($phone_result);
   echo "<table id='tbl_phone". $contactId ."' style='display: none; position: relative; left: 50px;' class='show table table-bordered table-striped'>";
   echo "<thead>";
-  echo "<caption><a href='../phones/add.php?contactId=". $row['id'] ."' title='Add Phone' data-toggle='tooltip'><span><i class='fas fa-plus'></i>phone</span></a></caption>";
+  echo "<caption><a href='../phones/add.php?contactId=". $contactId ."' title='Add Phone' data-toggle='tooltip'><span><i class='fas fa-plus'></i>phone</span></a></caption>";
   echo "<a href='#' title='Show/Hide Phones'style='position: relative; left: 50px;' onclick='myFunction(tbl_phone". $contactId .")'><span><i class='fas fa-chevron-down'></i>&nbsp Phones (". $phoneRowCount .")&nbsp</span></a>";
   echo "<tr>";
   echo "<th></th>";

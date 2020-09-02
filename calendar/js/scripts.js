@@ -1,12 +1,16 @@
-today = new Date();
-currentMonth = today.getMonth();
-currentYear = today.getFullYear();
-selectYear = document.getElementById("year");
-selectMonth = document.getElementById("month");
+'use strict'
 
-months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+console.log('imported script.js')
 
-monthAndYear = document.getElementById("monthAndYear");
+let today = new Date();
+let currentMonth = today.getMonth();
+let currentYear = today.getFullYear();
+let selectYear = document.getElementById("year");
+let selectMonth = document.getElementById("month");
+
+let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+let monthAndYear = document.getElementById("monthAndYear");
 showCalendar(currentMonth, currentYear);
 
 
@@ -14,12 +18,14 @@ function next() {
   currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
   currentMonth = (currentMonth + 1) % 12;
   showCalendar(currentMonth, currentYear);
+  populateCalendar();
 }
 
 function previous() {
   currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
   currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
   showCalendar(currentMonth, currentYear);
+  populateCalendar();
 }
 
 function jump() {
@@ -29,10 +35,9 @@ function jump() {
 }
 
 function showCalendar(month, year) {
-
   let firstDay = (new Date(year, month)).getDay();
 
-  tbl = document.getElementById("calendar-body"); // body of the calendar
+  let tbl = document.getElementById("calendar-body"); // body of the calendar
 
   // clearing all previous cells
   tbl.innerHTML = "";
@@ -51,8 +56,8 @@ function showCalendar(month, year) {
       //creating individual cells, filing them up with data.
       for (let j = 0; j < 7; j++) {
           if (i === 0 && j < firstDay) {
-              cell = document.createElement("td");
-              cellText = document.createTextNode("");
+              let cell = document.createElement("td");
+              let cellText = document.createTextNode("");
               cell.appendChild(cellText);
               row.appendChild(cell);
           }
@@ -61,9 +66,9 @@ function showCalendar(month, year) {
           }
 
           else {
-              cell = document.createElement("td");
-              br = document.createElement("br");
-              cellText = document.createTextNode(date);
+              let cell = document.createElement("td");
+              let br = document.createElement("br");
+              let cellText = document.createTextNode(date);
               // booking1 = document.createElement("span");
               // booking2 = document.createElement("span");
               // booking3 = document.createElement("span");
@@ -80,7 +85,7 @@ function showCalendar(month, year) {
               // booking3.className = 'badge badge-warning p-1 m-1 fu';
               // booking4.className = 'badge badge-danger p-1 m-1 fu';
               // booking5.className = 'badge badge-success p-1 m-1 fu';
-              cellText1 = document.createTextNode("test");
+              // cellText1 = document.createTextNode("test");
               if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                 cell.className = '';
                 cell.style = 'background-color: #8BC3F7;';
@@ -111,13 +116,59 @@ function daysInMonth(iMonth, iYear) {
 }
 
 // create function for booking
-function createBooking(startDate, clientFullName, color, title) {
-  cell = document.getElementById(startDate);
-  booking = document.createElement("span");
-  booking.innerHTML = clientFullName.toUpperCase();
-  booking.title = title;
-  booking.className = 'badge p-1 m-1';
-  booking.style = `background-color: ${color}; color: white;`;
-  cell.appendChild(booking);
+function createBooking(startDate, clientFullName, color, title, booking) {
+  let cell = document.getElementById(startDate);
+  if (cell == null) return;
+    
+ 
+  let detailsPanel = document.createElement("span");
+  let bookingEl = document.createElement("span");
+  bookingEl.innerHTML = clientFullName.toUpperCase();
+  bookingEl.title = title;
+  bookingEl.className = 'badge p-1 m-1';
+  bookingEl.style = `background-color: ${color}; color: white;cursor: pointer;`;
+  bookingEl.addEventListener('dblclick', () => {
+    let sideDetails = document.getElementById('sideDetails');
+    while (sideDetails.hasChildNodes()) {
+      sideDetails.removeChild(sideDetails.lastChild);
+    }
+    detailsPanel.innerHTML = getDetailsPane(booking);
+    sideDetails.appendChild(detailsPanel);
+  })
+  cell.appendChild(bookingEl);
 
 }
+function getDetailsPane(booking){
+  return `
+  <div class="booking-details">
+    <div>12:00 - 13:00</div>Event name</div>
+
+    <div>bookingType: ${booking.bookingType}</div>
+    <div>StartDate: ${booking.StartDate}</div>
+    <div>StartTime: ${booking.StartTime}</div>
+    <div>EndDate: ${booking.EndDate}</div>
+    <div>EndTime: ${booking.EndTime}</div>
+    <div>timezone: ${booking.timezone}</div>
+    <div>bookingLength: ${booking.bookingLength}</div>
+    <div>clientFullName: ${booking.clientFullName}</div>
+    <div>bookingColor: ${booking.bookingColor}</div>
+    <div>clientConfirm: ${booking.clientConfirm}</div>
+    <div>venueName: ${booking.venueName}</div>
+    <div>venueConfirm: ${booking.venueConfirm}</div>
+    <div>bookingStatus: ${booking.bookingStatus}</div>
+  </div>
+  `;
+}
+function populateCalendar(event){
+  window.booking_array.forEach(booking => {
+    const startDate = booking['StartDate'];
+    const clientFullName = booking['clientFullName'];
+    const color = (booking['bookingColor'] === null) ? 'rgb(0, 0, 0)' : booking['bookingColor'];
+    const title = JSON.stringify(booking);
+    
+    createBooking(startDate, clientFullName, color, title, booking);
+  })
+}
+window.addEventListener('load', populateCalendar)
+document.getElementById('next').addEventListener('click', next)
+document.getElementById('previous').addEventListener('click', previous)
