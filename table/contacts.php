@@ -20,6 +20,7 @@ $sql1 = "CREATE TABLE contacts (
     jobTitle VARCHAR(30) NULL,
     active INT(1) DEFAULT 1,
     birthdate DATE NULL,
+    timezoneId INT(3) NULL,
     bookingCount INT(3) NULL,
     bookingAuto INT(1) NULL,
     bookingColor VARCHAR(32) NULL,
