@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Bookings</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <script src="./js/view.js"></script>
     <link rel="stylesheet" href="./css/view.css">
     <style type="text/css">
+    body {
+        font-size: 10px;
+    }
         .wrapper {
             width: 100%;
             margin: 0 auto;
@@ -18,9 +20,23 @@
         .page-header h2 {
             margin-top: 0;
         }
-
-        table tr td:last-child a {
-            margin-right: 15px;
+        .table th,
+        .table td {
+            width: 110px;
+            padding: 0px 5px;
+            margin: 0px;
+        }
+        /* table tr td:last-child a { 
+        table.table:nth-child(8) > thead:nth-child(1),
+        table.table:nth-child(11) > thead:nth-child(1) 
+        thead:nth-child(5)::after */
+        table>thead::after 
+        {
+            display: none;
+            /* margin-right: 15px; */
+        }
+        .fitwidth {
+            /* width: 500px; */
         }
     </style>
     <script type="text/javascript">
@@ -98,9 +114,6 @@
                     if ($result = mysqli_query($conn, $sql)) {
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_array($result)) {
-                                $clientNameId = $row['clientNameId'];
-                                $venueNameId = $row['venueNameId'];
-                                // echo "$clientNameId";
                                 echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                 echo "<tr>";
@@ -118,6 +131,9 @@
                                 echo "</tr>";
                                 echo "</thead>";
                                 echo "<tbody>";
+                                $clientNameId = $row['clientNameId'];
+                                $venueNameId = $row['venueNameId'];
+                                // echo "$clientNameId";
                                 foreach ($booking_type_array as $item) {
                                     if ($item['id'] == $row['bookingTypeId']) {
                                         $bookingType = $item['bookingType'];
@@ -166,9 +182,9 @@
                                 echo "<td>" . $row['venueConfirm'] . "</td>";
                                 echo "<td>" . $row['bookingStatus'] . "</td>";
                                 echo "<td>";
-                                echo "<a href='view.php?id=" . $row['id'] . "' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                                echo "<a href='edit.php?id=" . $row['id'] . "' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                                echo "<a href='delete.php?id=" . $row['id'] . "' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                                echo "<a href='view.php?id=" . $row['id'] . "' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
+                                echo "<a href='edit.php?id=" . $row['id'] . "' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
+                                echo "<a href='delete.php?id=" . $row['id'] . "' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
                                 echo "</td>";
                                 echo "</tr>";
 

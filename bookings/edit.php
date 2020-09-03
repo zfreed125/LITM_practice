@@ -286,9 +286,6 @@ $conn->close();
                 <div style="height: 40px;" class="input-group-prepend"><span class="input-group-text">Client Genre Tags</span></div>
                 <div id="genreContactTags" style="border: 1px solid black; max-width: 250px;"> </div>
             </div>
-            <!-- <div id="genreContactTags" style=" position: absolute; left: 850px; top: 400px; border: 1px solid black; ">
-
-            </div> -->
             <div class="input-group mt-5 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group">
                     <div class="input-group-prepend"><span class="input-group-text">Client Confirm</span></div>
