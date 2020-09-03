@@ -25,7 +25,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 //attempt insert query execution
-$bookings_sql = "select * from bookings WHERE clientNameId IS NOT NULL;";
+$bookings_sql = "select * from bookings;";
 $result = mysqli_query($conn, $bookings_sql);
 //output data of each row
 $bookings_array = array();
@@ -40,6 +40,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $venueNameId = $row["venueNameId"];
     $venueConfirm = $row["venueConfirm"];
     $bookingStatus = $row["bookingStatus"];
+
     $contact_sql = "SELECT id,bookingColor, CONCAT(firstname, ' ', lastname) as fullname FROM contacts WHERE id='$clientNameId';";
     $contact_result = mysqli_query($conn, $contact_sql);
     while ($row = mysqli_fetch_assoc($contact_result)) {
