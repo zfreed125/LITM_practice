@@ -57,7 +57,7 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
                 <input class="form-control" type="text" name="jobTitle">
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Booking Timezone</span><select class="form-control" name="timezoneId"></div>
+                <div class="input-group-prepend"><span class="input-group-text">Contact Timezone</span><select class="form-control" name="timezoneId"></div>
                 <option value="12" selected="selected">Default *(CST)</option>
                 <?php foreach ($timezones_array as $item) { ?>
                     <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['name']; ?></option>
