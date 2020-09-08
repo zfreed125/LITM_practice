@@ -121,6 +121,15 @@ $conn->close();
             font-weight: bold;
             padding: 0.25em;
         }
+
+        .hide {
+            display: none;
+        }
+
+        p {
+            padding-left: 10px;
+            padding-right: 5px;
+        }
     </style>
 </head>
 <script>
@@ -129,6 +138,22 @@ $conn->close();
 
     function updateClientGenreTags(clientNameId) {
         let genre_array = <?php echo json_encode($genre_array) ?>;
+        // search genre array for q and find VenueId for a match
+        for (k = 0; k < genre_array.length; k++) {
+            gsearch = genre_array[k]['genreName'].toLowerCase();
+            // q needs to be fed from text area's tags on client
+            // if tags are removed or added to textarea we need to re-run query
+            q = 'area';
+
+            if (gsearch.includes(q.toLowerCase())) {
+                // if venueId is not null then the match is a success
+                if (genre_array[k]['venueId'] !== null) {
+                    // return new venue select with matched venues
+                    console.log(genre_array[k]['venueId']);
+                }
+            }
+
+        }
         let genreTagDiv = document.getElementById('genreContactTags');
         while (genreTagDiv.hasChildNodes()) {
             genreTagDiv.removeChild(genreTagDiv.lastChild);
@@ -180,6 +205,41 @@ $conn->close();
     function getValueFromVenueSelect(venueId) {
         updateVenueGenreTags(venueId);
     }
+
+    function addTagFromClientInput(e) {
+        let btn = document.getElementById('addTagToClient');
+        let input = document.getElementById('btnTagToClient');
+        let genreTagDiv = document.getElementById('genreContactTags');
+        genreTagDiv.removeChild(btn);
+        genreTagDiv.removeChild(input);
+        let el = document.createElement("span");
+        el.innerHTML = e + ' <span class="btn-delete">X</span>';
+        el.className = 'badge badge-primary p-2 m-1 fu';
+        el.addEventListener('click', () => {
+            genreTagDiv.removeChild(el);
+        })
+        genreTagDiv.appendChild(el);
+
+
+    }
+
+    function createInputClientTag(e) {
+        var genreClientDiv = document.getElementById(e);
+        var input = document.createElement("input");
+        input.id = 'addTagToClient';
+        var btn = document.createElement("button");
+        btn.id = 'btnTagToClient'
+        btn.textContent = 'add';
+        btn.type = 'button';
+        btn.addEventListener('click', () => {
+            // console.log('add input value to tag list');
+            addTagFromClientInput(document.getElementById('addTagToClient').value)
+        })
+
+        genreClientDiv.appendChild(input);
+        genreClientDiv.appendChild(btn);
+        // console.log(e);
+    }
     window.addEventListener('load', (event) => {
 
         updateClientGenreTags(selected_contact);
@@ -229,16 +289,43 @@ $conn->close();
 
     }); //window load
 </script>
+<script>
+    function formValidate() {
+        var venueName = document.forms["myForm"]["venueNameId"];
+        var clientName = document.forms["myForm"]["clientNameId"];
+        var bookingType = document.getElementById("bookingTypeId");
+
+        if (bookingType.value == "-1") {
+            bookingType.nextElementSibling.classList.remove("hide");
+            bookingType.focus();
+            return false;
+        }
+
+        if (bookingType.value == "2") {
+            if (venueName.value == "-1") {
+                venueName.nextElementSibling.classList.remove("hide");
+                venueName.focus();
+                return false;
+            }
+        } else if (bookingType.value == "1") {
+            if (clientName.value == "-1") {
+                clientName.nextElementSibling.classList.remove("hide");
+                clientName.focus();
+                return false;
+            }
+        }
+    }
+</script>
 
 <body>
     <div class="wrapper">
         <h2>Update Booking</h2>
         <p>Please edit the input values and submit to update the record.</p>
-        <form action="update.php" method="POST">
+        <form name="myForm" action="update.php" method="POST" onsubmit="return formValidate()">
             <div class="input-group">
                 <div class="input-group-prepend"><span class="input-group-text">Booking Type</span></div>
-                <select class="form-control" name="bookingTypeId">
-                    <option selected="selected">Choose one</option>
+                <select class="form-control" onchange="this.nextElementSibling.classList.add('hide')" name="bookingTypeId" id="bookingTypeId">
+                    <option value="-1" selected="selected">Choose one</option>
                     <?php foreach ($booking_type_array as $item) { ?>
                         <option value="<?php echo strtolower($item['id']); ?>" <?php if ($item['id'] == $bookingTypeId) {
                                                                                     echo "selected";
@@ -246,6 +333,9 @@ $conn->close();
                             <?php echo $item['bookingType']; ?></option>
                     <?php } ?>
                 </select>
+                <div class="hide">
+                    <p style="color: tomato;">* Required Field</p>
+                </div>
             </div>
             <div class="input-group mt-4">
                 <div class="input-group-prepend"><span class="input-group-text">Start Date</span></div>
@@ -279,13 +369,16 @@ $conn->close();
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text">Contact/Client</span></div>
-                <select class="form-control" name="clientNameId" id="clientNameId" onchange="getValueFromClientSelect(this.value)">
-                    <option value=''>Select Client</option>
+                <select class="form-control" onchange="this.nextElementSibling.classList.add('hide')" name="clientNameId" id="clientNameId" onchange="getValueFromClientSelect(this.value)">
+                    <option value="-1">Select Client</option>
                 </select>
+                <div class="hide">
+                    <p style="color: tomato;">* Required Field</p>
+                </div>
             </div>
             <div style=" position: absolute; left: 840px; top: 370px;" class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div style="height: 40px;" class="input-group-prepend"><span class="input-group-text">Client Genre Tags</span></div>
-                <div id="genreContactTags" style="border: 1px solid black; max-width: 250px;"> </div>
+                <div id="genreContactTags" ondblclick="createInputClientTag(this.id)" style="border: 1px solid black; max-width: 250px;"> </div>
             </div>
             <div class="input-group mt-5 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group">
@@ -295,9 +388,12 @@ $conn->close();
             </div>
             <div class="input-group mt-5 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text">Venue/Venue Client</span></div>
-                <select class="form-control" name="venueNameId" id='venueNameId' onchange="getValueFromVenueSelect(this.value)">
-                    <option value=''>Select Venue</option>
+                <select class="form-control" onchange="this.nextElementSibling.classList.add('hide')" name="venueNameId" id='venueNameId' onchange="getValueFromVenueSelect(this.value)">
+                    <option value="-1">Select Venue</option>
                 </select>
+                <div class="hide">
+                    <p style="color: tomato;">* Required Field</p>
+                </div>
             </div>
             <div style=" position: absolute; left: 840px; top: 550px;" class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div style="height: 40px;" class="input-group-prepend"><span class="input-group-text">Venue Genre Tags</span></div>
@@ -319,7 +415,7 @@ $conn->close();
 
             <input type="hidden" name="id" value="<?php echo $id; ?>">
             <div class="m-5">
-                <input type="submit" class="btn btn-primary" value="Submit">
+                <button type="submit" class="btn btn-primary">Submit</button>
                 <a class="btn btn-danger" href="delete.php?id=<?php echo $id; ?>">Delete</a>
             </div>
         </form>

@@ -15,9 +15,9 @@ $bookingDateEnd = $_REQUEST['bookingDateEnd'];
 $bookingTimeEnd = $_REQUEST['bookingTimeEnd'];
 $timezoneId = $_REQUEST['timezoneId'];
 $bookingLength = $_REQUEST['bookingLength'];
-$clientNameId = (empty($_REQUEST['clientNameId'])) ? 'NULL' : $_REQUEST['clientNameId'];
+$clientNameId = ($_REQUEST['clientNameId'] == '-1') ? 'NULL' : $_REQUEST['clientNameId'];
 $clientConfirm = (isset($_POST['clientConfirm'])) ? 1 : 0;
-$venueNameId = (empty($_REQUEST['venueNameId'])) ? 'NULL' : $_REQUEST['venueNameId'];
+$venueNameId = ($_REQUEST['venueNameId'] == '-1') ? 'NULL' : $_REQUEST['venueNameId'];
 $venueConfirm = (isset($_POST['venueConfirm'])) ? 1 : 0;
 $bookingStatus = $_REQUEST['bookingStatus'];
 
