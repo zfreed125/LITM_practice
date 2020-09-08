@@ -141,21 +141,22 @@ function createBooking(startDate, clientFullName, color, title, booking) {
 function getDetailsPane(booking) {
   return `
   <div class="booking-details">
-    <div>[${booking.StartTime} - ${booking.EndTime} ${booking.venueName}]</div>
+    <div><span>[${booking.StartTime} - ${booking.EndTime} ${booking.venueName}]<span></div>
 
-    <div>bookingType: ${booking.bookingType}</div>
-    <div>StartDate: ${booking.StartDate}</div>
-    <div>StartTime: ${booking.StartTime}</div>
-    <div>EndDate: ${booking.EndDate}</div>
-    <div>EndTime: ${booking.EndTime}</div>
-    <div>timezone: ${booking.timezone}</div>
-    <div>bookingLength: ${booking.bookingLength}</div>
-    <div>clientFullName: ${booking.clientFullName}</div>
-    <div>bookingColor: ${booking.bookingColor}</div>
-    <div>clientConfirm: ${booking.clientConfirm}</div>
-    <div>venueName: ${booking.venueName}</div>
-    <div>venueConfirm: ${booking.venueConfirm}</div>
-    <div>bookingStatus: ${booking.bookingStatus}</div>
+    <div><span>bookingType:</span> ${booking.bookingType}</div>
+    <div><span>StartDate:</span> ${booking.StartDate}</div>
+    <div><span>StartTime:</span> ${booking.StartTime}</div>
+    <div><span>EndDate:</span> ${booking.EndDate}</div>
+    <div><span>EndTime:</span> ${booking.EndTime}</div>
+    <div><span>timezone:</span> ${booking.timezone}</div>
+    <div><span>bookingLength:</span> ${booking.bookingLength}</div>
+    <div><span>clientFullName:</span> ${booking.clientFullName}</div>
+    <div><span>bookingColor:</span> ${booking.bookingColor}</div>
+    <div><span>clientConfirm:</span> ${booking.clientConfirm}</div>
+    <div><span>venueName:</span> ${booking.venueName}</div>
+    <div><span>venueConfirm:</span> ${booking.venueConfirm}</div>
+    <div><span>bookingStatus:</span> ${booking.bookingStatus}</div>
+    <button class="btn btn-primary">Email (placeholder)</button>
   </div>
   `;
 }

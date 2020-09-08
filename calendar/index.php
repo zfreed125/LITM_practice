@@ -18,17 +18,33 @@ require 'data.php';
     <script type="module" src="./js/scripts.js" defer></script>
 
 <style media="screen">
-  #calendar-body  td{
-    height: 100px;
-    width: 175px;
-  }
-  #sideDetails {
-      position: absolute;
-      height: 668px;
-      width: 325px;
-      left: 1230px;
-      border: 1px solid black;
-  }
+#calendar-body  td{
+height: 100px;
+width: 175px;
+}
+#sideDetails {
+position: absolute;
+top: 100px;
+
+height: 562px;
+width: 275px;
+left: 1230px;
+border: 1px solid #DEE2E6;
+border-radius: 10px;
+background-color: #F7F7F7;
+}
+.booking-details span {
+margin-top: 5px;  
+margin-left: 10px;  
+font-weight: bold;
+/* font-style: italic; */
+text-transform: capitalize;
+
+}
+.booking-details div{
+    padding: 5px;
+    align-text: right;
+}
 </style>
 </head>
 <body>
