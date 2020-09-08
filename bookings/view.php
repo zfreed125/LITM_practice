@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Bookings</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <script src="./js/view.js"></script>
     <link rel="stylesheet" href="./css/view.css">
@@ -20,11 +23,18 @@
         .page-header h2 {
             margin-top: 0;
         }
+        .table {
+            border: 1px solid lightgrey;
+
+        }
         .table th,
         .table td {
-            width: 110px;
+            width: 100px;
             padding: 0px 5px;
             margin: 0px;
+            text-align: left;
+            /* border-top: 1px solid lightgrey;
+            border-bottom: 1px solid lightgrey; */
         }
         /* table tr td:last-child a { 
         table.table:nth-child(8) > thead:nth-child(1),
@@ -39,11 +49,11 @@
             /* width: 500px; */
         }
     </style>
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         $(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip();
         });
-    </script>
+    </script> -->
 </head>
 
 <body>
@@ -112,24 +122,27 @@
                     //Attempt select query execution
                     $sql = "SELECT * FROM bookings;";
                     if ($result = mysqli_query($conn, $sql)) {
+                        echo "<table class='table table-bordered '>";
+                        echo "<thead>";
+                        echo "<tr>";
+                        echo "<th>#</th>";
+                        echo "<th>Type</th>";
+                        echo "<th>Start Date/Time</th>";
+                        echo "<th>End Date/Time</th>";
+                        echo "<th>Timezone</th>";
+                        echo "<th>Length</th>";
+                        echo "<th>Client Name</th>";
+                        echo "<th>Client Confirm</th>";
+                        echo "<th>Venue Name</th>";
+                        echo "<th>Venue Confirm</th>";
+                        echo "<th>Status</th>";
+                        echo "<th></th>";
+                        echo "</tr>";
+                        echo "</thead>";
+                        // echo "<tbody>";
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_array($result)) {
                                 echo "<table class='table table-bordered table-striped'>";
-                                echo "<thead>";
-                                echo "<tr>";
-                                echo "<th>#</th>";
-                                echo "<th>Type</th>";
-                                echo "<th>Start Date/Time</th>";
-                                echo "<th>End Date/Time</th>";
-                                echo "<th>Timezone</th>";
-                                echo "<th>Length</th>";
-                                echo "<th>Client Name</th>";
-                                echo "<th>Client Confirm</th>";
-                                echo "<th>Venue Name</th>";
-                                echo "<th>Venue Confirm</th>";
-                                echo "<th>Status</th>";
-                                echo "</tr>";
-                                echo "</thead>";
                                 echo "<tbody>";
                                 $clientNameId = $row['clientNameId'];
                                 $venueNameId = $row['venueNameId'];
@@ -191,9 +204,9 @@
                                 require "./includes/venue_loop.php";
 
                                 require "./includes/client_loop.php";
-                            }
-                            echo "</tbody>";
-                            echo "</table>";
+                        }
+                        echo "</tbody>";
+                        echo "</table>";
 
 
                             //Close connection
