@@ -1,0 +1,26 @@
+body {
+    width: 1400px;
+}
+
+.wrapper {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.btn-delete {
+    display: inline-block;
+    margin-left: 1em;
+    background: red;
+    color: white;
+    font-weight: bold;
+    padding: 0.25em;
+}
+
+.hide {
+    display: none;
+}
+
+p {
+    padding-left: 10px;
+    padding-right: 5px;
+}

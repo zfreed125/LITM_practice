@@ -7,42 +7,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$booking_sql = "SELECT * FROM booking_types;";
-$result = mysqli_query($conn, $booking_sql);
-$booking_type_array = array();
-while ($row = mysqli_fetch_assoc($result)) {
-    $booking_type_array[] = array('id' => $row['id'], 'bookingType' => $row['bookingType']);
-}
-$contact_sql = "SELECT id, CONCAT(firstname, ' ', lastname) as fullname FROM contacts ORDER BY lastname ASC, firstname ASC;";
-$contact_result = mysqli_query($conn, $contact_sql);
-$contacts_array = array();
-while ($row = mysqli_fetch_assoc($contact_result)) {
-    $contacts_array[] = array('id' => $row['id'], 'fullname' => $row['fullname']);
-}
-$genre_sql = "SELECT genres.id as gId, genres.contactId, genres.venueId, genres.genreTypeId, genre_types.* FROM genres INNER JOIN genre_types WHERE genre_types.id=genres.genreTypeId;";
-$genre_results = mysqli_query($conn, $genre_sql);
-$genre_array = array();
-while ($row = mysqli_fetch_assoc($genre_results)) {
-    $genre_array[] = array(
-        'id' => $row['gId'],
-        'genreName' => $row['genreType'],
-        'contactId' => $row['contactId'],
-        'venueId' => $row['venueId']
-    );
-}
-
-$venue_name_sql = "SELECT id, venueName FROM venues;";
-$result = mysqli_query($conn, $venue_name_sql);
-$venue_name_array = array();
-while ($row = mysqli_fetch_assoc($result)) {
-    $venue_name_array[] = array('id' => $row['id'], 'venueName' => $row['venueName']);
-}
-$timezones_sql = "SELECT * FROM timezones;";
-$timezones_result = mysqli_query($conn, $timezones_sql);
-$timezones_array = array();
-while ($row = mysqli_fetch_assoc($timezones_result)) {
-    $timezones_array[] = array('id' => $row['id'], 'name' => $row['name']);
-}
+require 'includes/type_arrays.php';
 
 $id = $_GET["id"];
 //attempt insert query execution
@@ -69,28 +34,14 @@ if (mysqli_num_rows($timezone_result) > 0) {
     $tz = $row['timezone'];
 }
 
-function convertDateTimeUTCtoLocal($bookingDateTime, $tz)
-{
-    $utc_date = DateTime::createFromFormat(
-        'Y-m-d H:i:s',  // this the format from mysql
-        // 'Y-m-d G:i',  // this the format from mysql
-        $bookingDateTime, // this is the output from mysql $bookingDateTime...
-        new DateTimeZone('UTC')
-    );
-    //
-    $local_date = $utc_date;
-    $local_date->setTimeZone(new DateTimeZone($tz));
-    //
-    $bookingDate = $local_date->format('Y-m-d'); // output: 08-25-2020
-    $bookingTime = $local_date->format('H:i'); // output: 10:45 PM
-
-    return array($bookingDate, $bookingTime);
-}
+require 'includes/convertDateTimeUTCtoLocal.php';
 
 (empty($bookingDateTimeStart)) ? $StartDate = 'unset' : $StartDate = convertDateTimeUTCtoLocal($bookingDateTimeStart, $tz)[0];
 (empty($bookingDateTimeStart)) ? $StartTime = 'unset' : $StartTime = convertDateTimeUTCtoLocal($bookingDateTimeStart, $tz)[1];
 (empty($bookingDateTimeEnd)) ? $EndDate = 'unset' : $EndDate = convertDateTimeUTCtoLocal($bookingDateTimeEnd, $tz)[0];
 (empty($bookingDateTimeEnd)) ? $EndTime = 'unset' : $EndTime = convertDateTimeUTCtoLocal($bookingDateTimeEnd, $tz)[1];
+
+require 'includes/bookings_array.php';
 
 $conn->close();
 ?>
@@ -102,144 +53,20 @@ $conn->close();
     <meta charset="UTF-8">
     <title>Update Booking</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/middle_finger.css">
-    <style type="text/css">
-        body {
-            width: 1400px;
-        }
-
-        .wrapper {
-            width: 500px;
-            margin: 0 auto;
-        }
-
-        .btn-delete {
-            display: inline-block;
-            margin-left: 1em;
-            background: red;
-            color: white;
-            font-weight: bold;
-            padding: 0.25em;
-        }
-
-        .hide {
-            display: none;
-        }
-
-        p {
-            padding-left: 10px;
-            padding-right: 5px;
-        }
-    </style>
 </head>
-<script>
+<script src="js/generateTags.js"></script>
+<script src="js/validate.js"></script>
+<script >
     var selected_contact = '<?php echo $clientNameId; ?>';
     var selected_venue = '<?php echo $venueNameId; ?>';
+    var genre_array = <?php echo json_encode($genre_array) ?>;
+    var bookings_array = <?php echo json_encode($bookings_array) ?>;
 
-    function updateClientGenreTags(clientNameId) {
-        let genre_array = <?php echo json_encode($genre_array) ?>;
-        // search genre array for q and find VenueId for a match
-        for (k = 0; k < genre_array.length; k++) {
-            gsearch = genre_array[k]['genreName'].toLowerCase();
-            // q needs to be fed from text area's tags on client
-            // if tags are removed or added to textarea we need to re-run query
-            q = 'area';
-
-            if (gsearch.includes(q.toLowerCase())) {
-                // if venueId is not null then the match is a success
-                if (genre_array[k]['venueId'] !== null) {
-                    // return new venue select with matched venues
-                    console.log(genre_array[k]['venueId']);
-                }
-            }
-
-        }
-        let genreTagDiv = document.getElementById('genreContactTags');
-        while (genreTagDiv.hasChildNodes()) {
-            genreTagDiv.removeChild(genreTagDiv.lastChild);
-        }
-        let h;
-        for (h = 0; h < genre_array.length; h++) {
-            let el = document.createElement("span");
-            let tag = genre_array[h];
-            if (tag['contactId'] === clientNameId) {
-                el.innerHTML = tag['genreName'] + ' <span class="btn-delete">X</span>';
-                el.className = 'badge badge-primary p-2 m-1 fu';
-                el.addEventListener('click', () => {
-                    console.log(tag['genreName']);
-                    genreTagDiv.removeChild(el);
-                })
-                genreTagDiv.appendChild(el);
-            }
-        }
-
-    }
-
-    function updateVenueGenreTags(venueNameId) {
-        let genre_array = <?php echo json_encode($genre_array) ?>;
-        let genreTagDiv = document.getElementById('genreVenueTags');
-        while (genreTagDiv.hasChildNodes()) {
-            genreTagDiv.removeChild(genreTagDiv.lastChild);
-        }
-        let h;
-        for (h = 0; h < genre_array.length; h++) {
-            let el = document.createElement("span");
-            let tag = genre_array[h];
-            if (tag['venueId'] === venueNameId) {
-                el.innerHTML = tag['genreName'] + ' <span class="btn-delete">X</span>';
-                el.className = 'badge badge-primary p-2 m-1 fu';
-                el.addEventListener('click', () => {
-                    console.log(tag['genreName']);
-                    genreTagDiv.removeChild(el);
-                })
-                genreTagDiv.appendChild(el);
-            }
-        }
-
-    }
-
-    function getValueFromClientSelect(clientId) {
-        updateClientGenreTags(clientId);
-    }
-
-    function getValueFromVenueSelect(venueId) {
-        updateVenueGenreTags(venueId);
-    }
-
-    function addTagFromClientInput(e) {
-        let btn = document.getElementById('addTagToClient');
-        let input = document.getElementById('btnTagToClient');
-        let genreTagDiv = document.getElementById('genreContactTags');
-        genreTagDiv.removeChild(btn);
-        genreTagDiv.removeChild(input);
-        let el = document.createElement("span");
-        el.innerHTML = e + ' <span class="btn-delete">X</span>';
-        el.className = 'badge badge-primary p-2 m-1 fu';
-        el.addEventListener('click', () => {
-            genreTagDiv.removeChild(el);
-        })
-        genreTagDiv.appendChild(el);
-
-
-    }
-
-    function createInputClientTag(e) {
-        var genreClientDiv = document.getElementById(e);
-        var input = document.createElement("input");
-        input.id = 'addTagToClient';
-        var btn = document.createElement("button");
-        btn.id = 'btnTagToClient'
-        btn.textContent = 'add';
-        btn.type = 'button';
-        btn.addEventListener('click', () => {
-            // console.log('add input value to tag list');
-            addTagFromClientInput(document.getElementById('addTagToClient').value)
-        })
-
-        genreClientDiv.appendChild(input);
-        genreClientDiv.appendChild(btn);
-        // console.log(e);
-    }
+    console.dir(bookings_array);
+        
+  
     window.addEventListener('load', (event) => {
 
         updateClientGenreTags(selected_contact);
@@ -288,33 +115,6 @@ $conn->close();
         }
 
     }); //window load
-</script>
-<script>
-    function formValidate() {
-        var venueName = document.forms["myForm"]["venueNameId"];
-        var clientName = document.forms["myForm"]["clientNameId"];
-        var bookingType = document.getElementById("bookingTypeId");
-
-        if (bookingType.value == "-1") {
-            bookingType.nextElementSibling.classList.remove("hide");
-            bookingType.focus();
-            return false;
-        }
-
-        if (bookingType.value == "2") {
-            if (venueName.value == "-1") {
-                venueName.nextElementSibling.classList.remove("hide");
-                venueName.focus();
-                return false;
-            }
-        } else if (bookingType.value == "1") {
-            if (clientName.value == "-1") {
-                clientName.nextElementSibling.classList.remove("hide");
-                clientName.focus();
-                return false;
-            }
-        }
-    }
 </script>
 
 <body>
@@ -369,7 +169,7 @@ $conn->close();
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text">Contact/Client</span></div>
-                <select class="form-control" onchange="this.nextElementSibling.classList.add('hide')" name="clientNameId" id="clientNameId" onchange="getValueFromClientSelect(this.value)">
+                <select class="form-control"  name="clientNameId" id="clientNameId" onchange="getValueFromClientSelect(this.value)">
                     <option value="-1">Select Client</option>
                 </select>
                 <div class="hide">
@@ -378,7 +178,7 @@ $conn->close();
             </div>
             <div style=" position: absolute; left: 840px; top: 370px;" class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div style="height: 40px;" class="input-group-prepend"><span class="input-group-text">Client Genre Tags</span></div>
-                <div id="genreContactTags" ondblclick="createInputClientTag(this.id)" style="border: 1px solid black; max-width: 250px;"> </div>
+                <div id="genreContactTags" ondblclick="createInputClientTag(this.id)" style="border: 1px solid black; min-width: 250px; max-width: 250px; "> </div>
             </div>
             <div class="input-group mt-5 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group">
@@ -388,7 +188,7 @@ $conn->close();
             </div>
             <div class="input-group mt-5 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text">Venue/Venue Client</span></div>
-                <select class="form-control" onchange="this.nextElementSibling.classList.add('hide')" name="venueNameId" id='venueNameId' onchange="getValueFromVenueSelect(this.value)">
+                <select class="form-control"  name="venueNameId" id='venueNameId' onchange="getValueFromVenueSelect(this.value)">
                     <option value="-1">Select Venue</option>
                 </select>
                 <div class="hide">
@@ -397,7 +197,7 @@ $conn->close();
             </div>
             <div style=" position: absolute; left: 840px; top: 550px;" class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div style="height: 40px;" class="input-group-prepend"><span class="input-group-text">Venue Genre Tags</span></div>
-                <div id="genreVenueTags" style="border: 1px solid black; max-width: 250px;"> </div>
+                <div id="genreVenueTags" ondblclick="createInputVenueTag(this.id)" style="border: 1px solid black; min-width: 250px; max-width: 250px; "> </div>
             </div>
 
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
