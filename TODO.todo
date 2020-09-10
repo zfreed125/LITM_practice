@@ -6,7 +6,8 @@
 ✔ Booking added to calendar @done(20-09-10 09:35)
 ✔ Booking color on calendar @done(20-09-10 09:35)
 ☐ Filter venues/clients by genre @wip
-☐ Historical log on bookings @wip 
+✔ Historical log on bookings @done(20-09-10 10:13)
 ☐ Booking status @wip 
 ☐ Email notification w/tz array @wip 
 ☐ Invoice ?
+☐ Historical log sort by date

@@ -56,6 +56,7 @@ $conn->close();
     <meta charset="UTF-8">
     <title>Update Record</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles.css">
     <style type="text/css">
         .wrapper {
             width: 500px;
@@ -87,30 +88,30 @@ $conn->close();
     </script>
 </head>
 
-<body>
+<body class="body">
     <div class="wrapper">
         <h2>Update Record</h2>
         <p>Please edit the input values and submit to update the record.</p>
         <form action="update.php" method="post">
 
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">First Name</span></div>
+                <div class="input-group-prepend"><span class="input-group-text label">First Name</span></div>
                 <input type="text" name="firstname" class="form-control" value="<?php echo $firstname; ?>">
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Last Name</span></div>
+                <div class="input-group-prepend"><span class="input-group-text label">Last Name</span></div>
                 <input type="text" name="lastname" class="form-control" value="<?php echo $lastname; ?>">
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Birth Date</span></div>
+                <div class="input-group-prepend"><span class="input-group-text label">Birth Date</span></div>
                 <input type="date" name="birthdate" class="form-control" value="<?php echo $birthdate; ?>">
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Job Title</span></div>
+                <div class="input-group-prepend"><span class="input-group-text label">Job Title</span></div>
                 <input type="text" name="jobTitle" class="form-control" value="<?php echo $jobTitle; ?>">
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1">
-                <div class="input-group-prepend"><span class="input-group-text">Timezone</span></div>
+                <div class="input-group-prepend"><span class="input-group-text label">Timezone</span></div>
                 <select style=" width: 375px;" name="timezoneId" class="form-control">
                     <option selected="selected">Select Timezone</option>
                     <?php foreach ($timezones_array as $item) { ?>
@@ -122,20 +123,20 @@ $conn->close();
             </div>
             <div id="client">
                 <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                    <div class="input-group-prepend"><span class="input-group-text">Auto Monthly Bookings</span></div>
+                    <div class="input-group-prepend"><span class="input-group-text label">Auto Monthly Bookings</span></div>
                     <input type="checkbox" name="bookingAuto" id="bookingAuto" class="form-control" value="<?php echo $bookingAuto; ?>">
                 </div>
                 <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                    <div class="input-group-prepend"><span class="input-group-text">Booking Amount Per Month</span></div>
+                    <div class="input-group-prepend"><span class="input-group-text label">Booking Amount Per Month</span></div>
                     <input type="number" id="bookingCount" name="bookingCount" class="form-control w-25" value="<?php echo $bookingCount; ?>">
                 </div>
                 <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                    <div class="input-group-prepend"><span class="input-group-text">Booking Color</span></div>
+                    <div class="input-group-prepend"><span class="input-group-text label">Booking Color</span></div>
                     <input type="color" id="bookingColor" class="form-control" name="bookingColor" value="<?php echo $bookingColor; ?>">
                 </div>
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Active</span></div>
+                <div class="input-group-prepend"><span class="input-group-text label">Active</span></div>
                 <input type="checkbox" name="active" id="active" class="form-control" value="<?php echo $active; ?>">
             </div>
             <input type="hidden" name="id" value="<?php echo $id; ?>" />

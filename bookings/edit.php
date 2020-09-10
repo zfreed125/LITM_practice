@@ -84,7 +84,9 @@ $conn->close();
         bookingsByClientDiv.appendChild(el);
     }    
     function bookingsByClient(filtered) {
-        let html = '<div class="booking-details">';
+        let html = `<div class="booking-details">
+        <div class="bookingsDetailsHeader" >Historical Log (All Date/Time is America/Chicago)</div>
+        `;
         for (i = 0; i < filtered.length; i++) {
             const venueName = venue_name_array.find(function (v){
                 return v.id == filtered[i].venueNameId;

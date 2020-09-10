@@ -1,0 +1,11 @@
+.label {
+    background-color: rgb(78,168,61);
+    color: white;
+    font-weight: bold;
+    /* font-family: "Comic Sans MS", cursive, sans-serif; */
+    font-family: "Times New Roman", Times, serif;
+    max-width: 300px;
+}
+.body {
+    background-color: rgb(74,12,87);
+}

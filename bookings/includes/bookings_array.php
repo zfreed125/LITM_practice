@@ -1,4 +1,6 @@
 <?php
+
+$utcTZ = 'America/Chicago';
 $bookings = "SELECT * FROM bookings;";
 $bookings_result = mysqli_query($conn, $bookings);
 $bookings_array = array();
@@ -11,10 +13,10 @@ while ($brow = mysqli_fetch_assoc($bookings_result)) {
     }
     $bDateTimeStart = $brow["bookingDateTimeStart"];
     $bDateTimeEnd = $brow["bookingDateTimeEnd"];
-    (empty($bDateTimeStart)) ? $bStartDate = 'unset' : $bStartDate = convertDateTimeUTCtoLocal($bDateTimeStart, $ttz)[0];
-    (empty($bDateTimeStart)) ? $bStartTime = 'unset' : $bStartTime = convertDateTimeUTCtoLocal($bDateTimeStart, $ttz)[1];
-    (empty($bDateTimeEnd)) ? $bEndDate = 'unset' : $bEndDate = convertDateTimeUTCtoLocal($bDateTimeEnd, $ttz)[0];
-    (empty($bDateTimeEnd)) ? $bEndTime = 'unset' : $bEndTime = convertDateTimeUTCtoLocal($bDateTimeEnd, $ttz)[1];
+    (empty($bDateTimeStart)) ? $bStartDate = 'unset' : $bStartDate = convertDateTimeUTCtoLocal($bDateTimeStart, $utcTZ)[0];
+    (empty($bDateTimeStart)) ? $bStartTime = 'unset' : $bStartTime = convertDateTimeUTCtoLocal($bDateTimeStart, $utcTZ)[1];
+    (empty($bDateTimeEnd)) ? $bEndDate = 'unset' : $bEndDate = convertDateTimeUTCtoLocal($bDateTimeEnd, $utcTZ)[0];
+    (empty($bDateTimeEnd)) ? $bEndTime = 'unset' : $bEndTime = convertDateTimeUTCtoLocal($bDateTimeEnd, $utcTZ)[1];
     
     foreach ($booking_type_array as $bitem) { 
         if ($bitem['id'] == $brow['bookingTypeId']) {

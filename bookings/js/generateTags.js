@@ -1,5 +1,6 @@
 function updateClientGenreTags(clientNameId) {
     // search genre array for q and find VenueId for a match
+    
     for (k = 0; k < genre_array.length; k++) {
         gsearch = genre_array[k]['genreName'].toLowerCase();
         // q needs to be fed from text area's tags on client

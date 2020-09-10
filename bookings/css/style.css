@@ -24,14 +24,8 @@ p {
     padding-left: 10px;
     padding-right: 5px;
 }
-/* .booking-details > div:nth-child(1) > span:nth-child(1) */
-.bookingsDetails:before {
-    content: "Historic Log";
+.bookingsDetailsHeader {
     font-weight: bold;
-    /* border-bottom: 1px solid black; */
-}
-.booking-details{
-    
 }
 .history_row:nth-child(odd){
     border: 1px solid grey;
