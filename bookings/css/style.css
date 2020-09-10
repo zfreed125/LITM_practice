@@ -24,3 +24,35 @@ p {
     padding-left: 10px;
     padding-right: 5px;
 }
+/* .booking-details > div:nth-child(1) > span:nth-child(1) */
+.bookingsDetails:before {
+    content: "Historic Log";
+    font-weight: bold;
+    /* border-bottom: 1px solid black; */
+}
+.booking-details{
+    /* border-bottom: 1px solid grey; */
+
+}
+.booking-details:nth-child(odd){
+    background: white;
+    font-size: 13px;
+    
+} 
+.booking-details:nth-child(even){
+    /* border: 1px solid grey; */
+    background: lightgray;
+    font-size: 13px;
+    
+} 
+.bookingsDetails{
+    position: absolute;
+    top: 100px;
+    height: 362px;
+    width: 400px;
+    left: 15px;
+    border: 1px solid #DEE2E6;
+    border-radius: 0px 0px 10px 10px;
+    background-color: #F7F7F7;
+    overflow-y: auto;
+}

@@ -70,6 +70,7 @@ function getValueFromClientSelect(clientId) {
     let x = document.getElementById('clientNameId');
     x.nextElementSibling.classList.add('hide');
     updateClientGenreTags(clientId);
+    showBookingsForClient(clientId);
 }
 
 function getValueFromVenueSelect(venueId) {

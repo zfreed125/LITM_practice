@@ -42,6 +42,7 @@ require 'includes/convertDateTimeUTCtoLocal.php';
 (empty($bookingDateTimeEnd)) ? $EndTime = 'unset' : $EndTime = convertDateTimeUTCtoLocal($bookingDateTimeEnd, $tz)[1];
 
 require 'includes/bookings_array.php';
+// require 'includes/venue_array.php';
 
 $conn->close();
 ?>
@@ -63,14 +64,49 @@ $conn->close();
     var selected_venue = '<?php echo $venueNameId; ?>';
     var genre_array = <?php echo json_encode($genre_array) ?>;
     var bookings_array = <?php echo json_encode($bookings_array) ?>;
-
-    console.dir(bookings_array);
-        
-  
+    var contacts_array = <?php echo json_encode($contacts_array) ?>;
+    var venue_name_array = <?php echo json_encode($venue_name_array) ?>;
+    
+    
+    function showBookingsForClient(clientId){
+        const clientName = contacts_array.find(function (c){
+            return c.id == clientId;
+        }).fullname
+        let el = document.createElement("span");
+        let bookingsByClientDiv = document.getElementById('bookingsByClient');
+        const filtered = bookings_array.filter(function (obj) {
+            return obj.clientNameId == clientId;
+        });
+        el.innerHTML = bookingsByClient(filtered);
+        while (bookingsByClientDiv.hasChildNodes()) {
+            bookingsByClientDiv.removeChild(bookingsByClientDiv.lastChild);
+        }
+        bookingsByClientDiv.appendChild(el);
+    }    
+    function bookingsByClient(filtered) {
+        let html = '<div class="booking-details">';
+        for (i = 0; i < filtered.length; i++) {
+            const venueName = venue_name_array.find(function (v){
+                return v.id == filtered[i].venueNameId;
+            })
+            // console.log(typeof venueName);
+            if(typeof venueName === 'undefined'){
+                venue_name = 'undefined';
+            }else{
+                venue_name = venueName.venueName;
+            }
+        html +=`
+            <div><span>[${venue_name}: ${filtered[i].bStartDate} ${filtered[i].bStartTime} - ${filtered[i].bEndDate} ${filtered[i].bEndTime}]<span></div>
+            `;
+        }
+        html += '</div>';
+        return html
+    }
     window.addEventListener('load', (event) => {
 
         updateClientGenreTags(selected_contact);
         updateVenueGenreTags(selected_venue);
+        showBookingsForClient(selected_contact);
 
 
         var contacts_array = <?php echo json_encode($contacts_array) ?>;
@@ -212,6 +248,7 @@ $conn->close();
                     <input class="form-control" type="text" id="bookingStatus" name="bookingStatus" value="<?php echo $bookingStatus; ?>">
                 </div>
             </div>
+            <div class="bookingsDetails" id="bookingsByClient"></div>
 
             <input type="hidden" name="id" value="<?php echo $id; ?>">
             <div class="m-5">
