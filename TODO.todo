@@ -1,2 +1,12 @@
 ✔ Drop down list for states @low @done(20-07-28 12:29)
-
+✔ Add contact @done(20-09-10 09:32)
+✔ Add venue @done(20-09-10 09:35)
+✔ Assign contact & venue to client @done(20-09-10 09:35)
+✔ Assign client to booking @done(20-09-10 09:35)
+✔ Booking added to calendar @done(20-09-10 09:35)
+✔ Booking color on calendar @done(20-09-10 09:35)
+☐ Filter venues/clients by genre @wip
+☐ Historical log on bookings @wip 
+☐ Booking status @wip 
+☐ Email notification w/tz array @wip 
+☐ Invoice ?

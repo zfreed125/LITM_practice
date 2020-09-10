@@ -96,7 +96,7 @@ $conn->close();
                 venue_name = venueName.venueName;
             }
         html +=`
-            <div><span>[${venue_name}: ${filtered[i].bStartDate} ${filtered[i].bStartTime} - ${filtered[i].bEndDate} ${filtered[i].bEndTime}]<span></div>
+            <div class="history_row"><span>${venue_name}: (${filtered[i].bStartDate} ${filtered[i].bStartTime})-(${filtered[i].bEndDate} ${filtered[i].bEndTime}) (${filtered[i].timezone})<span></div>
             `;
         }
         html += '</div>';

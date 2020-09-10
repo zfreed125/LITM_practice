@@ -28,6 +28,6 @@ $timezones_sql = "SELECT * FROM timezones;";
 $timezones_result = mysqli_query($conn, $timezones_sql);
 $timezones_array = array();
 while ($row = mysqli_fetch_assoc($timezones_result)) {
-    $timezones_array[] = array('id' => $row['id'], 'name' => $row['name']);
+    $timezones_array[] = array('id' => $row['id'], 'name' => $row['name'],'timezone' => $row['timezone']);
 }
 ?>

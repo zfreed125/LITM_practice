@@ -3,10 +3,10 @@ $bookings = "SELECT * FROM bookings;";
 $bookings_result = mysqli_query($conn, $bookings);
 $bookings_array = array();
 while ($brow = mysqli_fetch_assoc($bookings_result)) {
-
     foreach ($timezones_array as $tzitem) {
         if ($tzitem['id'] == $brow["timezoneId"]) {
-            $ttz = $tzitem['name'];
+            $ttz = $tzitem['timezone'];
+            $ttzname = $tzitem['name'];
         }
     }
     $bDateTimeStart = $brow["bookingDateTimeStart"];
