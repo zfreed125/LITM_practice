@@ -63,11 +63,39 @@ $conn->close();
     var selected_contact = '<?php echo $clientNameId; ?>';
     var selected_venue = '<?php echo $venueNameId; ?>';
     var genre_array = <?php echo json_encode($genre_array) ?>;
+    var genre_array_original = <?php echo json_encode($genre_array) ?>;
     var bookings_array = <?php echo json_encode($bookings_array) ?>;
     var contacts_array = <?php echo json_encode($contacts_array) ?>;
-    var venue_name_array = <?php echo json_encode($venue_name_array) ?>;
-    
-    
+    var venue_name_array_from_db = <?php echo json_encode($venue_name_array) ?>;
+</script>
+<script src="js/gsearch.js"></script>
+<script >
+
+
+
+    function changeVenueList(venue_list){
+        
+        const venue_name_array = venue_list;
+        return venue_name_array
+    }
+    function getVenueList(venue_name_array){
+        var venue_select = document.getElementById('venueNameId');
+        while (venue_select.hasChildNodes()) {
+            venue_select.removeChild(venue_select.lastChild);
+        }
+        var j;
+        for (j = 0; j < venue_name_array.length; j++) {
+            var opt = venue_name_array[j];
+            var el = document.createElement("option");
+            if (opt['id'] === selected_venue) {
+                el.selected = true;
+            }
+            el.textContent = opt['venueName'];
+            el.value = opt['id'];
+            
+            venue_select.appendChild(el);
+        }
+    }
     function showBookingsForClient(clientId){
         const clientName = contacts_array.find(function (c){
             return c.id == clientId;
@@ -88,6 +116,7 @@ $conn->close();
         <div class="bookingsDetailsHeader" >Historical Log (All Date/Time is America/Chicago)</div>
         `;
         for (i = 0; i < filtered.length; i++) {
+            let venue_name_array = changeVenueList(venue_name_array_from_db);
             const venueName = venue_name_array.find(function (v){
                 return v.id == filtered[i].venueNameId;
             })
@@ -105,11 +134,14 @@ $conn->close();
         return html
     }
     window.addEventListener('load', (event) => {
-
         updateClientGenreTags(selected_contact);
         updateVenueGenreTags(selected_venue);
         showBookingsForClient(selected_contact);
+        getVenueList(venue_name_array_from_db);
+        
 
+        // console.log(clientSearchTermsDiv.childNodes[0].dataset.label);
+        
 
         var contacts_array = <?php echo json_encode($contacts_array) ?>;
         var client_select = document.getElementById('clientNameId');
@@ -124,19 +156,8 @@ $conn->close();
             el.value = opt['id'];
             client_select.appendChild(el);
         }
-        var venue_name_array = <?php echo json_encode($venue_name_array) ?>;
-        var venue_select = document.getElementById('venueNameId');
-        var j;
-        for (j = 0; j < venue_name_array.length; j++) {
-            var opt = venue_name_array[j];
-            var el = document.createElement("option");
-            if (opt['id'] === selected_venue) {
-                el.selected = true;
-            }
-            el.textContent = opt['venueName'];
-            el.value = opt['id'];
-            venue_select.appendChild(el);
-        }
+
+     
 
 
         var x = document.getElementById("clientConfirm").value;

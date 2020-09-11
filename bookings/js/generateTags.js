@@ -1,21 +1,4 @@
 function updateClientGenreTags(clientNameId) {
-    // search genre array for q and find VenueId for a match
-    
-    for (k = 0; k < genre_array.length; k++) {
-        gsearch = genre_array[k]['genreName'].toLowerCase();
-        // q needs to be fed from text area's tags on client
-        // if tags are removed or added to textarea we need to re-run query
-        q = 'area';
-
-        if (gsearch.includes(q.toLowerCase())) {
-            // if venueId is not null then the match is a success
-            if (genre_array[k]['venueId'] !== null) {
-                // return new venue select with matched venues
-                console.log(genre_array[k]['venueId']);
-            }
-        }
-
-    }
     let genreTagDiv = document.getElementById('genreContactTags');
     while (genreTagDiv.hasChildNodes()) {
         genreTagDiv.removeChild(genreTagDiv.lastChild);
@@ -26,19 +9,21 @@ function updateClientGenreTags(clientNameId) {
         let tag = genre_array[h];
         if (tag['contactId'] === clientNameId) {
             el.dataset.label = tag['genreName'];
+            el.dataset.id = clientNameId;
             el.innerHTML = tag['genreName'] + ' <span class="btn-delete">X</span>';
             el.className = 'badge badge-primary p-1 m-1 fu';
             el.addEventListener('click', (event) => {
                 var name = event.currentTarget.dataset.label;
+                var id = event.currentTarget.dataset.id;
                 genre_array = genre_array.filter(function (obj) {
                     return obj.genreName !== name;
                 });
                 genreTagDiv.removeChild(el);
+                getValueFromClientSelect(id);
             })
             genreTagDiv.appendChild(el);
         }
     }
-
 }
 
 function updateVenueGenreTags(venueNameId) {
@@ -52,6 +37,7 @@ function updateVenueGenreTags(venueNameId) {
         let tag = genre_array[h];
         if (tag['venueId'] === venueNameId) {
             el.dataset.label = tag['genreName'];
+            el.dataset.id = venueNameId;
             el.innerHTML = tag['genreName'] + ' <span class="btn-delete">X</span>';
             el.className = 'badge badge-primary p-1 m-1 fu';
             el.addEventListener('click', (event) => {
@@ -66,12 +52,30 @@ function updateVenueGenreTags(venueNameId) {
     }
 
 }
-
 function getValueFromClientSelect(clientId) {
     let x = document.getElementById('clientNameId');
     x.nextElementSibling.classList.add('hide');
     updateClientGenreTags(clientId);
     showBookingsForClient(clientId);
+    var clientSearchTermsDiv = document.getElementById('genreContactTags');
+    searchTerm = [].map.call(clientSearchTermsDiv.children, function (e) {
+        return e.getAttribute('data-label')
+    })
+    console.clear();
+    console.log("New");
+    console.log(searchTerm);
+    
+    const filteredVenues = getFilteredVenues(
+        searchTerm,
+        genre_array_original,
+        venue_name_array_from_db
+        );
+        
+    console.log("genre_array",genre_array);
+    console.log("filteredVenues",filteredVenues);
+    var newFilteredVenuesByTag = changeVenueList(filteredVenues);
+    console.log("newFilteredVenuesByTag",newFilteredVenuesByTag);
+    getVenueList(newFilteredVenuesByTag);
 }
 
 function getValueFromVenueSelect(venueId) {
@@ -91,14 +95,17 @@ function addTagFromClientInput(e) {
     genreTagDiv.removeChild(input);
     let el = document.createElement("span");
     el.dataset.label = e;
+    el.dataset.id = contactId;
     el.innerHTML = e + ' <span class="btn-delete">X</span>';
     el.className = 'badge badge-primary p-1 m-1 fu';
     el.addEventListener('click', (event) => {
         var name = event.currentTarget.dataset.label;
+        var name = event.currentTarget.dataset.id;
         genre_array = genre_array.filter(function (obj) {
             return obj.genreName !== name;
         });
         genreTagDiv.removeChild(el);
+        getValueFromClientSelect(id);
 
     })
     genre_array.push({ 'id': null, 'genreName': e, 'contactId': contactId, 'venueId': null });
@@ -140,6 +147,8 @@ function createInputClientTag(e) {
     btn.type = 'button';
     btn.addEventListener('click', () => {
         addTagFromClientInput(document.getElementById('addTagToClient').value)
+        // console.log(genreClientDiv.lastChild.dataset.id);
+        getValueFromClientSelect(genreClientDiv.lastChild.dataset.id);
     })
 
     genreClientDiv.appendChild(input);
