@@ -15,10 +15,11 @@ function getFilteredVenues(q, genre_array, venue_name_array) {
                 .forEach((genre) => {
                     const venue = venue_name_array.find(
                         (venue) => venue.id === genre.venueId
-                    );
-                    filteredVenuesArray.push(venue);
-                });
-        }
+                        );
+                        filteredVenuesArray.push(venue);
+                    });
+                }
+                // venue['venueName'] = venue['venueName'] + ' (filtered)';
         return filteredVenuesArray;
     }, []);
 

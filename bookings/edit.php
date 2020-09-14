@@ -69,111 +69,49 @@ $conn->close();
     var venue_name_array_from_db = <?php echo json_encode($venue_name_array) ?>;
 </script>
 <script src="js/gsearch.js"></script>
+<script src="js/showBookings.js"></script>
 <script >
+function changeVenueList(venue_list){
+    const venue_name_array = venue_list;
+    return venue_name_array
+}
 
 
 
-    function changeVenueList(venue_list){
-        
-        const venue_name_array = venue_list;
-        return venue_name_array
+window.addEventListener('load', (event) => {
+    updateGenreTags( selected_contact, 'genreContactTags', 'contactId', getValueFromClientSelect );
+    updateGenreTags( selected_venue, 'genreVenueTags', 'venueId', getValueFromVenueSelect );
+    showBookingsForClient(selected_contact);
+    getVenueList(venue_name_array_from_db);
+
+    var contacts_array = <?php echo json_encode($contacts_array) ?>;
+    var client_select = document.getElementById('clientNameId');
+    var i;
+    for (i = 0; i < contacts_array.length; i++) {
+        var opt = contacts_array[i];
+        var el = document.createElement("option");
+        if (opt['id'] === selected_contact) {
+            el.selected = true;
+        }
+        el.textContent = opt['fullname'];
+        el.value = opt['id'];
+        client_select.appendChild(el);
     }
-    function getVenueList(venue_name_array){
-        var venue_select = document.getElementById('venueNameId');
-        while (venue_select.hasChildNodes()) {
-            venue_select.removeChild(venue_select.lastChild);
-        }
-        var j;
-        for (j = 0; j < venue_name_array.length; j++) {
-            var opt = venue_name_array[j];
-            var el = document.createElement("option");
-            if (opt['id'] === selected_venue) {
-                el.selected = true;
-            }
-            el.textContent = opt['venueName'];
-            el.value = opt['id'];
-            
-            venue_select.appendChild(el);
-        }
+
+    var x = document.getElementById("clientConfirm").value;
+    if ('<?php echo $clientConfirm; ?>' === '1') {
+        document.getElementById("clientConfirm").checked = true;
+    } else {
+        document.getElementById("clientConfirm").checked = false;
     }
-    function showBookingsForClient(clientId){
-        const clientName = contacts_array.find(function (c){
-            return c.id == clientId;
-        }).fullname
-        let el = document.createElement("span");
-        let bookingsByClientDiv = document.getElementById('bookingsByClient');
-        const filtered = bookings_array.filter(function (obj) {
-            return obj.clientNameId == clientId;
-        });
-        el.innerHTML = bookingsByClient(filtered);
-        while (bookingsByClientDiv.hasChildNodes()) {
-            bookingsByClientDiv.removeChild(bookingsByClientDiv.lastChild);
-        }
-        bookingsByClientDiv.appendChild(el);
-    }    
-    function bookingsByClient(filtered) {
-        let html = `<div class="booking-details">
-        <div class="bookingsDetailsHeader" >Historical Log (All Date/Time is America/Chicago)</div>
-        `;
-        for (i = 0; i < filtered.length; i++) {
-            let venue_name_array = changeVenueList(venue_name_array_from_db);
-            const venueName = venue_name_array.find(function (v){
-                return v.id == filtered[i].venueNameId;
-            })
-            // console.log(typeof venueName);
-            if(typeof venueName === 'undefined'){
-                venue_name = 'undefined';
-            }else{
-                venue_name = venueName.venueName;
-            }
-        html +=`
-            <div class="history_row"><span>${venue_name}: (${filtered[i].bStartDate} ${filtered[i].bStartTime})-(${filtered[i].bEndDate} ${filtered[i].bEndTime}) (${filtered[i].timezone})<span></div>
-            `;
-        }
-        html += '</div>';
-        return html
+    var y = document.getElementById("venueConfirm").value;
+    if ('<?php echo $venueConfirm; ?>' === '1') {
+        document.getElementById("venueConfirm").checked = true;
+    } else {
+        document.getElementById("venueConfirm").checked = false;
     }
-    window.addEventListener('load', (event) => {
-        updateClientGenreTags(selected_contact);
-        updateVenueGenreTags(selected_venue);
-        showBookingsForClient(selected_contact);
-        getVenueList(venue_name_array_from_db);
-        
 
-        // console.log(clientSearchTermsDiv.childNodes[0].dataset.label);
-        
-
-        var contacts_array = <?php echo json_encode($contacts_array) ?>;
-        var client_select = document.getElementById('clientNameId');
-        var i;
-        for (i = 0; i < contacts_array.length; i++) {
-            var opt = contacts_array[i];
-            var el = document.createElement("option");
-            if (opt['id'] === selected_contact) {
-                el.selected = true;
-            }
-            el.textContent = opt['fullname'];
-            el.value = opt['id'];
-            client_select.appendChild(el);
-        }
-
-     
-
-
-        var x = document.getElementById("clientConfirm").value;
-        if ('<?php echo $clientConfirm; ?>' === '1') {
-            document.getElementById("clientConfirm").checked = true;
-        } else {
-            document.getElementById("clientConfirm").checked = false;
-        }
-        var y = document.getElementById("venueConfirm").value;
-        if ('<?php echo $venueConfirm; ?>' === '1') {
-            document.getElementById("venueConfirm").checked = true;
-        } else {
-            document.getElementById("venueConfirm").checked = false;
-        }
-
-    }); //window load
+}); //window load
 </script>
 
 <body>
@@ -237,7 +175,7 @@ $conn->close();
             </div>
             <div style=" position: absolute; left: 840px; top: 370px;" class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div style="height: 40px;" class="input-group-prepend"><span class="input-group-text">Client Genre Tags</span></div>
-                <div id="genreContactTags" ondblclick="createInputClientTag(this.id)" style="border: 1px solid black; min-width: 250px; max-width: 250px; "> </div>
+                <div id="genreContactTags" ondblclick="createInputTag(this.id, 'addTagToClient', 'btnTagToClient', addTagFromClientInput, getValueFromClientSelect)" style="border: 1px solid black; min-width: 250px; max-width: 250px; "> </div>
             </div>
             <div class="input-group mt-5 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group">
@@ -256,7 +194,8 @@ $conn->close();
             </div>
             <div style=" position: absolute; left: 840px; top: 550px;" class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div style="height: 40px;" class="input-group-prepend"><span class="input-group-text">Venue Genre Tags</span></div>
-                <div id="genreVenueTags" ondblclick="createInputVenueTag(this.id)" style="border: 1px solid black; min-width: 250px; max-width: 250px; "> </div>
+                <div id="genreVenueTags"  style="border: 1px solid black; min-width: 250px; max-width: 250px; "> </div>
+                <!-- <div id="genreVenueTags" ondblclick="createInputTag(this.id, 'addTagToVenue', 'btnTagToVenue', addTagFromVenueInput, getValueFromVenueSelect)" style="border: 1px solid black; min-width: 250px; max-width: 250px; "> </div> -->
             </div>
 
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
