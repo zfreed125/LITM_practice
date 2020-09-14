@@ -1,6 +1,7 @@
 <?php
-$month = idate('m');
-$year = idate('Y');
+
+(!empty($_REQUEST['month'])) ? $month = $_REQUEST['month'] : $month = idate('m');
+(!empty($_REQUEST['year'])) ? $year = $_REQUEST['year'] : $year = idate('Y');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +13,10 @@ $year = idate('Y');
     <title>Document</title>
 </head>
 <style>
+    input{
+        width: 75px;
+        margin-left: 20px;
+    }
     .wrapper{
         display: flex;  
 
@@ -36,7 +41,12 @@ $year = idate('Y');
     }
 </style>
 <body>
-    <h3>Month: <?php echo $month; ?> Year: <?php echo $year; ?></h3>
+<form name="myForm" action="index.php" method="POST">
+<span>
+    <h3>Month: <input name="month" type="text" value="<?php echo $month; ?>"> Year: <input name="year" type="text" value="<?php echo $year; ?>"><input class="btn btn-primary" type="submit" name="submit" value="Submit"></h3>
+      
+</span>    
+</form>
     <div class='wrapper'>
 
 <?php
