@@ -81,6 +81,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         'timezone' => $tz,
         'bookingLength' => $bookingLength,
         'clientFullName' => $clientFullName,
+        'clientNameId' => $clientNameId,
         'bookingColor' => $bookingColor,
         'clientConfirm' => $clientConfirm,
         'venueName' => $venueName,
@@ -88,5 +89,32 @@ while ($row = mysqli_fetch_assoc($result)) {
         'bookingStatus' => $bookingStatus
     );
 }
+$thisMonth = '9';
+$client_booking_count_array = [];
+$sql = "SELECT clientNameId, count(*) as bcount FROM bookings 
+        WHERE MONTH(bookingDateTimeStart)='$thisMonth' 
+        GROUP BY clientNameId;";
+
+$result = mysqli_query($conn, $sql);
+while ($row = mysqli_fetch_assoc($result)){
+  $bookingCount = $row['bcount'];
+  $clientNameId = $row['clientNameId'];
+  $sql_contact = "SELECT bookingCount as bookingCountTotal FROM contacts WHERE id='$clientNameId';";
+  $result_client = mysqli_query($conn, $sql_contact);
+  while ($crow = mysqli_fetch_assoc($result_client)){
+    $bookingCountTotal = $crow['bookingCountTotal'];
+  }
+    $client_booking_count_array[] = array(
+      'contactId' => $clientNameId,
+      'bookingCount' => $bookingCount,
+      'bookingCountTotal' => $bookingCountTotal
+    );
+}
+/*  TODO: Booking count for current month out of 
+      if booking type is guest
+        contacts bookingCount
+      get this month for each guest
+      count how many
+*/
 
 ?>

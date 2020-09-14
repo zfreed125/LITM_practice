@@ -69,34 +69,13 @@ function showCalendar(month, year) {
         let cell = document.createElement("td");
         let br = document.createElement("br");
         let cellText = document.createTextNode(date);
-        // booking1 = document.createElement("span");
-        // booking2 = document.createElement("span");
-        // booking3 = document.createElement("span");
-        // booking4 = document.createElement("span");
-        // booking5 = document.createElement("span");
-        // booking1.innerHTML = "test"+(date);
         cell.setAttribute("id", `${Number(selectMonth.value) + 1}-${date}-${year}`);
-        // booking2.innerHTML = "test"+(date);
-        // booking3.innerHTML = "test"+(date);
-        // booking4.innerHTML = "test"+(date);
-        // booking5.innerHTML = "test"+(date);
-        // booking1.className = 'badge badge-primary p-1 m-1 fu';
-        // booking2.className = 'badge badge-info p-1 m-1 fu';
-        // booking3.className = 'badge badge-warning p-1 m-1 fu';
-        // booking4.className = 'badge badge-danger p-1 m-1 fu';
-        // booking5.className = 'badge badge-success p-1 m-1 fu';
-        // cellText1 = document.createTextNode("test");
         if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
           cell.className = '';
           cell.style = 'background-color: #8BC3F7;';
         } // color today's date
         cell.appendChild(cellText);
         cell.appendChild(br);
-        // cell.appendChild(booking1);
-        // cell.appendChild(booking2);
-        // cell.appendChild(booking3);
-        // cell.appendChild(booking4);
-        // cell.appendChild(booking5);
         row.appendChild(cell);
         date++;
       }
@@ -115,15 +94,37 @@ function daysInMonth(iMonth, iYear) {
   return 32 - new Date(iYear, iMonth, 32).getDate();
 }
 
+console.log('client_booking_count_array', client_booking_count_array);
+/*  TODO: Booking count for current month out of 
+      if booking type is guest
+        contacts bookingCount
+      get this month for each guest
+      count how many
+*/
+
 // create function for booking
+
 function createBooking(startDate, clientFullName, color, title, booking) {
+  // console.log('booking', booking);
+
+  console.log('bookingType is guest', booking.bookingType === 'Guest');
+  console.log('clientNameId', booking.clientNameId);
+  console.log('currentMonth', currentMonth + 1);
+
+  // loop through client_booking_count_array with currentMonth+1, booking.clientNameId
+  // if booking.bookingType === 'Guest' is true
+  // return 
+  // 'contactId' => $clientNameId,
+  // 'bookingCount' => $bookingCount,
+  // 'bookingCountTotal' => $bookingCountTotal
+
   let cell = document.getElementById(startDate);
   if (cell == null) return;
 
 
   let detailsPanel = document.createElement("span");
   let bookingEl = document.createElement("span");
-  bookingEl.innerHTML = clientFullName.toUpperCase();
+  bookingEl.innerHTML = clientFullName.toUpperCase() + '<br>(1of4)';
   bookingEl.title = title;
   bookingEl.className = 'badge p-1 m-1';
   bookingEl.style = `background-color: ${color}; color: white;cursor: pointer;font-size: 8px;`;
@@ -182,11 +183,9 @@ function populateCalendar(event) {
   bookingStatus: ${booking.bookingStatus}
   
   `;
-
     createBooking(startDate, clientFullName, color, title, booking);
   })
 }
-console.dir(window.booking_array);
 window.addEventListener('load', populateCalendar)
 document.getElementById('next').addEventListener('click', next)
 document.getElementById('previous').addEventListener('click', previous)

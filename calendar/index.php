@@ -15,6 +15,7 @@ require 'data.php';
 
     <!-- LITM -->
     <script>window.booking_array = <?php echo json_encode($bookings_array);?>;</script>
+    <script>window.client_booking_count_array = <?php echo json_encode($client_booking_count_array);?>;</script>
     <script type="module" src="./js/scripts.js" defer></script>
 
 <style media="screen">
