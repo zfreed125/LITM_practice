@@ -24,10 +24,10 @@ width: 175px;
 }
 #sideDetails {
 position: absolute;
-top: 100px;
+top: 60px;
 
-height: 562px;
-width: 300px;
+height: 602px;
+width: 400px;
 left: 1230px;
 border: 1px solid #DEE2E6;
 border-radius: 10px;
@@ -42,7 +42,7 @@ text-transform: capitalize;
 
 }
 .booking-details div{
-    padding: 5px;
+    /* padding: 5px; */
     align-text: right;
 }
 </style>

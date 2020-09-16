@@ -41,27 +41,61 @@ while ($row = mysqli_fetch_assoc($result)) {
     $venueConfirm = $row["venueConfirm"];
     $bookingStatus = $row["bookingStatus"];
 
+    $venue_name_sql = "SELECT id,primaryNoteId,primaryServiceId,venueName,hostNameId FROM venues WHERE id='$venueNameId';";
+    $venue_result = mysqli_query($conn, $venue_name_sql);
+    while ($row = mysqli_fetch_assoc($venue_result)) {
+        $venue_name_array[] = [$row['id'] => $row['venueName']];
+        $primaryVenueNoteId = $row['primaryNoteId'];
+        $primaryVenueServiceId = $row['primaryServiceId'];
+        $primaryVenueHostNameId = $row['hostNameId'];
+    }
+    $host_sql = "SELECT id,primaryEmailId, CONCAT(firstname, ' ', lastname) as fullname FROM contacts WHERE id='$primaryVenueHostNameId';";
+    $host_result = mysqli_query($conn, $host_sql);
+    while ($row = mysqli_fetch_assoc($host_result)) {
+        $hostFullName = $row['fullname'];
+        $hostPrimaryEmailId = $row['primaryEmailId'];
+    }
     $contact_sql = "SELECT id,bookingColor,primaryEmailId, CONCAT(firstname, ' ', lastname) as fullname FROM contacts WHERE id='$clientNameId';";
     $contact_result = mysqli_query($conn, $contact_sql);
     while ($row = mysqli_fetch_assoc($contact_result)) {
         $clientFullName = $row['fullname'];
         $bookingColor = $row['bookingColor'];
-        $primaryEmailId = $row['primaryEmailId'];
+        $clientPrimaryEmailId = $row['primaryEmailId'];
     }
-    $primaryEmail = 'unasigned';
-    $email_sql = "SELECT email FROM emails where id = '$primaryEmailId';";
+    
+    $hostPrimaryEmail = 'unasigned';
+    $email_sql = "SELECT email FROM emails where id = '$hostPrimaryEmailId';";
     $email_result = mysqli_query($conn, $email_sql);
     while ($email_row = mysqli_fetch_assoc($email_result)) {
-        $primaryEmail = $email_row['email'];
+        $hostPrimaryEmail = $email_row['email'];
+    }
+    $clientPrimaryEmail = 'unasigned';
+    $email_sql = "SELECT email FROM emails where id = '$clientPrimaryEmailId';";
+    $email_result = mysqli_query($conn, $email_sql);
+    while ($email_row = mysqli_fetch_assoc($email_result)) {
+        $clientPrimaryEmail = $email_row['email'];
+    }
+    $primaryVenueNote = 'unasigned';
+    $note_sql = "SELECT note FROM notes where id = '$primaryVenueNoteId';";
+    $note_result = mysqli_query($conn, $note_sql);
+    while ($note_row = mysqli_fetch_assoc($note_result)) {
+        $primaryVenueNote = $note_row['note'];
+    }
+    $primaryVenueServiceName = 'unasigned';
+    $primaryVenueServiceUserAccount = 'unasigned';
+    $primaryVenueServiceWebsite = 'unasigned';
+    $primaryVenueServiceNotes = 'unasigned';
+    $service_sql = "SELECT * FROM services where id = '$primaryVenueServiceId';";
+    $service_result = mysqli_query($conn, $service_sql);
+    while ($service_row = mysqli_fetch_assoc($service_result)) {
+        $primaryVenueServiceName = $service_row['serviceName'];
+        $primaryVenueServiceUserAccount = $service_row['userAccount'];
+        $primaryVenueServiceWebsite = $service_row['website'];
+        $primaryVenueServiceNotes = $service_row['notes'];
     }
     // TODO: add primary email address from contacts (primaryAddressId) if not null, to booking so we can email from calendar
     // TODO: add venue host name website and notes
-    $venue_name_sql = "SELECT id, venueName FROM venues WHERE id='$venueNameId';";
-    $venue_result = mysqli_query($conn, $venue_name_sql);
-    while ($row = mysqli_fetch_assoc($venue_result)) {
-        $venue_name_array[] = [$row['id'] => $row['venueName']];
-        // $venueName = $row['venueName'];
-    }
+    
     $booking_sql = "SELECT * FROM booking_types WHERE id='$bookingTypeId';";
     $booking_result = mysqli_query($conn, $booking_sql);
     while ($row = mysqli_fetch_assoc($booking_result)) {
@@ -91,12 +125,19 @@ while ($row = mysqli_fetch_assoc($result)) {
         'bookingLength' => $bookingLength,
         'clientFullName' => $clientFullName,
         'clientNameId' => $clientNameId,
-        'primaryEmail' => $primaryEmail,
+        'clientPrimaryEmail' => $clientPrimaryEmail,
+        'primaryVenueNote' => $primaryVenueNote,
         'bookingColor' => $bookingColor,
         'clientConfirm' => $clientConfirm,
         'venueName' => $venueName,
+        'hostFullName' => $hostFullName,
+        'hostPrimaryEmail' => $hostPrimaryEmail,
         'venueConfirm' => $venueConfirm,
-        'bookingStatus' => $bookingStatus
+        'bookingStatus' => $bookingStatus,
+        'primaryVenueServiceName' => $primaryVenueServiceName,
+        'primaryVenueServiceUserAccount' => $primaryVenueServiceUserAccount,
+        'primaryVenueServiceWebsite' => $primaryVenueServiceWebsite,
+        'primaryVenueServiceNotes' => $primaryVenueServiceNotes
     );
 }
 ?>

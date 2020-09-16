@@ -161,9 +161,16 @@ function getDetailsPane(booking) {
     <div><span>bookingColor:</span> ${booking.bookingColor}</div>
     <div><span>clientConfirm:</span> ${booking.clientConfirm}</div>
     <div><span>venueName:</span> ${booking.venueName}</div>
+    <div><span>hostFullName:</span> ${booking.hostFullName}</div>
+    <div><span>hostEmail:</span> ${booking.hostEmail}</div>
     <div><span>venueConfirm:</span> ${booking.venueConfirm}</div>
     <div><span>bookingStatus:</span> ${booking.bookingStatus}</div>
-    <div><span>primaryEmail:</span> ${booking.primaryEmail}</div>
+    <div><span>clientEmail:</span> ${booking.clientPrimaryEmail}</div>
+    <div><span>VenueNote:</span> ${booking.primaryVenueNote}</div>
+    <div><span>VenueServiceName:</span> ${booking.primaryVenueServiceName}</div>
+    <div><span>VenueServiceUserAccount:</span> ${booking.primaryVenueServiceUserAccount}</div>
+    <div><span>VenueServiceWebsite:</span> ${booking.primaryVenueServiceWebsite}</div>
+    <div><span>VenueServiceNotes:</span> ${booking.primaryVenueServiceNotes}</div>
   </div>
   `;
 }
@@ -185,9 +192,16 @@ function populateCalendar(event) {
   bookingColor: ${booking.bookingColor}
   clientConfirm: ${booking.clientConfirm}
   venueName: ${booking.venueName}
+  hostFullName: ${booking.hostFullName}
+  hostEmail: ${booking.hostPrimaryEmail}
   venueConfirm: ${booking.venueConfirm}
   bookingStatus: ${booking.bookingStatus}
-  primaryEmail: ${booking.primaryEmail}
+  clientEmail: ${booking.clientPrimaryEmail}
+  VenueNote: ${booking.primaryVenueNote}
+  VenueServiceName: ${booking.primaryVenueServiceName}
+  VenueServiceUserAccount: ${booking.primaryVenueServiceUserAccount}
+  VenueServiceWebsite: ${booking.primaryVenueServiceWebsite}
+  VenueServiceNotes: ${booking.primaryVenueServiceNotes}
   
   `;
     createBooking(startDate, clientFullName, color, title, booking);
