@@ -14,7 +14,10 @@ $phoneId = $_REQUEST['phoneId'];
 $serviceId = $_REQUEST['serviceId'];
 $addressId = $_REQUEST['addressId'];
 $emailId = $_REQUEST['emailId'];
+$noteId = $_REQUEST['noteId'];
 $venueId = $_REQUEST['venueId'];
+// echo $noteId;
+// die();
 
 if(!empty($emailId)){
   $sql = "UPDATE venues SET primaryEmailId='$emailId' WHERE id='$venueId';";
@@ -27,6 +30,9 @@ if(!empty($serviceId)){
 }
 if(!empty($phoneId)){
   $sql = "UPDATE venues SET primaryPhoneId='$phoneId' WHERE id='$venueId';";
+}
+if(!empty($noteId)){
+  $sql = "UPDATE venues SET primaryNoteId='$noteId' WHERE id='$venueId';";
 }
 
 

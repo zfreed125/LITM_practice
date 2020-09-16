@@ -10,6 +10,7 @@ echo "<caption><a href='../notes/add.php?venueId=". $venuesId ."' title='Add not
 echo "<a href='#' title='Show/Hide Notes'style='position: relative; left: 50px;' onclick='myFunction(tbl_note". $venuesId .")'><span><i class='fas fa-chevron-down'></i>&nbsp Notes (". $noteRowCount .")&nbsp</span></a>";
 echo "<thead>";
 echo "<tr>";
+echo "<th></th>";
 echo "<th>Author</th>";
 echo "<th>Topic</th>";
 echo "<th>Notes</th>";
@@ -20,7 +21,13 @@ echo "<tbody>";
 
 while ($row = mysqli_fetch_assoc($note_result))
 {
+if($primaryNoteId == $row['id']) {
+$note_primary = "<span><i style='color:green'class='fas fa-star'></i></span>";
+}else{
+$note_primary = "<a href='primary.php?noteId=".$row['id']."&venueId=".$venuesId."'><span><i style='color:green'class='far fa-star'></i></span></a>";
+}
 echo "<tr>";
+echo "<td class='fitwidth'>" . "$note_primary" . "</td>";
 echo "<td class='fitwidth'>" . "$row[author]" . "</td>";
 echo "<td class='fitwidth'>" . "$row[topic]" . "</td>";
 echo "<td class='fitwidth'>" . "$row[note]" . "</td>";

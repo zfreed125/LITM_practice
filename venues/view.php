@@ -121,6 +121,7 @@
                         $primaryEmailId = $row['primaryEmailId'];
                         $primaryAddressId = $row['primaryAddressId'];
                         $primaryServiceId = $row['primaryServiceId'];
+                        $primaryNoteId = $row['primaryNoteId'];
                         echo "<td class='fitwidth'>" . "$row[id]" . "</td>";
                         echo "<td class='fitwidth'>" . "$row[venueName]" . "</td>";
                         echo "<td class='fitwidth'>" . $venueType . "</td>";
