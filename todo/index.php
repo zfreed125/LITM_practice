@@ -109,9 +109,19 @@ $client_booking_count = array();
 
 foreach ($client_booking_count_array as $booking) {
     if ($booking['bookingYear'] == $year) {
+        foreach ($contacts_array as $contact_item) {
+            if($booking['contactId'] == $contact_item['id']){
+                // array_push($client_booking_count,$contact_item['id']);
+                $todo_array[$contact_item['id']] = array(
+                    'fullname' => $contact_item['fullname'],
+                    'bookingColor' => $booking['bookingColor'],
+                    'bookingCountTotal' => $booking['bookingCountTotal'],
+                    'bookings' => 0);
+                    
+            }
+        }
         if ($booking['bookingMonth'] == $month) {
             foreach ($contacts_array as $contact_item) {
-                
                 if($booking['contactId'] == $contact_item['id']){
                     array_push($client_booking_count,$contact_item['id']);
                     $todo_array[$contact_item['id']] = array(
@@ -120,15 +130,26 @@ foreach ($client_booking_count_array as $booking) {
                         'bookingCountTotal' => $booking['bookingCountTotal'],
                         'bookings' => array_count_values($client_booking_count)[$contact_item['id']]);
                         
-                    }
-                    
-                    
                 }
-                
+            }
+        } // If Month
+    }else{ // If Year
+    foreach ($contacts_array as $contact_item) {
+            if($booking['contactId'] == $contact_item['id']){
+                // array_push($client_booking_count,$contact_item['id']);
+                $todo_array[$contact_item['id']] = array(
+                    'fullname' => $contact_item['fullname'],
+                    'bookingColor' => $booking['bookingColor'],
+                    'bookingCountTotal' => $booking['bookingCountTotal'],
+                    'bookings' => 0);
+                    
             }
         }
-    }   
-    
+    }
+}   
+    // echo "<pre>";
+    // echo print_r($todo_array);
+    // echo "</pre>";
     foreach ($todo_array as $todo_item) {
         $card = " <div class='card'><div class='container'> ";
         $card .= " <h4><b>".$todo_item['fullname']."</b></h4> <!-- <p>Venue Name</p> --> ";

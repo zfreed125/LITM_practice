@@ -1,6 +1,6 @@
 'use strict'
 
-console.log('imported script.js')
+console.log('imported script.js');
 
 let today = new Date();
 let currentMonth = today.getMonth();
@@ -94,36 +94,41 @@ function daysInMonth(iMonth, iYear) {
   return 32 - new Date(iYear, iMonth, 32).getDate();
 }
 
-console.log('client_booking_count_array', client_booking_count_array);
-/*  TODO: Booking count for current month out of 
-      if booking type is guest
-        contacts bookingCount
-      get this month for each guest
-      count how many
-*/
 
 // create function for booking
+function email() {
+  let bookingData = document.getElementById('currentBooking').dataset.booking;
+  let booking = JSON.parse(bookingData);
+  console.log(booking);
 
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.onreadystatechange = function () {
+    if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+      console.log(xmlHttp.responseText);
+    }
+  }
+  xmlHttp.open("post", "../email.php");
+  xmlHttp.send(bookingData);
+
+
+
+
+
+}
 function createBooking(startDate, clientFullName, color, title, booking) {
-  // console.log('booking', booking);
-
-  console.log('bookingType is guest', booking.bookingType === 'Guest');
-  console.log('clientNameId', booking.clientNameId);
-  console.log('currentMonth', currentMonth + 1);
-
-  // loop through client_booking_count_array with currentMonth+1, booking.clientNameId
-  // if booking.bookingType === 'Guest' is true
-  // return 
-  // 'contactId' => $clientNameId,
-  // 'bookingCount' => $bookingCount,
-  // 'bookingCountTotal' => $bookingCountTotal
 
   let cell = document.getElementById(startDate);
   if (cell == null) return;
 
 
   let detailsPanel = document.createElement("span");
+  detailsPanel.id = 'currentBooking';
+  detailsPanel.dataset.booking = JSON.stringify(booking);
+  let emailButton = document.createElement("button");
   let bookingEl = document.createElement("span");
+  emailButton.className = 'btn btn-primary';
+  emailButton.textContent = 'Email Booking';
+  emailButton.onclick = email;
   bookingEl.innerHTML = clientFullName.toUpperCase() + '<br>(1of4)';
   bookingEl.title = title;
   bookingEl.className = 'badge p-1 m-1';
@@ -135,6 +140,7 @@ function createBooking(startDate, clientFullName, color, title, booking) {
     }
     detailsPanel.innerHTML = getDetailsPane(booking);
     sideDetails.appendChild(detailsPanel);
+    sideDetails.appendChild(emailButton);
   })
   cell.appendChild(bookingEl);
 
@@ -157,7 +163,7 @@ function getDetailsPane(booking) {
     <div><span>venueName:</span> ${booking.venueName}</div>
     <div><span>venueConfirm:</span> ${booking.venueConfirm}</div>
     <div><span>bookingStatus:</span> ${booking.bookingStatus}</div>
-    <button class="btn btn-primary">Email (placeholder)</button>
+    <div><span>primaryEmail:</span> ${booking.primaryEmail}</div>
   </div>
   `;
 }
@@ -167,7 +173,7 @@ function populateCalendar(event) {
     const clientFullName = booking['clientFullName'] + '-' + booking['venueName'];
     const color = (booking['bookingColor'] === null) ? 'rgb(0, 0, 0)' : booking['bookingColor'];
     const title = `
-  [12:00 - 13:00 Event name]
+  [${booking.StartTime} - ${booking.EndTime} ${booking.venueName}]
   bookingType: ${booking.bookingType}
   StartDate: ${booking.StartDate}
   StartTime: ${booking.StartTime}
@@ -181,6 +187,7 @@ function populateCalendar(event) {
   venueName: ${booking.venueName}
   venueConfirm: ${booking.venueConfirm}
   bookingStatus: ${booking.bookingStatus}
+  primaryEmail: ${booking.primaryEmail}
   
   `;
     createBooking(startDate, clientFullName, color, title, booking);

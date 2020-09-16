@@ -17,7 +17,6 @@ require 'data.php';
     <script>window.booking_array = <?php echo json_encode($bookings_array);?>;</script>
     <script>window.client_booking_count_array = <?php echo json_encode($client_booking_count_array);?>;</script>
     <script type="module" src="./js/scripts.js" defer></script>
-
 <style media="screen">
 #calendar-body  td{
 height: 100px;
@@ -28,7 +27,7 @@ position: absolute;
 top: 100px;
 
 height: 562px;
-width: 275px;
+width: 300px;
 left: 1230px;
 border: 1px solid #DEE2E6;
 border-radius: 10px;
