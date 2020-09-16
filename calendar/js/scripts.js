@@ -152,7 +152,9 @@ function getDetailsPane(booking) {
 
     <div><span>bookingType:</span> ${booking.bookingType}</div>
     <div><span>StartDate:</span> ${booking.StartDate}</div>
+    <div hidden><span>bookingDateTimeStart:</span> ${booking.bookingDateTimeStart}</div>
     <div><span>StartTime:</span> ${booking.StartTime}</div>
+    <div hidden><span>bookingDateTimeEnd:</span> ${booking.bookingDateTimeEnd}</div>
     <div><span>EndDate:</span> ${booking.EndDate}</div>
     <div><span>EndTime:</span> ${booking.EndTime}</div>
     <div><span>timezone:</span> ${booking.timezone}</div>
@@ -171,6 +173,7 @@ function getDetailsPane(booking) {
     <div><span>VenueServiceUserAccount:</span> ${booking.primaryVenueServiceUserAccount}</div>
     <div><span>VenueServiceWebsite:</span> ${booking.primaryVenueServiceWebsite}</div>
     <div><span>VenueServiceNotes:</span> ${booking.primaryVenueServiceNotes}</div>
+    <div><span>clientTzId:</span> ${booking.clientTzId}</div>
   </div>
   `;
 }
@@ -183,7 +186,9 @@ function populateCalendar(event) {
   [${booking.StartTime} - ${booking.EndTime} ${booking.venueName}]
   bookingType: ${booking.bookingType}
   StartDate: ${booking.StartDate}
+  bookingDateTimeStart: ${booking.bookingDateTimeStart}
   StartTime: ${booking.StartTime}
+  bookingDateTimeEnd: ${booking.bookingDateTimeEnd}
   EndDate: ${booking.EndDate}
   EndTime: ${booking.EndTime}
   timezone: ${booking.timezone}
@@ -202,6 +207,7 @@ function populateCalendar(event) {
   VenueServiceUserAccount: ${booking.primaryVenueServiceUserAccount}
   VenueServiceWebsite: ${booking.primaryVenueServiceWebsite}
   VenueServiceNotes: ${booking.primaryVenueServiceNotes}
+  clientTzId: ${booking.clientTzId}
   
   `;
     createBooking(startDate, clientFullName, color, title, booking);

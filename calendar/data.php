@@ -102,10 +102,13 @@ while ($row = mysqli_fetch_assoc($result)) {
         $bookingType = $row['bookingType'];
     }
 
-    $timezone_sql = "SELECT timezone from timezones where id='$timezoneId';";
+    $timezone_sql = "SELECT * from timezones where id='$timezoneId';";
     $timezone_result = mysqli_query($conn, $timezone_sql);
     if (mysqli_num_rows($timezone_result) > 0) {
         $row = mysqli_fetch_assoc($timezone_result);
+        $clientTzId = $row['id'];
+        $clientTzOffset = $row['offset'];
+        $clientTzName = $row['timezone'];
         $tz = 'America/Chicago'; // Default Calendar TimeZone
         // $tz = $row['timezone'];
     }
@@ -118,7 +121,9 @@ while ($row = mysqli_fetch_assoc($result)) {
     $bookings_array[] = array(
         'bookingType' => $bookingType,
         'StartDate' => $StartDate,
+        'bookingDateTimeStart' => $bookingDateTimeStart,
         'StartTime' => $StartTime,
+        'bookingDateTimeEnd' => $bookingDateTimeEnd,
         'EndDate' => $EndDate,
         'EndTime' => $EndTime,
         'timezone' => $tz,
@@ -137,7 +142,8 @@ while ($row = mysqli_fetch_assoc($result)) {
         'primaryVenueServiceName' => $primaryVenueServiceName,
         'primaryVenueServiceUserAccount' => $primaryVenueServiceUserAccount,
         'primaryVenueServiceWebsite' => $primaryVenueServiceWebsite,
-        'primaryVenueServiceNotes' => $primaryVenueServiceNotes
+        'primaryVenueServiceNotes' => $primaryVenueServiceNotes,
+        'clientTzId' => $clientTzId
     );
 }
 ?>
