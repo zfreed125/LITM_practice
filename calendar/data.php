@@ -41,20 +41,30 @@ while ($row = mysqli_fetch_assoc($result)) {
     $venueConfirm = $row["venueConfirm"];
     $bookingStatus = $row["bookingStatus"];
 
-    $venue_name_sql = "SELECT id,primaryNoteId,primaryServiceId,venueName,hostNameId FROM venues WHERE id='$venueNameId';";
+    $primaryVenueNoteId = null;
+    $primaryVenueServiceId = null;
+    $primaryVenueHostNameId = null;
+    $hostPrimaryEmailId = null;
+    $venue_name_sql = "SELECT id,primaryNoteId,primaryServiceId,primaryEmailId,venueName,hostNameId FROM venues WHERE id='$venueNameId';";
     $venue_result = mysqli_query($conn, $venue_name_sql);
     while ($row = mysqli_fetch_assoc($venue_result)) {
         $venue_name_array[] = [$row['id'] => $row['venueName']];
         $primaryVenueNoteId = $row['primaryNoteId'];
         $primaryVenueServiceId = $row['primaryServiceId'];
         $primaryVenueHostNameId = $row['hostNameId'];
+        $hostPrimaryEmailId = $row['primaryEmailId'];
     }
-    $host_sql = "SELECT id,primaryEmailId, CONCAT(firstname, ' ', lastname) as fullname FROM contacts WHERE id='$primaryVenueHostNameId';";
+
+    $hostFullName = null;
+    $host_sql = "SELECT id, CONCAT(firstname, ' ', lastname) as fullname FROM contacts WHERE id='$primaryVenueHostNameId';";
     $host_result = mysqli_query($conn, $host_sql);
     while ($row = mysqli_fetch_assoc($host_result)) {
         $hostFullName = $row['fullname'];
-        $hostPrimaryEmailId = $row['primaryEmailId'];
     }
+
+    $clientFullName = null;
+    $bookingColor = null;
+    $clientPrimaryEmailId = null;
     $contact_sql = "SELECT id,bookingColor,primaryEmailId, CONCAT(firstname, ' ', lastname) as fullname FROM contacts WHERE id='$clientNameId';";
     $contact_result = mysqli_query($conn, $contact_sql);
     while ($row = mysqli_fetch_assoc($contact_result)) {
@@ -96,12 +106,16 @@ while ($row = mysqli_fetch_assoc($result)) {
     // TODO: add primary email address from contacts (primaryAddressId) if not null, to booking so we can email from calendar
     // TODO: add venue host name website and notes
     
+    $bookingType = null;
     $booking_sql = "SELECT * FROM booking_types WHERE id='$bookingTypeId';";
     $booking_result = mysqli_query($conn, $booking_sql);
     while ($row = mysqli_fetch_assoc($booking_result)) {
         $bookingType = $row['bookingType'];
     }
 
+    $clientTzId = null;
+    $clientTzOffset = null;
+    $clientTzName = null;
     $timezone_sql = "SELECT * from timezones where id='$timezoneId';";
     $timezone_result = mysqli_query($conn, $timezone_sql);
     if (mysqli_num_rows($timezone_result) > 0) {
@@ -130,15 +144,19 @@ while ($row = mysqli_fetch_assoc($result)) {
         'bookingLength' => $bookingLength,
         'clientFullName' => $clientFullName,
         'clientNameId' => $clientNameId,
-        'clientPrimaryEmail' => $clientPrimaryEmail,
-        'primaryVenueNote' => $primaryVenueNote,
         'bookingColor' => $bookingColor,
         'clientConfirm' => $clientConfirm,
         'venueName' => $venueName,
         'hostFullName' => $hostFullName,
-        'hostPrimaryEmail' => $hostPrimaryEmail,
         'venueConfirm' => $venueConfirm,
         'bookingStatus' => $bookingStatus,
+        'primaryVenueNoteId' => $primaryVenueNoteId,
+        'primaryVenueNote' => $primaryVenueNote,
+        'clientPrimaryEmailId' => $clientPrimaryEmailId,
+        'clientPrimaryEmail' => $clientPrimaryEmail,
+        'hostPrimaryEmailId' => $hostPrimaryEmailId,
+        'hostPrimaryEmail' => $hostPrimaryEmail,
+        'primaryVenueServiceId' => $primaryVenueServiceId,
         'primaryVenueServiceName' => $primaryVenueServiceName,
         'primaryVenueServiceUserAccount' => $primaryVenueServiceUserAccount,
         'primaryVenueServiceWebsite' => $primaryVenueServiceWebsite,

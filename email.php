@@ -41,15 +41,21 @@ $litmTimezoneOffset = '-06:00';
 $bookingLength = $data['bookingLength'];
 $clientFullName = $data['clientFullName'];
 $clientNameId = $data['clientNameId'];
-$clientPrimaryEmail = $data['clientPrimaryEmail'];
 $bookingColor = $data['bookingColor'];
 $clientConfirm = $data['clientConfirm'];
 $venueName = $data['venueName'];
 $hostFullName = $data['hostFullName'];
-$hostPrimaryEmail = $data['hostPrimaryEmail'];
 $venueConfirm = $data['venueConfirm'];
 $bookingStatus = $data['bookingStatus'];
+
+$primaryVenueId = $data['primaryVenueId'];
+$primaryVenueNoteId = $data['primaryVenueNoteId'];
 $primaryVenueNote = $data['primaryVenueNote'];
+$clientPrimaryEmailId = $data['clientPrimaryEmailId'];
+$clientPrimaryEmail = $data['clientPrimaryEmail'];
+$hostPrimaryEmailId = $data['hostPrimaryEmailId'];
+$hostPrimaryEmail = $data['hostPrimaryEmail'];
+$primaryVenueServiceId = $data['primaryVenueServiceId'];
 $primaryVenueServiceName = $data['primaryVenueServiceName'];
 $primaryVenueServiceUserAccount = $data['primaryVenueServiceUserAccount'];
 $primaryVenueServiceWebsite = $data['primaryVenueServiceWebsite'];
@@ -57,7 +63,8 @@ $primaryVenueServiceNotes = $data['primaryVenueServiceNotes'];
 $clientTzId = $data['clientTzId'];
 $pacificTimezoneName = 5;
 $pacificTimezoneName = 'America/Los_Angeles';
-$to = "admin@callitweb.com, mich721@gmail.com";
+$to = "$clientPrimaryEmail";
+// $to = "admin@callitweb.com, mich721@gmail.com";
 // $to = "somebody@example.com, somebodyelse@example.com";
 $subject = "Booking Schedule: For(" . $clientFullName . ")";
 
@@ -81,89 +88,106 @@ $timezone_sql = "SELECT * from timezones where id='$clientTzId';";
     (empty($bookingDateTimeEnd)) ? $pacificEndDate = 'unset' : $pacificEndDate = convertDateTimeUTCtoLocal($bookingDateTimeEnd, $pacificTimezoneName)[0];
     (empty($bookingDateTimeEnd)) ? $pacificEndTime = 'unset' : $pacificEndTime = convertDateTimeUTCtoLocal($bookingDateTimeEnd, $pacificTimezoneName)[1];
 
-
 $message = "
-<html>
-<head>
-<title>Booking Details</title>
-</head>
-<body>
-<h3>Booking For " . $clientFullName . " </h3>
-" . $clientDetailsHtml . "
-<table>
-    <tr>
-        <th style='text-align: left;'>Date:</th>
-        <td style='text-align: left;'>" . $StartDate . "</td>
-    </tr>
-    <tr>
-        <th style='text-align: left;'>Time:</th>
-        <td style='text-align: left;'>" . $StartTime . "</td> 
-    </tr>
-    <tr>
-        <th style='text-align: left;'>Show Name:</th>
-        <td style='text-align: left;'>" . $venueName . "</td> 
-    </tr>
-    <tr>
-        <th style='text-align: left;'>Timezone:</th>
-        <td style='text-align: left;'>" . $litmTimezoneName . "</td> 
-    </tr>
-    <tr>
-        <th style='text-align: left;'>Host:</th>
-        <td style='text-align: left;'>" . $hostFullName . " (" . $hostPrimaryEmail . ")</td> 
-    </tr>
-    <tr>
-        <th style='text-align: left;'>Length of Interview:</th>
-        <td style='text-align: left;'>" . $bookingLength . "</td> 
-    </tr>
-    <tr>
-        <th style='text-align: left;'>Website:</th>
-        <td style='text-align: left;'>" . $primaryVenueServiceWebsite . "</td> 
-    </tr>
-    <tr>
-        <th style='text-align: left;' valign='top'>Notes:</th>
-        <td style='text-align: left;'>" . $primaryVenueNote . "</td> 
-    </tr>
-    <tr>
-    <th style='text-align: left;' valign='top'>Service Notes:</th>
-    <td valign='top'>
-        <table>
-            <tr>
-                <th style='text-align: left;'>Service Name:</th>
-                <td style='text-align: left;'>" . $primaryVenueServiceName . "</td>
-            </tr>
-            <tr>
-                <th style='text-align: left;'>Service User:</th>
-                <td style='text-align: left;'>" . $primaryVenueServiceUserAccount . "</td>
-            </tr>
-            <tr>
-                <th style='text-align: left;'>Service Website:</th>
-                <td style='text-align: left;'>" . $primaryVenueServiceWebsite . "</td>
-            </tr>
-            <tr>
-                <th style='text-align: left;'>Service Notes:</th>
-                <td style='text-align: left;'>" . $primaryVenueServiceNotes . "</td>
-            </tr>
-        </table>
-    </td>
-    </tr>
+    <html>
+    <head>
+    <title>Booking Details</title>
+    </head>
+    <body>
+    <h3>Booking For " . $clientFullName . " </h3>
+    " . $clientDetailsHtml . "
+    <table>
+        <tr>
+            <th style='text-align: left;'>Date:</th>
+            <td style='text-align: left;'>" . $StartDate . "</td>
+        </tr>
+        <tr>
+            <th style='text-align: left;'>Time:</th>
+            <td style='text-align: left;'>" . $StartTime . "</td> 
+        </tr>
+        <tr>
+            <th style='text-align: left;'>Show Name:</th>
+            <td style='text-align: left;'>" . $venueName . "</td> 
+        </tr>
+        <tr>
+            <th style='text-align: left;'>Timezone:</th>
+            <td style='text-align: left;'>" . $litmTimezoneName . "</td> 
+        </tr>
+        <tr>
+            <th style='text-align: left;'>Host:</th>
+            <td style='text-align: left;'>" . $hostFullName . " (" . $hostPrimaryEmail . ")</td> 
+        </tr>
+        <tr>
+            <th style='text-align: left;'>Length of Interview:</th>
+            <td style='text-align: left;'>" . $bookingLength . "</td> 
+        </tr>
+        <tr>
+            <th style='text-align: left;'>Website:</th>
+            <td style='text-align: left;'>" . $primaryVenueServiceWebsite . "</td> 
+        </tr>
+        <tr>
+            <th style='text-align: left;' valign='top'>Notes:</th>
+            <td style='text-align: left;'>" . $primaryVenueNote . "</td> 
+        </tr>
+        <tr>
+        <th style='text-align: left;' valign='top'>Service Notes:</th>
+        <td valign='top'>
+            <table>
+                <tr>
+                    <th style='text-align: left;'>Service Name:</th>
+                    <td style='text-align: left;'>" . $primaryVenueServiceName . "</td>
+                </tr>
+                <tr>
+                    <th style='text-align: left;'>Service User:</th>
+                    <td style='text-align: left;'>" . $primaryVenueServiceUserAccount . "</td>
+                </tr>
+                <tr>
+                    <th style='text-align: left;'>Service Website:</th>
+                    <td style='text-align: left;'>" . $primaryVenueServiceWebsite . "</td>
+                </tr>
+                <tr>
+                    <th style='text-align: left;'>Service Notes:</th>
+                    <td style='text-align: left;'>" . $primaryVenueServiceNotes . "</td>
+                </tr>
+            </table>
+        </td>
+        </tr>
 
-    <br>
-    <br>
-</table>
-<img style='width: 8%;' src='https://ci3.googleusercontent.com/proxy/r5QP5P6T_WDQRE6TJNt9fDkJGl0vEl96dSnZQ9qZmWqhOdwN7GZLmfEFabihsPUa8qfrjeNxjvpxdzhdnkBc2A64i7p4mLOirNAiBo7yyRPo8JSoCmrhsN2nnt3Xr9WhXJMYe_2voaaeITFN4HS1WwhJi3d1yxJxbCNauRdhdQgkV2tKqOmg_Hl9DxIkpTQrYmq60mjVWLJRu_KAew=s0-d-e1-ft#https://docs.google.com/uc?export=download&id=1KFwppgNkPJgHCfNZb2KZsYmX6VGRuY-9&revid=0Bw3hvFN4lg78OU9pZU9zZUQzTlRlWkF6NlZMOG1GYmxmOEhvPQ'>
-<p>Michelle Freed, Publicist</p>
-<p>LITM Media</p>
-<p>'Leave it to Michelle'</p>
-<p>424-409-5486</p>
-<a href='https://litmmedia.com/'>https://litmmedia.com/</a>
-</body>
-</html>
+        <br>
+        <br>
+    </table>
+    <img style='width: 8%;' src='https://ci3.googleusercontent.com/proxy/r5QP5P6T_WDQRE6TJNt9fDkJGl0vEl96dSnZQ9qZmWqhOdwN7GZLmfEFabihsPUa8qfrjeNxjvpxdzhdnkBc2A64i7p4mLOirNAiBo7yyRPo8JSoCmrhsN2nnt3Xr9WhXJMYe_2voaaeITFN4HS1WwhJi3d1yxJxbCNauRdhdQgkV2tKqOmg_Hl9DxIkpTQrYmq60mjVWLJRu_KAew=s0-d-e1-ft#https://docs.google.com/uc?export=download&id=1KFwppgNkPJgHCfNZb2KZsYmX6VGRuY-9&revid=0Bw3hvFN4lg78OU9pZU9zZUQzTlRlWkF6NlZMOG1GYmxmOEhvPQ'>
+    <p>Michelle Freed, Publicist</p>
+    <p>LITM Media</p>
+    <p>'Leave it to Michelle'</p>
+    <p>424-409-5486</p>
+    <a href='https://litmmedia.com/'>https://litmmedia.com/</a>
+    </body>
+    </html>
 ";
-
+$venueWebsite = '';
+if(!empty($primaryVenueServiceId)){
+$venueWebsite = <<<VENUEWEBSITE
+            <div style="margin-left: 1em;">
+                <span style="display: inline-block; width: 140px;">Website:</span>
+                <span style="display: inline-block;font-weight: bold; padding: 0.25em 0">$primaryVenueServiceWebsite</span>
+            </div>
+VENUEWEBSITE;
+}
+$hostEmail = '';
+if(!empty($hostPrimaryEmailId)){
+$hostEmail = <<<HOSTEMAIL
+            <div style="margin-left: 1em;">
+                <span style="display: inline-block; width: 140px;">Host Email:</span>
+                <span style="display: inline-block;font-weight: bold; padding: 0.25em 0"><a href="mailto:$hostPrimaryEmail">$hostPrimaryEmail</a></span>
+            </div>
+HOSTEMAIL;
+}
+// purple 4A0C57 green 4FDC0E
 $show = <<<SHOW
     <div class="show" style="width: 70%; margin-top: 1.5em;">
-    <div style="border: solid black 1px; border-radius: 0.25em;">
-        <div style="background-color: #eee;border-bottom: solid 1px #ccc;text-align: center; border-top-left-radius: 0.25em; border-top-right-radius: 0.25em;"><h3 style="margin:0; padding: 0;">Show</h3></div>
+    <div style="color:#4FDC0E;background-color: #4A0C57;border: solid black 1px; border-radius: 0.25em;">
+        <div style="background-color: #4FDC0E;border-bottom: solid 1px #ccc;text-align: center; border-top-left-radius: 0.25em; border-top-right-radius: 0.25em;"><h3 style="color:#4A0C57;margin:0; padding: 0;">Booking Confirmation</h3></div>
             <div style="margin-left: 1em;">
                 <span style="display: inline-block; width: 140px;">Show Name:</span>
                 <span style="display: inline-block;font-weight: bold; padding: 0.25em 0">$venueName</span>
@@ -171,30 +195,26 @@ $show = <<<SHOW
 
             <div style="margin-left: 1em;">
                 <span style="display: inline-block; width: 140px;">Host:</span>
-                <span style="display: inline-block;font-weight: bold; padding: 0.25em 0">$hostFullName (<a href="mailto:$hostPrimaryEmail">$hostPrimaryEmail</a>)</span>
+                <span style="display: inline-block;font-weight: bold; padding: 0.25em 0">$hostFullName</span>
+            </div>
+
+            $venueWebsite
+
+            $hostEmail
+
+            <div style="margin-left: 1em;">
+                <span style="display: inline-block; width: 140px;">Client Show Time:</span><span style="display: inline-block;font-weight: bold; padding: 0.25em 0">$StartDate $StartTime</span>
+                <span style="display: inline-block; width: 140px;">($litmTimezoneName)</span>
             </div>
 
             <div style="margin-left: 1em;">
-                <span style="display: inline-block; width: 140px;">Date:</span>
-                <span style="display: inline-block;font-weight: bold; padding: 0.25em 0">$StartDate</span>
+                <span style="display: inline-block; width: 140px;">Alt. Show Times:</span><span style="display: inline-block;font-weight: bold; padding: 0.25em 0">$pacificStartDate $pacificStartTime</span>
+                <span style="display: inline-block; width: 140px;">($pacificTimezoneName)</span>
             </div>
 
             <div style="margin-left: 1em;">
-                <span style="display: inline-block; width: 140px;">Time:</span>
-                    <div style="margin-left: 1em;">
-                    <span style="display: inline-block;font-weight: bold; padding: 0.25em 0">$pacificStartTime</span>
-                    <span style="display: inline-block; width: 140px;">($pacificTimezoneName)</span>
-                    </div>
-
-                    <div style="margin-left: 1em;">
-                    <span style="display: inline-block;font-weight: bold; padding: 0.25em 0">$StartTime</span>
-                    <span style="display: inline-block; width: 140px;">($litmTimezoneName)</span>
-                    </div>
-                    
-                    <div style="margin-left: 1em;">
-                    <span style="display: inline-block;font-weight: bold; padding: 0.25em 0">$clientStartTime</span>
-                    <span style="display: inline-block; width: 140px;">($clientTimezoneName)</span>
-                    </div>
+                <span style="display: inline-block; width: 140px;"></span><span style="display: inline-block;font-weight: bold; padding: 0.25em 0">$clientStartDate $clientStartTime</span>
+                <span style="display: inline-block; width: 140px;">($clientTimezoneName)</span>
             </div>
             
             <div style="margin-left: 1em;">
@@ -209,8 +229,8 @@ SHOW;
 
 $serviceNotes = <<<SERVICENOTES
     <div class="service-notes" style="width: 70%;margin-top: 1.5em;">
-        <div style="border: solid black 1px; border-radius: 0.25em;">
-            <div style="background-color: #eee;border-bottom: solid 1px #ccc;text-align: center; border-top-left-radius: 0.25em; border-top-right-radius: 0.25em;"><h3 style="margin:0; padding: 0;">Service Notes</h3></div>
+        <div style="color:#4FDC0E;background-color: #4A0C57;border: solid black 1px; border-radius: 0.25em;">
+            <div style="background-color: #4FDC0E;border-bottom: solid 1px #ccc;text-align: center; border-top-left-radius: 0.25em; border-top-right-radius: 0.25em;"><h3 style="color:#4A0C57;margin:0; padding: 0;">Service Notes</h3></div>
                 <div style="margin-left: 1em;">
                     <span style="display: inline-block; width: 140px;">Service:</span>
                     <span style="display: inline-block;font-weight: bold; padding: 0.25em 0">$primaryVenueServiceName</span>
@@ -236,10 +256,12 @@ $serviceNotes = <<<SERVICENOTES
 
 SERVICENOTES;
 
+$showNotes = '';
+if(!empty($primaryVenueNoteId)){
 $showNotes = <<<SHOWNOTES
     <div class="show-notes" style="width: 70%;margin-top: 1.5em;">
-        <div style="border: solid black 1px; border-radius: 0.25em;">
-            <div style="background-color: #eee;border-bottom: solid 1px #ccc;text-align: center; border-top-left-radius: 0.25em; border-top-right-radius: 0.25em;"><h3 style="margin:0; padding: 0;">Service Notes</h3></div>
+        <div style="color:#4FDC0E;background-color: #4A0C57;border: solid black 1px; border-radius: 0.25em;">
+            <div style="background-color: #4FDC0E;border-bottom: solid 1px #ccc;text-align: center; border-top-left-radius: 0.25em; border-top-right-radius: 0.25em;"><h3 style="color:#4A0C57;margin:0; padding: 0;">Instructions</h3></div>
                 <div style="margin-left: 1em;">
                     <span style="display: inline-block;font-weight: bold; padding: 0.25em 0">$primaryVenueNote</span>
                 </div>
@@ -247,6 +269,8 @@ $showNotes = <<<SHOWNOTES
         </div>
     </div>
 SHOWNOTES;
+
+}
 
 $signature = <<<SIGNATURE
     <div class="signature" style="height: 120px;width: 70%; margin-top: 2em;">
@@ -272,7 +296,7 @@ SIGNATURE;
 $message = <<<HTML
 <div>
     $show
-    $serviceNotes
+    <!-- $serviceNotes -->
     $showNotes
     $signature
 </div>

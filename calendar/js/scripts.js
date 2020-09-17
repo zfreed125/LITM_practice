@@ -145,7 +145,24 @@ function createBooking(startDate, clientFullName, color, title, booking) {
   cell.appendChild(bookingEl);
 
 }
+
 function getDetailsPane(booking) {
+  let primaryVenueService = ``;
+  let primaryVenueNote = ``;
+  let clientPrimaryEmail = ``;
+  let hostPrimaryEmail = ``;
+  if (booking.hostPrimaryEmailId) {
+    hostPrimaryEmail = `<div><span>hostPrimaryEmail:</span> ${booking.hostPrimaryEmail}</div>`;
+  }
+  if (booking.clientPrimaryEmailId) {
+    clientPrimaryEmail = `<div><span>clientPrimaryEmail:</span> ${booking.clientPrimaryEmail}</div>`;
+  }
+  if (booking.primaryVenueNoteId) {
+    primaryVenueNote = `<div><span>VenueNote:</span> ${booking.primaryVenueNote}</div>`;
+  }
+  if (booking.primaryVenueServiceId) {
+    primaryVenueService = `<div><span>VenueServiceName:</span> ${booking.primaryVenueServiceName}</div> <div><span>VenueServiceUserAccount:</span> ${booking.primaryVenueServiceUserAccount}</div> <div><span>VenueServiceWebsite:</span> ${booking.primaryVenueServiceWebsite}</div> <div><span>VenueServiceNotes:</span> ${booking.primaryVenueServiceNotes}</div> `;
+  }
   return `
   <div class="booking-details">
     <div><span>[${booking.StartTime} - ${booking.EndTime} ${booking.venueName}]<span></div>
@@ -164,52 +181,63 @@ function getDetailsPane(booking) {
     <div><span>clientConfirm:</span> ${booking.clientConfirm}</div>
     <div><span>venueName:</span> ${booking.venueName}</div>
     <div><span>hostFullName:</span> ${booking.hostFullName}</div>
-    <div><span>hostEmail:</span> ${booking.hostEmail}</div>
+    ${hostPrimaryEmail}
     <div><span>venueConfirm:</span> ${booking.venueConfirm}</div>
     <div><span>bookingStatus:</span> ${booking.bookingStatus}</div>
-    <div><span>clientEmail:</span> ${booking.clientPrimaryEmail}</div>
-    <div><span>VenueNote:</span> ${booking.primaryVenueNote}</div>
-    <div><span>VenueServiceName:</span> ${booking.primaryVenueServiceName}</div>
-    <div><span>VenueServiceUserAccount:</span> ${booking.primaryVenueServiceUserAccount}</div>
-    <div><span>VenueServiceWebsite:</span> ${booking.primaryVenueServiceWebsite}</div>
-    <div><span>VenueServiceNotes:</span> ${booking.primaryVenueServiceNotes}</div>
-    <div><span>clientTzId:</span> ${booking.clientTzId}</div>
+    ${clientPrimaryEmail}
+    ${primaryVenueNote}
+    ${primaryVenueService}
+    <div hidden><span>clientTzId:</span> ${booking.clientTzId}</div>
   </div>
   `;
 }
 function populateCalendar(event) {
   window.booking_array.forEach(booking => {
+    let primaryVenueService = ``;
+    let primaryVenueNote = ``;
+    let clientPrimaryEmail = ``;
+    let hostPrimaryEmail = ``;
+    if (booking.hostPrimaryEmailId) {
+      hostPrimaryEmail = `hostPrimaryEmail: ${booking.hostPrimaryEmail}`;
+    }
+    if (booking.clientPrimaryEmailId) {
+      clientPrimaryEmail = `clientPrimaryEmail: ${booking.clientPrimaryEmail}`;
+    }
+    if (booking.primaryVenueNoteId) {
+      primaryVenueNote = `VenueNote: ${booking.primaryVenueNote}`;
+    }
+    if (booking.primaryVenueServiceId) {
+      primaryVenueService = `VenueServiceName: ${booking.primaryVenueServiceName}VenueServiceUserAccount: ${booking.primaryVenueServiceUserAccount}VenueServiceWebsite: ${booking.primaryVenueServiceWebsite}VenueServiceNotes: ${booking.primaryVenueServiceNotes}`;
+    }
     const startDate = booking['StartDate'];
     const clientFullName = booking['clientFullName'] + '-' + booking['venueName'];
     const color = (booking['bookingColor'] === null) ? 'rgb(0, 0, 0)' : booking['bookingColor'];
-    const title = `
-  [${booking.StartTime} - ${booking.EndTime} ${booking.venueName}]
-  bookingType: ${booking.bookingType}
-  StartDate: ${booking.StartDate}
-  bookingDateTimeStart: ${booking.bookingDateTimeStart}
-  StartTime: ${booking.StartTime}
-  bookingDateTimeEnd: ${booking.bookingDateTimeEnd}
-  EndDate: ${booking.EndDate}
-  EndTime: ${booking.EndTime}
-  timezone: ${booking.timezone}
-  bookingLength: ${booking.bookingLength}
-  clientFullName: ${booking.clientFullName}
-  bookingColor: ${booking.bookingColor}
-  clientConfirm: ${booking.clientConfirm}
-  venueName: ${booking.venueName}
-  hostFullName: ${booking.hostFullName}
-  hostEmail: ${booking.hostPrimaryEmail}
-  venueConfirm: ${booking.venueConfirm}
-  bookingStatus: ${booking.bookingStatus}
-  clientEmail: ${booking.clientPrimaryEmail}
-  VenueNote: ${booking.primaryVenueNote}
-  VenueServiceName: ${booking.primaryVenueServiceName}
-  VenueServiceUserAccount: ${booking.primaryVenueServiceUserAccount}
-  VenueServiceWebsite: ${booking.primaryVenueServiceWebsite}
-  VenueServiceNotes: ${booking.primaryVenueServiceNotes}
-  clientTzId: ${booking.clientTzId}
-  
-  `;
+    const title = '';
+    //   const title = `
+    // [${booking.StartTime} - ${booking.EndTime} ${booking.venueName}]
+    // bookingType: ${booking.bookingType}
+    // StartDate: ${booking.StartDate}
+    // bookingDateTimeStart: ${booking.bookingDateTimeStart}
+    // StartTime: ${booking.StartTime}
+    // bookingDateTimeEnd: ${booking.bookingDateTimeEnd}
+    // EndDate: ${booking.EndDate}
+    // EndTime: ${booking.EndTime}
+    // timezone: ${booking.timezone}
+    // bookingLength: ${booking.bookingLength}
+    // clientFullName: ${booking.clientFullName}
+    // bookingColor: ${booking.bookingColor}
+    // clientConfirm: ${booking.clientConfirm}
+    // venueName: ${booking.venueName}
+    // hostFullName: ${booking.hostFullName}
+    // ${hostPrimaryEmail}
+    // venueConfirm: ${booking.venueConfirm}
+    // bookingStatus: ${booking.bookingStatus}
+    // ${clientPrimaryEmail}
+    // ${primaryVenueNote}
+    // ${primaryVenueService}
+    // clientTzId: ${booking.clientTzId}
+
+    // `;
     createBooking(startDate, clientFullName, color, title, booking);
   })
 }
