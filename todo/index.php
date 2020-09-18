@@ -116,7 +116,8 @@ foreach ($client_booking_count_array as $booking) {
                     'fullname' => $contact_item['fullname'],
                     'bookingColor' => $booking['bookingColor'],
                     'bookingCountTotal' => $booking['bookingCountTotal'],
-                    'bookings' => 0);
+                    'bookings' => array_count_values($client_booking_count)[$contact_item['id']]);
+                    // 'bookings' => 0);
                     
             }
         }
@@ -141,15 +142,17 @@ foreach ($client_booking_count_array as $booking) {
                     'fullname' => $contact_item['fullname'],
                     'bookingColor' => $booking['bookingColor'],
                     'bookingCountTotal' => $booking['bookingCountTotal'],
-                    'bookings' => 0);
+                    'bookings' => array_count_values($client_booking_count)[$contact_item['id']]);
+                    // 'bookings' => 0);
                     
             }
         }
     }
 }   
-    // echo "<pre>";
+    echo "<pre>";
+    // echo print_r($client_booking_count_array);
     // echo print_r($todo_array);
-    // echo "</pre>";
+    echo "</pre>";
     foreach ($todo_array as $todo_item) {
         $card = " <div class='card'><div class='container'> ";
         $card .= " <h4><b>".$todo_item['fullname']."</b></h4> <!-- <p>Venue Name</p> --> ";
