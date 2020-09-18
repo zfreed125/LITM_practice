@@ -219,7 +219,7 @@ window.addEventListener('load', (event) => {
             <input type="hidden" name="id" value="<?php echo $id; ?>">
             <div class="m-5">
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <a class="btn btn-danger" href="delete.php?id=<?php echo $id; ?>">Delete</a>
+                <!-- <a class="btn btn-danger" href="delete.php?id=<?php echo $id; ?>">Delete</a> -->
             </div>
         </form>
     </div>

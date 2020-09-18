@@ -144,7 +144,7 @@ $conn->close();
             <input type="submit" class="btn btn-primary" value="Submit">
             <br>
             <br>
-            <a class="btn btn-danger" href="delete.php?id=<?php echo $id; ?>">Delete</a>
+            <!-- <a class="btn btn-danger" href="delete.php?id=<?php echo $id; ?>">Delete</a> -->
             <br>
             <br>
             <a class="btn btn-default" href="view.php">Cancel</a>

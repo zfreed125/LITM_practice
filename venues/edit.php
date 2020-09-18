@@ -269,7 +269,7 @@ $conn->close();
             <br>
             <br>
             <!-- <input type="submit" class="btn btn-danger" value="Delete"> -->
-            <a class="btn btn-danger" href="delete.php?id=<?php echo $id; ?>">Delete</a>
+            <!-- <a class="btn btn-danger" href="delete.php?id=<?php echo $id; ?>">Delete</a> -->
             <br>
             <br>
             <a class="btn btn-default" href="view.php">Cancel</a>

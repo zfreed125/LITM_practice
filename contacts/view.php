@@ -76,7 +76,7 @@
                         // echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                         echo "<td class='fitwidth'>";
                         echo "<a href='edit.php?id=" . $row['id'] . "' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
-                        echo "<a href='delete.php?contactId=" . $row['id'] . "' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
+                        // echo "<a href='delete.php?contactId=" . $row['id'] . "' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
                         echo "</td>";
                         $primaryPhoneId = $row['primaryPhoneId'];
                         $primaryEmailId = $row['primaryEmailId'];
