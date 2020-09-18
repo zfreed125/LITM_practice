@@ -131,7 +131,7 @@ function createBooking(startDate, clientFullName, color, title, booking) {
   emailButton.onclick = email;
   bookingEl.innerHTML = clientFullName;
   // bookingEl.innerHTML = clientFullName.toUpperCase() + '';
-  bookingEl.title = title;
+  // bookingEl.title = title;
   bookingEl.className = 'badge p-1 m-1';
   bookingEl.style = `background-color: ${color}; color: white;cursor: pointer;font-size: 8px;`;
   bookingEl.addEventListener('dblclick', () => {
@@ -224,9 +224,14 @@ function populateCalendar(event) {
     if (booking.clientConfirm === '1') {
       clientIsConfirmed = '<span style="float:left"><i style="margin-right:2px;margin-bottom:2px;color:green;background-color:white;" class="fas fa-check-square"></i>';
     } else {
-      clientIsConfirmed = '<span style="float:left"><i style="margin-right:2px;background-color:white;color:red;" class="fas fa-times-circle"></i>';
+      clientIsConfirmed = '<span style="float:left"><i style="margin-right:2px;margin-bottom:2px;background-color:white;color:red;" class="fas fa-times-circle"></i>';
     }
-    (booking.venueConfirm === '1') ? venueIsConfirmed = '<span style="float:left"><i style="margin-right:2px;margin-bottom:2px;color:green;background-color:white;" class="fas fa-check-square"></i>' : venueIsConfirmed = '<span style="float:left"><i style="margin-right:2px;background-color:white;color:red;" class="fas fa-times-circle"></i>';
+    if (booking.venueConfirm === '1') {
+      venueIsConfirmed = '<span style="float:left"><i style="margin-right:2px;color:green;background-color:white;" class="fas fa-check-square"></i>';
+    } else {
+      // <a href='../bookings/update_vc.php?id=${booking.bookingId}&vc=1' title='Confirm Venue'> </a>
+      venueIsConfirmed = `<span style="float:left"><a  href="../bookings/update_vc.php?id=${booking.bookingId}&vc=1" title="Confirm Venue"><i style="margin-right:2px;background-color:white;color:red;" class="fas fa-times-circle"></i></a>`;
+    }
     const startDate = booking['StartDate'];
     const clientFullName = clientIsConfirmed + booking['clientFullName'] + '</span>' + '<br>' + venueIsConfirmed + booking['venueName'] + '</span>';
     // const clientFullName = booking['clientFullName'] + '-' + booking['venueName'];

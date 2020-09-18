@@ -22,13 +22,15 @@ require 'data.php';
 height: 100px;
 width: 175px;
 }
+.table td{
+    padding:.1em;
+}
 #sideDetails {
 position: absolute;
 top: 60px;
-
 height: 602px;
 width: 400px;
-left: 1230px;
+left: 1265px;
 border: 1px solid #DEE2E6;
 border-radius: 10px;
 background-color: #F7F7F7;
