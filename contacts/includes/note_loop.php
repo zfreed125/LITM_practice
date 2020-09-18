@@ -22,7 +22,7 @@
  while ($row = mysqli_fetch_assoc($note_result))
  {
  if($primaryNoteId == $row['id']) {
- $note_primary = "<span><i style='color:green'class='fas fa-star'></i></span>";
+ $note_primary = "<a href='../notes/remove_primary.php?src=contacts&id=".$row['id']."'><span><i style='color:green'class='fas fa-star'></i></span></a>";
  }else{
  $note_primary = "<a href='primary.php?noteId=".$row['id']."&contactId=".$contactId."'><span><i style='color:green'class='far fa-star'></i></span></a>";
  }

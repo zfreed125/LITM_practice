@@ -24,7 +24,7 @@
    while ($row = mysqli_fetch_assoc($address_result))
    {
    if($primaryAddressId == $row['id']) {
-   $address_primary = "<span><i style='color:green'class='fas fa-star'></i></span>";
+   $address_primary = "<a href='../address/remove_primary.php?src=contacts&id=".$row['id']."'><span><i style='color:green'class='fas fa-star'></i></span></a>";
    }else{
    $address_primary = "<a href='primary.php?addressId=".$row['id']."&contactId=".$contactId."'><span><i style='color:green'class='far fa-star'></i></span></a>";
    }

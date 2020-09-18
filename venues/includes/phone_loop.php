@@ -31,7 +31,7 @@ while ($row = mysqli_fetch_assoc($phone_result))
             }
     }
 if($primaryPhoneId == $row['id']) {
-    $phone_primary = "<span><i style='color:green'class='fas fa-star'></i></span>";
+    $phone_primary = "<a href='../phones/remove_primary.php?src=venues&id=".$row['id']."'><span><i style='color:green'class='fas fa-star'></i></span></a>";
 }else{
     $phone_primary = "<a href='primary.php?phoneId=".$row['id']."&venueId=".$venuesId."'><span><i style='color:green'class='far fa-star'></i></span></a>";
 }

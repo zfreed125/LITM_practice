@@ -23,7 +23,7 @@
  while ($row = mysqli_fetch_assoc($services_result))
  {
  if($primaryServiceId == $row['id']) {
- $service_primary = "<span><i style='color:green'class='fas fa-star'></i></span>";
+ $service_primary = "<a href='../services/remove_primary.php?src=contacts&id=".$row['id']."'><span><i style='color:green'class='fas fa-star'></i></span></a>";
  }else{
  $service_primary = "<a href='primary.php?serviceId=".$row['id']."&contactId=".$contactId."'><span><i style='color:green'class='far fa-star'></i></span></a>";
  }
