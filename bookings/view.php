@@ -120,7 +120,7 @@
                         $timezones_array[] = array('id' => $row['id'], 'timezone' => $row['timezone']);
                     }
                     //Attempt select query execution
-                    $sql = "SELECT * FROM bookings;";
+                    $sql = "SELECT * FROM bookings ORDER BY id desc;";
                     if ($result = mysqli_query($conn, $sql)) {
                         echo "<table class='table table-bordered '>";
                         echo "<thead>";

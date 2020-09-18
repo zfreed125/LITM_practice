@@ -111,9 +111,6 @@ while ($row = mysqli_fetch_assoc($result)) {
         $primaryVenueServiceWebsite = $service_row['website'];
         $primaryVenueServiceNotes = $service_row['notes'];
     }
-    // TODO: add primary email address from contacts (primaryAddressId) if not null, to booking so we can email from calendar
-    // TODO: add venue host name website and notes
-    echo $bookingId;
     $bookingType = null;
     $booking_sql = "SELECT * FROM booking_types WHERE id='$bookingTypeId';";
     $booking_result = mysqli_query($conn, $booking_sql);
@@ -132,7 +129,6 @@ while ($row = mysqli_fetch_assoc($result)) {
         $clientTzOffset = $row['offset'];
         $clientTzName = $row['timezone'];
         $tz = 'America/Chicago'; // Default Calendar TimeZone
-        // $tz = $row['timezone'];
     }
 
     (empty($bookingDateTimeStart)) ? $StartDate = 'unset' : $StartDate = convertDateTimeUTCtoLocal($bookingDateTimeStart, $tz)[0];

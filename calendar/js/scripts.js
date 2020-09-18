@@ -154,45 +154,58 @@ function getDetailsPane(booking) {
   let hostPrimaryEmail = ``;
   let clientPrimaryNote = ``;
   if (booking.clientPrimaryNoteId) {
-    clientPrimaryNote = `<div><span>clientPrimaryNote:</span> ${booking.clientPrimaryNote}</div>`;
+    clientPrimaryNote = `<div style="margin-left:2em;"><span>Note:</span> ${booking.clientPrimaryNote}</div>`;
   }
   if (booking.hostPrimaryEmailId) {
-    hostPrimaryEmail = `<div><span>hostPrimaryEmail:</span> ${booking.hostPrimaryEmail}</div>`;
+    hostPrimaryEmail = `<div style="margin-left:2em;"><span>Email:</span> ${booking.hostPrimaryEmail}</div>`;
   }
   if (booking.clientPrimaryEmailId) {
-    clientPrimaryEmail = `<div><span>clientPrimaryEmail:</span> ${booking.clientPrimaryEmail}</div>`;
+    clientPrimaryEmail = `<div style="margin-left:2em;"><span>Email:</span> ${booking.clientPrimaryEmail}</div>`;
   }
   if (booking.primaryVenueNoteId) {
     primaryVenueNote = `<div><span>VenueNote:</span> ${booking.primaryVenueNote}</div>`;
   }
   if (booking.primaryVenueServiceId) {
-    primaryVenueService = `<div><span>VenueServiceName:</span> ${booking.primaryVenueServiceName}</div> <div><span>VenueServiceUserAccount:</span> ${booking.primaryVenueServiceUserAccount}</div> <div><span>VenueServiceWebsite:</span> ${booking.primaryVenueServiceWebsite}</div> <div><span>VenueServiceNotes:</span> ${booking.primaryVenueServiceNotes}</div> `;
+    primaryVenueService =
+      `<div><span>VenueService:</span></div>
+      <div style="margin-left:2em;"><span>Name:</span> ${booking.primaryVenueServiceName}</div>
+      <div style="margin-left:2em;"><span>UserAccount:</span> ${booking.primaryVenueServiceUserAccount}</div>
+      <div style="margin-left:2em;"><span>Website:</span> ${booking.primaryVenueServiceWebsite}</div> 
+      <div style="margin-left:2em;"><span>Notes:</span> ${booking.primaryVenueServiceNotes}</div>
+     `;
   }
   return `
   <div class="booking-details">
-    <div><span>[${booking.StartTime} - ${booking.EndTime} ${booking.venueName}]<span></div>
+    <div><span>[(${booking.bookingType}) ${booking.StartTime} - ${booking.EndTime} ${booking.venueName}]<span></div>
 
     <div hidden><span>bookingId:</span> ${booking.bookingId}</div>
     <div hidden><span>clientConfirm:</span> ${booking.clientConfirm}</div>
-    <div><span>bookingType:</span> ${booking.bookingType}</div>
-    <div><span>StartDate:</span> ${booking.StartDate}</div>
     <div hidden><span>bookingDateTimeStart:</span> ${booking.bookingDateTimeStart}</div>
-    <div><span>StartTime:</span> ${booking.StartTime}</div>
     <div hidden><span>bookingDateTimeEnd:</span> ${booking.bookingDateTimeEnd}</div>
-    <div><span>EndDate:</span> ${booking.EndDate}</div>
-    <div><span>EndTime:</span> ${booking.EndTime}</div>
-    <div><span>timezone:</span> ${booking.timezone}</div>
-    <div><span>bookingLength:</span> ${booking.bookingLength}</div>
-    <div><span>clientFullName:</span> ${booking.clientFullName}</div>
-    <div><span>bookingColor:</span> ${booking.bookingColor}</div>
-    <div><span>venueName:</span> ${booking.venueName}</div>
-    <div><span>hostFullName:</span> ${booking.hostFullName}</div>
-    ${hostPrimaryEmail}
-    <div><span>bookingStatus:</span> ${booking.bookingStatus}</div>
+    <div hidden><span>EndDate:</span> ${booking.EndDate}</div>
+    <div hidden><span>EndTime:</span> ${booking.EndTime}</div>
+    <div hidden><span>bookingColor:</span> ${booking.bookingColor}</div>
+    <div hidden><span>venueName:</span> ${booking.venueName}</div>
+    <div hidden><span>bookingType:</span> ${booking.bookingType}</div>
+    <div hidden><span>bookingStatus:</span> ${booking.bookingStatus}</div>
+
+    <div><span>Booking Time:</span></div>
+      <div style="margin-left:2em;"><span>Date:</span> ${booking.StartDate}</div>
+      <div style="margin-left:2em;"><span>Time:</span> ${booking.StartTime}</div>
+      <div style="margin-left:2em;"><span>timezone:</span> ${booking.timezone}</div>
+      <div style="margin-left:2em;"><span>Length:</span> ${booking.bookingLength}</div>
+
+    <div><span>Client:</span></div>  
+    <div style="margin-left:2em;"><span>Name:</span> ${booking.clientFullName}</div>
     ${clientPrimaryEmail}
     ${clientPrimaryNote}
-    ${primaryVenueNote}
+    
+    <div><span>Host:</span></div>  
+      <div style="margin-left:2em;"><span>Name:</span> ${booking.hostFullName}</div>
+      ${hostPrimaryEmail}
+
     ${primaryVenueService}
+    ${primaryVenueNote}
     <div hidden><span>clientTzId:</span> ${booking.clientTzId}</div>
   </div>
   `;
