@@ -129,7 +129,8 @@ function createBooking(startDate, clientFullName, color, title, booking) {
   emailButton.className = 'btn btn-primary';
   emailButton.textContent = 'Email Booking';
   emailButton.onclick = email;
-  bookingEl.innerHTML = clientFullName.toUpperCase() + '<br>(1of4)';
+  bookingEl.innerHTML = clientFullName;
+  // bookingEl.innerHTML = clientFullName.toUpperCase() + '';
   bookingEl.title = title;
   bookingEl.className = 'badge p-1 m-1';
   bookingEl.style = `background-color: ${color}; color: white;cursor: pointer;font-size: 8px;`;
@@ -151,6 +152,10 @@ function getDetailsPane(booking) {
   let primaryVenueNote = ``;
   let clientPrimaryEmail = ``;
   let hostPrimaryEmail = ``;
+  let clientPrimaryNote = ``;
+  if (booking.clientPrimaryNoteId) {
+    clientPrimaryNote = `<div><span>clientPrimaryNote:</span> ${booking.clientPrimaryNote}</div>`;
+  }
   if (booking.hostPrimaryEmailId) {
     hostPrimaryEmail = `<div><span>hostPrimaryEmail:</span> ${booking.hostPrimaryEmail}</div>`;
   }
@@ -167,6 +172,8 @@ function getDetailsPane(booking) {
   <div class="booking-details">
     <div><span>[${booking.StartTime} - ${booking.EndTime} ${booking.venueName}]<span></div>
 
+    <div hidden><span>bookingId:</span> ${booking.bookingId}</div>
+    <div hidden><span>clientConfirm:</span> ${booking.clientConfirm}</div>
     <div><span>bookingType:</span> ${booking.bookingType}</div>
     <div><span>StartDate:</span> ${booking.StartDate}</div>
     <div hidden><span>bookingDateTimeStart:</span> ${booking.bookingDateTimeStart}</div>
@@ -178,13 +185,12 @@ function getDetailsPane(booking) {
     <div><span>bookingLength:</span> ${booking.bookingLength}</div>
     <div><span>clientFullName:</span> ${booking.clientFullName}</div>
     <div><span>bookingColor:</span> ${booking.bookingColor}</div>
-    <div><span>clientConfirm:</span> ${booking.clientConfirm}</div>
     <div><span>venueName:</span> ${booking.venueName}</div>
     <div><span>hostFullName:</span> ${booking.hostFullName}</div>
     ${hostPrimaryEmail}
-    <div><span>venueConfirm:</span> ${booking.venueConfirm}</div>
     <div><span>bookingStatus:</span> ${booking.bookingStatus}</div>
     ${clientPrimaryEmail}
+    ${clientPrimaryNote}
     ${primaryVenueNote}
     ${primaryVenueService}
     <div hidden><span>clientTzId:</span> ${booking.clientTzId}</div>
@@ -197,6 +203,10 @@ function populateCalendar(event) {
     let primaryVenueNote = ``;
     let clientPrimaryEmail = ``;
     let hostPrimaryEmail = ``;
+    let clientPrimaryNote = ``;
+    if (booking.clientPrimaryNoteId) {
+      clientPrimaryNote = `clientPrimaryNote: ${booking.clientPrimaryNote}`;
+    }
     if (booking.hostPrimaryEmailId) {
       hostPrimaryEmail = `hostPrimaryEmail: ${booking.hostPrimaryEmail}`;
     }
@@ -209,12 +219,22 @@ function populateCalendar(event) {
     if (booking.primaryVenueServiceId) {
       primaryVenueService = `VenueServiceName: ${booking.primaryVenueServiceName}VenueServiceUserAccount: ${booking.primaryVenueServiceUserAccount}VenueServiceWebsite: ${booking.primaryVenueServiceWebsite}VenueServiceNotes: ${booking.primaryVenueServiceNotes}`;
     }
+    let clientIsConfirmed;
+    let venueIsConfirmed;
+    if (booking.clientConfirm === '1') {
+      clientIsConfirmed = '<span style="float:left"><i style="margin-right:2px;margin-bottom:2px;color:green;background-color:white;" class="fas fa-check-square"></i>';
+    } else {
+      clientIsConfirmed = '<span style="float:left"><i style="margin-right:2px;background-color:white;color:red;" class="fas fa-times-circle"></i>';
+    }
+    (booking.venueConfirm === '1') ? venueIsConfirmed = '<span style="float:left"><i style="margin-right:2px;margin-bottom:2px;color:green;background-color:white;" class="fas fa-check-square"></i>' : venueIsConfirmed = '<span style="float:left"><i style="margin-right:2px;background-color:white;color:red;" class="fas fa-times-circle"></i>';
     const startDate = booking['StartDate'];
-    const clientFullName = booking['clientFullName'] + '-' + booking['venueName'];
+    const clientFullName = clientIsConfirmed + booking['clientFullName'] + '</span>' + '<br>' + venueIsConfirmed + booking['venueName'] + '</span>';
+    // const clientFullName = booking['clientFullName'] + '-' + booking['venueName'];
     const color = (booking['bookingColor'] === null) ? 'rgb(0, 0, 0)' : booking['bookingColor'];
     const title = '';
     //   const title = `
     // [${booking.StartTime} - ${booking.EndTime} ${booking.venueName}]
+    // <div hidden><span>bookingId:</span> ${booking.bookingId}</div>
     // bookingType: ${booking.bookingType}
     // StartDate: ${booking.StartDate}
     // bookingDateTimeStart: ${booking.bookingDateTimeStart}
@@ -226,13 +246,12 @@ function populateCalendar(event) {
     // bookingLength: ${booking.bookingLength}
     // clientFullName: ${booking.clientFullName}
     // bookingColor: ${booking.bookingColor}
-    // clientConfirm: ${booking.clientConfirm}
     // venueName: ${booking.venueName}
     // hostFullName: ${booking.hostFullName}
     // ${hostPrimaryEmail}
-    // venueConfirm: ${booking.venueConfirm}
     // bookingStatus: ${booking.bookingStatus}
     // ${clientPrimaryEmail}
+    // ${ clientPrimaryNote }
     // ${primaryVenueNote}
     // ${primaryVenueService}
     // clientTzId: ${booking.clientTzId}

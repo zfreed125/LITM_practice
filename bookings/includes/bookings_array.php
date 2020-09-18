@@ -37,7 +37,9 @@ while ($brow = mysqli_fetch_assoc($bookings_result)) {
         'clientConfirm' => $brow["clientConfirm"],
         'venueNameId' => $brow["venueNameId"],
         'venueConfirm' => $brow["venueConfirm"],
-        'bookingStatus' => $brow["bookingStatus"]
+        'bookingStatus' => $brow["bookingStatus"],
+        'utcDateTimeStart' => $bDateTimeStart,
+        'utcDateTimeEnd' => $bDateTimeEnd,
     );
 }
 ?>

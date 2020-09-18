@@ -56,6 +56,10 @@ $conn->close();
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/middle_finger.css">
+
+    <!-- moment.js && moment-timezone.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/moment.min.js" integrity="sha512-Q1f3TS3vSt1jQ8AwP2OuenztnLU6LwxgyyYOG1jgMW/cbEMHps/3wjvnl1P3WTrF3chJUWEoxDUEjMxDV8pujg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.31/moment-timezone-with-data.js" integrity="sha512-ECoTMVFwwVtxjEBRjUMjviUd6hBjwDhBJI0+3W2YDs+ld5rHHUDr59T15gxwEPkGu5XLmkASUSvPgQe/Tpyodg==" crossorigin="anonymous"></script>
 </head>
 <script src="js/generateTags.js"></script>
 <script src="js/validate.js"></script>

@@ -30,6 +30,7 @@ $result = mysqli_query($conn, $bookings_sql);
 //output data of each row
 $bookings_array = array();
 while ($row = mysqli_fetch_assoc($result)) {
+    $bookingId = $row["id"];
     $bookingTypeId = $row["bookingTypeId"];
     $bookingDateTimeStart = $row["bookingDateTimeStart"];
     $bookingDateTimeEnd = $row["bookingDateTimeEnd"];
@@ -65,36 +66,43 @@ while ($row = mysqli_fetch_assoc($result)) {
     $clientFullName = null;
     $bookingColor = null;
     $clientPrimaryEmailId = null;
-    $contact_sql = "SELECT id,bookingColor,primaryEmailId, CONCAT(firstname, ' ', lastname) as fullname FROM contacts WHERE id='$clientNameId';";
+    $contact_sql = "SELECT id,bookingColor,primaryEmailId,primaryNoteId, CONCAT(firstname, ' ', lastname) as fullname FROM contacts WHERE id='$clientNameId';";
     $contact_result = mysqli_query($conn, $contact_sql);
     while ($row = mysqli_fetch_assoc($contact_result)) {
         $clientFullName = $row['fullname'];
         $bookingColor = $row['bookingColor'];
         $clientPrimaryEmailId = $row['primaryEmailId'];
+        $clientPrimaryNoteId = $row['primaryNoteId'];
     }
     
-    $hostPrimaryEmail = 'unasigned';
+    $hostPrimaryEmail = 'unassigned';
     $email_sql = "SELECT email FROM emails where id = '$hostPrimaryEmailId';";
     $email_result = mysqli_query($conn, $email_sql);
     while ($email_row = mysqli_fetch_assoc($email_result)) {
         $hostPrimaryEmail = $email_row['email'];
     }
-    $clientPrimaryEmail = 'unasigned';
+    $clientPrimaryEmail = 'unassigned';
     $email_sql = "SELECT email FROM emails where id = '$clientPrimaryEmailId';";
     $email_result = mysqli_query($conn, $email_sql);
     while ($email_row = mysqli_fetch_assoc($email_result)) {
         $clientPrimaryEmail = $email_row['email'];
     }
-    $primaryVenueNote = 'unasigned';
-    $note_sql = "SELECT note FROM notes where id = '$primaryVenueNoteId';";
-    $note_result = mysqli_query($conn, $note_sql);
-    while ($note_row = mysqli_fetch_assoc($note_result)) {
-        $primaryVenueNote = $note_row['note'];
+    $clientPrimaryNote = 'unassigned';
+    $client_note_sql = "SELECT note FROM notes where id = '$clientPrimaryNoteId';";
+    $client_note_result = mysqli_query($conn, $client_note_sql);
+    while ($client_note_row = mysqli_fetch_assoc($client_note_result)) {
+        $clientPrimaryNote = $client_note_row['note'];
     }
-    $primaryVenueServiceName = 'unasigned';
-    $primaryVenueServiceUserAccount = 'unasigned';
-    $primaryVenueServiceWebsite = 'unasigned';
-    $primaryVenueServiceNotes = 'unasigned';
+    $primaryVenueNote = 'unassigned';
+    $venue_note_sql = "SELECT note FROM notes where id = '$primaryVenueNoteId';";
+    $venue_note_result = mysqli_query($conn, $venue_note_sql);
+    while ($venue_note_row = mysqli_fetch_assoc($venue_note_result)) {
+        $primaryVenueNote = $venue_note_row['note'];
+    }
+    $primaryVenueServiceName = 'unassigned';
+    $primaryVenueServiceUserAccount = 'unassigned';
+    $primaryVenueServiceWebsite = 'unassigned';
+    $primaryVenueServiceNotes = 'unassigned';
     $service_sql = "SELECT * FROM services where id = '$primaryVenueServiceId';";
     $service_result = mysqli_query($conn, $service_sql);
     while ($service_row = mysqli_fetch_assoc($service_result)) {
@@ -105,7 +113,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     }
     // TODO: add primary email address from contacts (primaryAddressId) if not null, to booking so we can email from calendar
     // TODO: add venue host name website and notes
-    
+    echo $bookingId;
     $bookingType = null;
     $booking_sql = "SELECT * FROM booking_types WHERE id='$bookingTypeId';";
     $booking_result = mysqli_query($conn, $booking_sql);
@@ -133,6 +141,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     (empty($bookingDateTimeEnd)) ? $EndTime = 'unset' : $EndTime = convertDateTimeUTCtoLocal($bookingDateTimeEnd, $tz)[1];
     for ($i = 0; $i < count($venue_name_array); $i++) { $venueName = $venue_name_array[$i][$venueNameId]; }
     $bookings_array[] = array(
+        'bookingId' => $bookingId,
         'bookingType' => $bookingType,
         'StartDate' => $StartDate,
         'bookingDateTimeStart' => $bookingDateTimeStart,
@@ -154,6 +163,8 @@ while ($row = mysqli_fetch_assoc($result)) {
         'primaryVenueNote' => $primaryVenueNote,
         'clientPrimaryEmailId' => $clientPrimaryEmailId,
         'clientPrimaryEmail' => $clientPrimaryEmail,
+        'clientPrimaryNoteId' => $clientPrimaryNoteId,
+        'clientPrimaryNote' => $clientPrimaryNote,
         'hostPrimaryEmailId' => $hostPrimaryEmailId,
         'hostPrimaryEmail' => $hostPrimaryEmail,
         'primaryVenueServiceId' => $primaryVenueServiceId,

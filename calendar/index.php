@@ -12,7 +12,7 @@ require 'data.php';
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
           integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <!-- LITM -->
     <script>window.booking_array = <?php echo json_encode($bookings_array);?>;</script>
     <script>window.client_booking_count_array = <?php echo json_encode($client_booking_count_array);?>;</script>

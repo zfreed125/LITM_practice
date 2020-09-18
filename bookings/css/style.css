@@ -45,11 +45,15 @@ p {
 .bookingsDetails{
     position: absolute;
     top: 100px;
-    height: 362px;
+    height: 462px;
     width: 425px;
     left: 15px;
     border: 1px solid #DEE2E6;
     border-radius: 0px 0px 10px 10px;
     background-color: #F7F7F7;
     overflow-y: auto;
+}
+.booking-details {
+    padding: 1em;
+    text-align: center;
 }

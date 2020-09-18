@@ -15,6 +15,7 @@ $serviceId = $_REQUEST['serviceId'];
 $addressId = $_REQUEST['addressId'];
 $emailId = $_REQUEST['emailId'];
 $contactId = $_REQUEST['contactId'];
+$noteId = $_REQUEST['noteId'];
 
 if(!empty($emailId)){
   $sql = "UPDATE contacts SET primaryEmailId='$emailId' WHERE id='$contactId';";
@@ -27,6 +28,9 @@ if(!empty($serviceId)){
 }
 if(!empty($phoneId)){
   $sql = "UPDATE contacts SET primaryPhoneId='$phoneId' WHERE id='$contactId';";
+}
+if(!empty($noteId)){
+  $sql = "UPDATE contacts SET primaryNoteId='$noteId' WHERE id='$contactId';";
 }
 
 

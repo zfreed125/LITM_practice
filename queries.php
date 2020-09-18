@@ -9,7 +9,32 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
+function get_timezone_abbreviation($timezone_id)
+{
+    if($timezone_id){
+        $abb_list = timezone_abbreviations_list();
 
+        $abb_array = array();
+        foreach ($abb_list as $abb_key => $abb_val) {
+            foreach ($abb_val as $key => $value) {
+                $value['abb'] = $abb_key;
+                array_push($abb_array, $value);
+            }
+        }
+
+        foreach ($abb_array as $key => $value) {
+            if($value['timezone_id'] == $timezone_id){
+                return strtoupper($value['abb']);
+            }
+        }
+    }
+    return FALSE;
+} 
+echo get_timezone_abbreviation('America/New_York');
+echo "<pre>";
+print_r(timezone_abbreviations_list());
+// print_r(timezone_abbreviations_list());
+echo "</pre>";
 // echo 'hi';
 // $field0 = "0;"
 // $field1 = "2;"
@@ -27,13 +52,13 @@ if ($conn->connect_error) {
 
 // }
 
-$sql3 = "SELECT genres.genreTypeId, genre_types.genreType FROM genres
-INNER JOIN genre_types ON genres.genreTypeId=genre_types.id WHERE genres.contactId='3'";
-$result3 = mysqli_query($conn, $sql3);
-while($row = mysqli_fetch_assoc($result3)){
-  // echo $row['genreTypeId'];
-  echo $row['genreType'];
-}
+// $sql3 = "SELECT genres.genreTypeId, genre_types.genreType FROM genres
+// INNER JOIN genre_types ON genres.genreTypeId=genre_types.id WHERE genres.contactId='3'";
+// $result3 = mysqli_query($conn, $sql3);
+// while($row = mysqli_fetch_assoc($result3)){
+//   // echo $row['genreTypeId'];
+//   echo $row['genreType'];
+// }
 
 
 

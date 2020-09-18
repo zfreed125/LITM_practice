@@ -82,6 +82,7 @@
                         $primaryEmailId = $row['primaryEmailId'];
                         $primaryAddressId = $row['primaryAddressId'];
                         $primaryServiceId = $row['primaryServiceId'];
+                        $primaryNoteId = $row['primaryNoteId'];
                         $contactId = $row['id'];
                         echo "</tr>";
 
