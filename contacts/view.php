@@ -14,6 +14,36 @@
 </head>
 
 <body>
+ <style type="text/css">
+    body {
+        font-size: 10px;
+    }
+        .wrapper {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .page-header h2 {
+            margin-top: 0;
+        }
+        .table {
+            border: 1px solid lightgrey;
+
+        }
+        .table th,
+        .table td {
+            width: 100px;
+            padding: 0px 5px;
+            margin: 0px;
+            text-align: left;
+        }
+        table>thead::after 
+        {
+            display: none;
+        }
+        .fitwidth {
+        }
+    </style>
     <div class="wrapper pull-left">
         <div class="container-fluid">
             <div class="row">
