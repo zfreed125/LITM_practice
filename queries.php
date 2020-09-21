@@ -9,32 +9,31 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-function get_timezone_abbreviation($timezone_id)
-{
-    if($timezone_id){
-        $abb_list = timezone_abbreviations_list();
+// function get_timezone_abbreviation($timezone_id)
+// {
+//     if($timezone_id){
+//         $abb_list = timezone_abbreviations_list();
 
-        $abb_array = array();
-        foreach ($abb_list as $abb_key => $abb_val) {
-            foreach ($abb_val as $key => $value) {
-                $value['abb'] = $abb_key;
-                array_push($abb_array, $value);
-            }
-        }
+//         $abb_array = array();
+//         foreach ($abb_list as $abb_key => $abb_val) {
+//             foreach ($abb_val as $key => $value) {
+//                 $value['abb'] = $abb_key;
+//                 array_push($abb_array, $value);
+//             }
+//         }
 
-        foreach ($abb_array as $key => $value) {
-            if($value['timezone_id'] == $timezone_id){
-                return strtoupper($value['abb']);
-            }
-        }
-    }
-    return FALSE;
-} 
+//         foreach ($abb_array as $key => $value) {
+//             if($value['timezone_id'] == $timezone_id){
+//                 return strtoupper($value['abb']);
+//             }
+//         }
+//     }
+//     return FALSE;
+// } 
 // echo get_timezone_abbreviation('America/New_York');
-echo "<pre>";
+// echo "<pre>";
 // print_r(timezone_abbreviations_list());
-// print_r(timezone_abbreviations_list());
-echo "</pre>";
+// echo "</pre>";
 // echo 'hi';
 // $field0 = "0;"
 // $field1 = "2;"
@@ -44,25 +43,52 @@ echo "</pre>";
 
 
 
-$sql = "SELECT * FROM timezones;";
-// echo $sql;
-$result = mysqli_query($conn, $sql);
-while ($row = mysqli_fetch_assoc($result)){
-// echo $row['timezone']."<br>";
-// echo get_timezone_abbreviation($row['timezone']).",".$row['timezone']. ",".$row['name'].",".$row['offset'].",<br>";
-echo $row['offset'].",<br>";
-}
+// $sql = "SELECT * FROM timezones;";
+// // echo $sql;
+// $result = mysqli_query($conn, $sql);
+// while ($row = mysqli_fetch_assoc($result)){
+    // // echo $row['timezone']."<br>";
+    // // echo get_timezone_abbreviation($row['timezone']).",".$row['timezone']. ",".$row['name'].",".$row['offset'].",<br>";
+    // echo $row['offset'].",<br>";
+    // }
+    
+    
+    
+    
+    
+    // $tz_alias = array(
+    //      'Central' => 'America/Chicago',
+    //      'Eastern' => 'America/New_York',
+    //      'Pacific' => 'America/Los_Angeles',
+    //      'Mountain' => 'America/Denver',
+    //      'Hawaii' => 'Pacific/Honolulu'
+    //     );
+// ini_set('memory_limit', '-1');
+        $tz_alias = array();
+        $sql = "SELECT timezone,alias FROM timezones;";
+        $result = mysqli_query($conn, $sql);
+        while ($row = mysqli_fetch_assoc($result)){
+            $tz_alias[$row['alias']] = $row['timezone'];
+        }
+        $timezoneName = "America/Denver";
+        $TzAbbrev = array_search($timezoneName,$tz_alias);
 
-// $sql3 = "SELECT genres.genreTypeId, genre_types.genreType FROM genres
-// INNER JOIN genre_types ON genres.genreTypeId=genre_types.id WHERE genres.contactId='3'";
-// $result3 = mysqli_query($conn, $sql3);
-// while($row = mysqli_fetch_assoc($result3)){
-//   // echo $row['genreTypeId'];
-//   echo $row['genreType'];
-// }
+        echo "Is valid:($TzAbbrev)";
+        echo "<pre>";
+        print_r($tz_alias);
+        echo "</pre>";
 
 
-
+        // $sql3 = "SELECT genres.genreTypeId, genre_types.genreType FROM genres
+        // INNER JOIN genre_types ON genres.genreTypeId=genre_types.id WHERE genres.contactId='3'";
+        // $result3 = mysqli_query($conn, $sql3);
+        // while($row = mysqli_fetch_assoc($result3)){
+            //   // echo $row['genreTypeId'];
+            //   echo $row['genreType'];
+            // }
+            
+            
+            
 
 // $account_sql = "SELECT * FROM accounts where contactId=1 AND accountTypeId=4;";
 // $account_sql = "SELECT accounts.accountTypeId, account_types.id, account_types.accountType as typeName  FROM accounts 

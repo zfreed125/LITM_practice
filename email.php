@@ -145,13 +145,21 @@ $litmStartEnd = removeDuplicateAmPm("$litmStartTime-$litmEndTime");
 
 
 
-$tz_alias = array(
- 'Central' => 'America/Chicago',
- 'Eastern' => 'America/New_York',
- 'Pacific' => 'America/Los_Angeles',
- 'Mountain' => 'America/Denver',
- 'Hawaii' => 'Pacific/Honolulu'
-);
+// $tz_alias = array(
+//  'Central' => 'America/Chicago',
+//  'Eastern' => 'America/New_York',
+//  'Pacific' => 'America/Los_Angeles',
+//  'Mountain' => 'America/Denver',
+//  'Hawaii' => 'Pacific/Honolulu'
+// );
+
+$tz_alias = array();
+$sql = "SELECT timezone,alias FROM timezones;";
+$result = mysqli_query($conn, $sql);
+while ($row = mysqli_fetch_assoc($result)){
+    $tz_alias[$row['alias']] = $row['timezone'];
+}
+
 function checkForAliasTZ($timezoneName,$tz_alias){
     $TzAbbrev = array_search($timezoneName,$tz_alias);
     if(empty($TzAbbrev)){
