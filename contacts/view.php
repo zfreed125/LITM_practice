@@ -43,14 +43,17 @@
         }
         .fitwidth {
         }
-    </style>
+</style>
     <div class="wrapper pull-left">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
                         <h2 class="pull-left">Contact List</h2>
-                        <a href="../contacts/add.php" class="btn btn-success pull-right">Add New Contact</a>
+
+                        <a href="../" style="float:left;font-size:18px;" class="" ><i class="fas fa-chevron-left"></i> Back</a>
+                        <a href="../contacts/add.php" style="float:right;" class="btn btn-success pull-right mb-2" >Add New Contact</a>
+
                     </div>
                     <?php
 

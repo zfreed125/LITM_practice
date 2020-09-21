@@ -6,12 +6,12 @@
     <title>Bookings</title>
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <script src="./js/view.js"></script>
     <link rel="stylesheet" href="./css/view.css">
-    <style type="text/css">
+<style type="text/css">
     body {
         font-size: 10px;
     }
@@ -48,12 +48,7 @@
         .fitwidth {
             /* width: 500px; */
         }
-    </style>
-    <!-- <script type="text/javascript">
-        $(document).ready(function() {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-    </script> -->
+</style>
 </head>
 
 <body>
@@ -63,8 +58,9 @@
                 <div class="col-md-12">
                     <div class="page-header clearfix">
                         <h2 class="pull-left">Booking List</h2>
-                        <a href="add.php" class="btn btn-success pull-right">Add New Booking</a>
-                    </div>
+                        <a href="../" style="float:left;font-size:18px;" class="" ><i class="fas fa-chevron-left"></i> Back</a>
+                        <a href="add.php" style="float:right;" class="btn btn-success pull-right">Add New Booking</a>
+                    </div><br>
                     <?php
                     // Include config file
                     require_once '../config.php';
