@@ -30,9 +30,9 @@ function get_timezone_abbreviation($timezone_id)
     }
     return FALSE;
 } 
-echo get_timezone_abbreviation('America/New_York');
+// echo get_timezone_abbreviation('America/New_York');
 echo "<pre>";
-print_r(timezone_abbreviations_list());
+// print_r(timezone_abbreviations_list());
 // print_r(timezone_abbreviations_list());
 echo "</pre>";
 // echo 'hi';
@@ -44,13 +44,14 @@ echo "</pre>";
 
 
 
-// $sql = "SELECT genreTypeId FROM genres WHERE contactId='3'";
-// // echo $sql;
-// $result = mysqli_query($conn, $sql);
-// while ($row = mysqli_fetch_assoc($result)){
-// $sql2 = "SELECT genreType FROM genre_types WHERE id='$row[genreTypeId]'";
-
-// }
+$sql = "SELECT * FROM timezones;";
+// echo $sql;
+$result = mysqli_query($conn, $sql);
+while ($row = mysqli_fetch_assoc($result)){
+// echo $row['timezone']."<br>";
+// echo get_timezone_abbreviation($row['timezone']).",".$row['timezone']. ",".$row['name'].",".$row['offset'].",<br>";
+echo $row['offset'].",<br>";
+}
 
 // $sql3 = "SELECT genres.genreTypeId, genre_types.genreType FROM genres
 // INNER JOIN genre_types ON genres.genreTypeId=genre_types.id WHERE genres.contactId='3'";

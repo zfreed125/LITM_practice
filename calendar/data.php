@@ -41,6 +41,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $venueNameId = $row["venueNameId"];
     $venueConfirm = $row["venueConfirm"];
     $bookingStatus = $row["bookingStatus"];
+    $reminder = $row["reminder"];
 
     $primaryVenueNoteId = null;
     $primaryVenueServiceId = null;
@@ -168,6 +169,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         'primaryVenueServiceUserAccount' => $primaryVenueServiceUserAccount,
         'primaryVenueServiceWebsite' => $primaryVenueServiceWebsite,
         'primaryVenueServiceNotes' => $primaryVenueServiceNotes,
+        'reminder' => $reminder,
         'clientTzId' => $clientTzId
     );
 }

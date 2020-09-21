@@ -25,6 +25,7 @@ $sql1 = "CREATE TABLE bookings (
     venueNameId INT(6) NULL,
     venueConfirm INT(1) NOT NULL,
     bookingStatus VARCHAR(32) DEFAULT 'Initialized',
+    reminder INT(1) NULL,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )";
     

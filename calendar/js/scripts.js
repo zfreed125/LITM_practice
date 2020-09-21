@@ -110,9 +110,20 @@ function email() {
   xmlHttp.open("post", "../email.php");
   xmlHttp.send(bookingData);
 
+}
+function reminder(book) {
+  console.log(book);
 
+  let booking = JSON.stringify(book);
 
-
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.onreadystatechange = function () {
+    if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+      console.log(xmlHttp.responseText);
+    }
+  }
+  xmlHttp.open("post", "../reminder.php");
+  xmlHttp.send(booking);
 
 }
 function createBooking(startDate, clientFullName, color, title, booking) {
@@ -130,10 +141,15 @@ function createBooking(startDate, clientFullName, color, title, booking) {
   emailButton.textContent = 'Email Booking';
   emailButton.onclick = email;
   bookingEl.innerHTML = clientFullName;
-  // bookingEl.innerHTML = clientFullName.toUpperCase() + '';
-  // bookingEl.title = title;
   bookingEl.className = 'badge p-1 m-1';
   bookingEl.style = `background-color: ${color}; color: white;cursor: pointer;font-size: 8px;`;
+  bookingEl.addEventListener('mousedown', (event) => {
+    if (event.which == 3) {
+      var answer = confirm("Please click on OK to send a reminder.")
+      if (answer)
+        reminder(booking);
+    }
+  })
   bookingEl.addEventListener('dblclick', () => {
     let sideDetails = document.getElementById('sideDetails');
     while (sideDetails.hasChildNodes()) {
@@ -206,6 +222,7 @@ function getDetailsPane(booking) {
 
     ${primaryVenueService}
     ${primaryVenueNote}
+    <div><span>Reminder:</span> ${booking.reminder}</div>
     <div hidden><span>clientTzId:</span> ${booking.clientTzId}</div>
   </div>
   `;
@@ -234,6 +251,13 @@ function populateCalendar(event) {
     }
     let clientIsConfirmed;
     let venueIsConfirmed;
+    let reminderIcon;
+
+    if (booking.reminder !== '1' && booking.clientPrimaryEmail !== 'unassigned' && booking.clientConfirm !== '0') {
+      reminderIcon = '<i style="margin-left:2px;margin-bottom:2px;color:dodgerblue;" class="fas fa-bell"></i>';
+    } else {
+      reminderIcon = '';
+    }
     if (booking.clientConfirm === '1') {
       clientIsConfirmed = '<span style="float:left"><i style="margin-right:2px;margin-bottom:2px;color:green;background-color:white;" class="fas fa-check-square"></i>';
     } else {
@@ -242,39 +266,12 @@ function populateCalendar(event) {
     if (booking.venueConfirm === '1') {
       venueIsConfirmed = '<span style="float:left"><i style="margin-right:2px;color:green;background-color:white;" class="fas fa-check-square"></i>';
     } else {
-      // <a href='../bookings/update_vc.php?id=${booking.bookingId}&vc=1' title='Confirm Venue'> </a>
       venueIsConfirmed = `<span style="float:left"><a  href="../bookings/update_vc.php?id=${booking.bookingId}&vc=1" title="Confirm Venue"><i style="margin-right:2px;background-color:white;color:red;" class="fas fa-times-circle"></i></a>`;
     }
     const startDate = booking['StartDate'];
-    const clientFullName = clientIsConfirmed + booking['clientFullName'] + '</span>' + '<br>' + venueIsConfirmed + booking['venueName'] + '</span>';
-    // const clientFullName = booking['clientFullName'] + '-' + booking['venueName'];
+    const clientFullName = clientIsConfirmed + booking['clientFullName'] + '</span>' + '<br>' + venueIsConfirmed + booking['venueName'] + reminderIcon + '</span>';
     const color = (booking['bookingColor'] === null) ? 'rgb(0, 0, 0)' : booking['bookingColor'];
     const title = '';
-    //   const title = `
-    // [${booking.StartTime} - ${booking.EndTime} ${booking.venueName}]
-    // <div hidden><span>bookingId:</span> ${booking.bookingId}</div>
-    // bookingType: ${booking.bookingType}
-    // StartDate: ${booking.StartDate}
-    // bookingDateTimeStart: ${booking.bookingDateTimeStart}
-    // StartTime: ${booking.StartTime}
-    // bookingDateTimeEnd: ${booking.bookingDateTimeEnd}
-    // EndDate: ${booking.EndDate}
-    // EndTime: ${booking.EndTime}
-    // timezone: ${booking.timezone}
-    // bookingLength: ${booking.bookingLength}
-    // clientFullName: ${booking.clientFullName}
-    // bookingColor: ${booking.bookingColor}
-    // venueName: ${booking.venueName}
-    // hostFullName: ${booking.hostFullName}
-    // ${hostPrimaryEmail}
-    // bookingStatus: ${booking.bookingStatus}
-    // ${clientPrimaryEmail}
-    // ${ clientPrimaryNote }
-    // ${primaryVenueNote}
-    // ${primaryVenueService}
-    // clientTzId: ${booking.clientTzId}
-
-    // `;
     createBooking(startDate, clientFullName, color, title, booking);
   })
 }
