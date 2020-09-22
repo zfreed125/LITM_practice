@@ -48,8 +48,8 @@ function updateGenreTags(Id, genreDivId, tagKeyName, getValueFromSelect) {
 function getValueFromClientSelect(clientId) {
     let x = document.getElementById('clientNameId');
     x.nextElementSibling.classList.add('hide');
-    
-    updateGenreTags( clientId, 'genreContactTags', 'contactId', getValueFromClientSelect )
+
+    updateGenreTags(clientId, 'genreContactTags', 'contactId', getValueFromClientSelect)
     // updateClientGenreTags(clientId);
     showBookingsForClient(clientId);
     var SearchTermsDiv = document.getElementById('genreContactTags');
@@ -59,13 +59,13 @@ function getValueFromClientSelect(clientId) {
     // console.clear();
     // console.log("New");
     // console.log(searchTerm);
-    
+
     const filteredVenues = getFilteredVenues(
         searchTerm,
         genre_array_original,
         venue_name_array_from_db
-        );
-        
+    );
+
     // console.log("genre_array",genre_array);
     // console.log("filteredVenues",filteredVenues);
     var newFilteredVenuesByTag = changeVenueList(filteredVenues);
@@ -97,12 +97,12 @@ function addTagFromClientInput(e) {
         });
         genreTagDiv.removeChild(el);
         getValueFromClientSelect(id);
-        
+
     })
     genre_array.push({ 'id': null, 'genreName': e, 'contactId': contactId, 'venueId': null });
-    
+
     genreTagDiv.appendChild(el);
-    
+
 }
 
 
@@ -118,9 +118,10 @@ function createInputTag(e, tagId, btnId, addTagFromInput, getValueFromSelect) {
         addTagFromInput(document.getElementById(tagId).value)
         getValueFromSelect(genreDiv.lastChild.dataset.id);
     })
-    
+
     genreDiv.appendChild(input);
     genreDiv.appendChild(btn);
+    input.focus();
 }
 
 

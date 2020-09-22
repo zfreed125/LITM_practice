@@ -51,6 +51,7 @@ text-transform: capitalize;
 </head>
 <body>
 <div style="width:max-content" class="container col-sm-4 col-md-7 col-lg-4 mt-1 ml-1">
+<a href="../" style="float:left;font-size:18px;" class="" ><i class="fas fa-chevron-left"></i> Back</a>
     <div style="width:max-content" class="card">
         <h3 style="text-align: center;" class="card-header" id="monthAndYear"></h3>
         <div class="form-inline">
