@@ -17,14 +17,23 @@
         width: 75px;
         margin-left: 20px;
     }
+    h3{
+        margin-left: 160px;
+    }
     .wrapper{
         display: flex;  
+        margin-left: 160px;
 
     }
     .card{
+        background-color: #4A0C57;
+        color:#4FDC0E;
+        border: solid 6px #4FDC0E;
+/* 4FDC0E; */
+        position: relative;
         margin: 20px;
         padding: 10px;
-        max-width: 15%;
+        max-width: 35%;
         text-align: center;
 	    flex-flow: row wrap;
 
@@ -43,7 +52,7 @@
 <body>
 <form name="myForm" action="index.php" method="POST">
 <span>
-    <h3>Month: <input name="month" type="text" value="<?php echo $month; ?>"> Year: <input name="year" type="text" value="<?php echo $year; ?>"><input class="btn btn-primary" type="submit" name="submit" value="Submit"></h3>
+    <h3 class="center">Month: <input name="month" type="text" value="<?php echo $month; ?>"> Year: <input name="year" type="text" value="<?php echo $year; ?>"><input class="btn btn-primary" type="submit" name="submit" value="Submit"></h3>
       
 </span>    
 </form>
@@ -51,7 +60,7 @@
 
 <?php
 
-require_once '../config.php';
+require_once './config.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
