@@ -25,3 +25,12 @@ display: none;
 .hide:target ~ .details {
 display: block;
 }
+.divmaster{
+    /* display: inline-block; */
+    /* left:850px; */
+}
+.divend{
+    /* display: inline-block; */
+    /* position: relative; */
+    /* left:650px; */
+}

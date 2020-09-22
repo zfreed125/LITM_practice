@@ -6,7 +6,7 @@
 // while ($row = mysqli_fetch_assoc($venue_types_result)) {
 //     $venue_type_array[] = array('id' => $row['id'], 'venueType' => $row['venueType']);
 // }
-echo "<table id='tbl_client". $bookingId ."' style='width:0px; display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
+echo "<table id='tbl_client". $bookingId ."' style='width:0px; display: none; ' class='details table table-bordered table-striped'>";
 // echo "<caption><a href='../accounts/add.php?contactId=". $bookingId ."' title='Add Account' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span>Account</a></caption>";
 // echo "<a href='#' title='Show/Hide accounts'style='position: relative; left: 50px;' onclick='myFunction(tbl_account". $bookingId .")'><span><i class='fas fa-chevron-down'></i>&nbspVenue Details&nbsp</span></a>";
 echo "<tbody>";

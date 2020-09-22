@@ -9,6 +9,9 @@ function myFunction(id) {
     }
     sessionStorage.setItem("bookings_uncollapsed", JSON.stringify(show));
 }
+function dbclick(el) {
+    console.log(el);
+}
 window.addEventListener('load', (event) => {
     // var uncollapsed = JSON.parse(sessionStorage.getItem("bookings_uncollapsed"));
     // for (i = 0; i < uncollapsed.length; i++) {

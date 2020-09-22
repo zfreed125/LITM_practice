@@ -90,8 +90,8 @@ $conn->close();
 
 <body class="body">
     <div class="wrapper">
-        <h2>Update Record</h2>
-        <p>Please edit the input values and submit to update the record.</p>
+        <h2 style="color: white;">Update Record</h2>
+        <p style="color: white;">Please edit the input values and submit to update the record.</p>
         <form action="update.php" method="post">
 
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
@@ -145,9 +145,8 @@ $conn->close();
             <br>
             <br>
             <!-- <a class="btn btn-danger" href="delete.php?id=<?php echo $id; ?>">Delete</a> -->
-            <br>
-            <br>
-            <a class="btn btn-default" href="view.php">Cancel</a>
+            
+            <a class="btn btn-secondary" href="view.php">Cancel</a>
         </form>
     </div>
 </body>

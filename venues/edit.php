@@ -100,9 +100,10 @@ $conn->close();
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="./js/validation.js"></script>
+    <link rel="stylesheet" href="../styles.css">
     <style type="text/css">
         .wrapper {
-            width: 800 px;
+            width: 800px;
             margin: 0 auto;
         }
 
@@ -143,21 +144,21 @@ $conn->close();
 
 </head>
 
-<body>
+<body class="body">
     <div class="wrapper">
-        <h2>Update Record</h2>
-        <p>Please edit the input values and submit to update the record.</p>
+        <h2 style="color: white;">Update Record</h2>
+        <p style="color: white;">Please edit the input values and submit to update the record.</p>
         <form name="myForm" action="update.php" method="post" onsubmit="return validateForm()">
 
-            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Venue Name</span></div>
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
+                <div class="input-group-prepend"><span class="input-group-text label">Venue Name</span></div>
                 <input type="text" name="venueName" class="form-control" value="<?php echo $venueName; ?>" onkeyup="this.nextElementSibling.classList.add('hide')">
                 <div class="hide">
                     <p style="color: tomato;">* Required Field</p>
                 </div>
             </div>
-            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Venue Type</span></div>
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
+                <div class="input-group-prepend"><span class="input-group-text label">Venue Type</span></div>
                 <select name="venueTypeId" onchange="this.nextElementSibling.classList.add('hide')" class="form-control">
                     <option value="-1" selected="selected">Select Venue Type</option>
                     <?php foreach ($venue_type_array as $item) { ?>
@@ -171,8 +172,8 @@ $conn->close();
                     <p style="color: tomato;">* Required Field</p>
                 </div>
             </div>
-            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Contact</span></div>
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
+                <div class="input-group-prepend"><span class="input-group-text label">Contact</span></div>
                 <select name="contactNameId" onchange="this.nextElementSibling.classList.add('hide')" class="form-control">
                     <option value="-1" selected="selected">Select Contact Name</option>
                     <?php foreach ($contacts_array as $item) { ?>
@@ -186,8 +187,8 @@ $conn->close();
                     <p style="color: tomato;">* Required Field</p>
                 </div>
             </div>
-            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Host</span></div>
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
+                <div class="input-group-prepend"><span class="input-group-text label">Host</span></div>
                 <select name="hostNameId" onchange="this.nextElementSibling.classList.add('hide')" class="form-control">
                     <option value="-1" selected="selected">Select Host Name</option>
                     <?php foreach ($contacts_array as $item) { ?>
@@ -202,32 +203,32 @@ $conn->close();
                 </div>
             </div>
             <div class="input-group mt-4">
-                <div class="input-group-prepend"><span class="input-group-text">Start Date</span></div>
-                <input style=" width: 50px;" type="date" name="venueDateStart" onclick="this.nextElementSibling.classList.add('hide')" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeStart, $tz)[0]; ?>">
+                <div class="input-group-prepend"><span class="input-group-text label">Start Date</span></div>
+                <input class="date" type="date" name="venueDateStart" onclick="this.nextElementSibling.classList.add('hide')" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeStart, $tz)[0]; ?>">
                 <div class="hide">
                     <p style="color: tomato;">* Required Field</p>
                 </div>
-                <div class="input-group-prepend"><span class="input-group-text">Start Time</span></div>
-                <input type="time" name="venueTimeStart" onclick="this.nextElementSibling.classList.add('hide')" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeStart, $tz)[1]; ?>">
+                <div class="input-group-prepend"><span class="input-group-text label">Start Time</span></div>
+                <input class="date" type="time" name="venueTimeStart" onclick="this.nextElementSibling.classList.add('hide')" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeStart, $tz)[1]; ?>">
                 <div class="hide">
                     <p style="color: tomato;">* Required Field</p>
                 </div>
             </div>
             <span class="input-group-addon">&nbsp</span>
             <div class="input-group">
-                <div class="input-group-prepend"><span class="input-group-text">End Date</span></div>
-                <input style=" width: 50px;" type="date" name="venueDateEnd" onclick="this.nextElementSibling.classList.add('hide')" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeEnd, $tz)[0]; ?>">
+                <div class="input-group-prepend"><span class="input-group-text label">End Date</span></div>
+                <input class="date" type="date" name="venueDateEnd" onclick="this.nextElementSibling.classList.add('hide')" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeEnd, $tz)[0]; ?>">
                 <div class="hide">
                     <p style="color: tomato;">* Required Field</p>
                 </div>
-                <div class="input-group-prepend"><span class="input-group-text">End Time</span></div>
-                <input type="time" name="venueTimeEnd" onclick="this.nextElementSibling.classList.add('hide')" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeEnd, $tz)[1]; ?>">
+                <div class="input-group-prepend"><span class="input-group-text label">End Time</span></div>
+                <input class="date" type="time" name="venueTimeEnd" onclick="this.nextElementSibling.classList.add('hide')" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeEnd, $tz)[1]; ?>">
                 <div class="hide">
                     <p style="color: tomato;">* Required Field</p>
                 </div>
             </div>
-            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Timezone</span></div>
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
+                <div class="input-group-prepend"><span class="input-group-text label">Timezone</span></div>
                 <select name="timezoneId" onchange="this.nextElementSibling.classList.add('hide')" class="form-control">
                     <option value="-1" selected="selected">Select Timezone</option>
                     <?php foreach ($timezones_array as $item) { ?>
@@ -241,26 +242,26 @@ $conn->close();
                     <p style="color: tomato;">* Required Field</p>
                 </div>
             </div>
-            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Show Length</span></div>
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
+                <div class="input-group-prepend"><span class="input-group-text label">Show Length</span></div>
                 <input type="number" name="showLength" class="form-control" value="<?php echo $showLength; ?>">
             </div>
             <div id="client">
-                <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                    <div class="input-group-prepend"><span class="input-group-text">Auto Monthly Bookings</span></div>
+                <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
+                    <div class="input-group-prepend"><span class="input-group-text label">Auto Monthly Bookings</span></div>
                     <input type="checkbox" name="bookingAuto" id="bookingAuto" class="form-control" value="<?php echo $bookingAuto; ?>">
                 </div>
-                <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                    <div class="input-group-prepend"><span class="input-group-text">Booking Amount Per Month</span></div>
+                <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
+                    <div class="input-group-prepend"><span class="input-group-text label">Booking Amount Per Month</span></div>
                     <input type="number" id="bookingCount" name="bookingCount" class="form-control w-25" value="<?php echo $bookingCount; ?>">
                 </div>
-                <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                    <div class="input-group-prepend"><span class="input-group-text">Booking Color</span></div>
+                <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
+                    <div class="input-group-prepend"><span class="input-group-text label">Booking Color</span></div>
                     <input type="color" id="bookingColor" class="form-control" name="bookingColor" value="<?php echo $bookingColor; ?>">
                 </div>
             </div>
-            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Active</span></div>
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
+                <div class="input-group-prepend"><span class="input-group-text label">Active</span></div>
                 <input type="checkbox" name="active" id="active" class="form-control" value="<?php echo $active; ?>">
             </div>
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
@@ -270,9 +271,8 @@ $conn->close();
             <br>
             <!-- <input type="submit" class="btn btn-danger" value="Delete"> -->
             <!-- <a class="btn btn-danger" href="delete.php?id=<?php echo $id; ?>">Delete</a> -->
-            <br>
-            <br>
-            <a class="btn btn-default" href="view.php">Cancel</a>
+           
+            <a class="btn btn-secondary" href="view.php">Cancel</a>
         </form>
     </div>
 </body>

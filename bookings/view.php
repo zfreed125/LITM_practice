@@ -178,14 +178,15 @@
                                 echo "<td>" . $EndDateTime . "</td>";
                                 echo "<td>" . $timezone . "</td>";
                                 echo "<td>" . $row['bookingLength'] . "</td>";
-                                $html = htmlspecialchars('window.location.href="../contacts/edit.php?id='.$clientNameId.'"',ENT_QUOTES);
-                                echo "<td><a href='#' title='Show/Hide accounts' ondblclick='$html' onclick='myFunction(tbl_client" . $row['id'] . ")'>";
+                                $htmlClient = htmlspecialchars('window.location.href="../contacts/edit.php?id='.$clientNameId.'"',ENT_QUOTES);
+                                echo "<td ondblclick='dbclick($htmlClient)'><a href='#' title='Show/Hide accounts'  onclick='myFunction(tbl_client" . $row['id'] . ")'>";
                                 for ($h = 0; $h < count($contacts_array); $h++) { $client = $contacts_array[$h][$clientNameId]; echo $client; }
                                 echo "</a></td>";
                                 // echo "<td>" . (!empty($client)) ? $row['clientNameId'] : $client . "</td>";
                                 echo "<td>" . $row['clientConfirm'] . "</td>";
                                 // echo "<td>" . $venue . "</td>";
-                                echo "<td><a href='#' title='Show/Hide accounts'onclick='myFunction(tbl_venue" . $row['id'] . ")'>";
+                                $htmlVenue = htmlspecialchars('window.location.href="../venues/edit.php?id='.$venueNameId.'"',ENT_QUOTES);
+                                echo "<td ondblclick='dbclick($htmlVenue)'><a href='#' title='Show/Hide accounts'onclick='myFunction(tbl_venue" . $row['id'] . ")'>";
                                 for ($i = 0; $i < count($venue_name_array); $i++) { $venue = $venue_name_array[$i][$venueNameId]; echo $venue; }
                                 echo "</a></td>";
                                 echo "<td>" . $row['venueConfirm'] . "</td>";
@@ -196,10 +197,16 @@
                                 // echo "<a href='delete.php?id=" . $row['id'] . "' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
                                 echo "</td>";
                                 echo "</tr>";
-
+                                
+                                // echo "<div class='divmaster'>";
+                                // echo "<span ";
                                 require "./includes/venue_loop.php";
-
+                                // echo "</span>";
+                                // echo "<span ";
                                 require "./includes/client_loop.php";
+                                // echo "</span>";
+                                // echo "<div>";
+
                         }
                         echo "</tbody>";
                         echo "</table>";
