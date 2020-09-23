@@ -263,14 +263,14 @@ function populateCalendar(event) {
       reminderIcon = '';
     }
     if (booking.clientConfirm === '1') {
-      clientIsConfirmed = '<span style="float:left"><i style="margin-right:2px;margin-bottom:2px;color:green;background-color:white;" class="fas fa-check-square"></i>';
+      clientIsConfirmed = '<span style="float:left"><i style="border-radius: 5px;margin-right:2px;margin-bottom:2px;color:green;background-color:white;" class="fas fa-check-square"></i>';
     } else {
-      clientIsConfirmed = '<span style="float:left"><i style="margin-right:2px;margin-bottom:2px;background-color:white;color:red;" class="fas fa-times-circle"></i>';
+      clientIsConfirmed = '<span style="float:left"><i style="border-radius: 5px;margin-right:2px;margin-bottom:2px;background-color:white;color:red;" class="fas fa-times-circle"></i>';
     }
     if (booking.venueConfirm === '1') {
-      venueIsConfirmed = '<span style="float:left"><i style="margin-right:2px;color:green;background-color:white;" class="fas fa-check-square"></i>';
+      venueIsConfirmed = '<span style="float:left"><i style="border-radius: 5px;margin-right:2px;color:green;background-color:white;" class="fas fa-check-square"></i>';
     } else {
-      venueIsConfirmed = `<span style="float:left"><a  href="../bookings/update_vc.php?id=${booking.bookingId}&vc=1" title="Confirm Venue"><i style="margin-right:2px;background-color:white;color:red;" class="fas fa-times-circle"></i></a>`;
+      venueIsConfirmed = `<span style="float:left"><a  href="../bookings/update_vc.php?id=${booking.bookingId}&vc=1" title="Confirm Venue"><i style="border-radius: 5px;margin-right:2px;background-color:white;color:red;" class="fas fa-times-circle"></i></a>`;
     }
     const startDate = booking['StartDate'];
     const clientFullName = clientIsConfirmed + booking['clientFullName'] + '</span>' + '<br>' + venueIsConfirmed + booking['venueName'] + reminderIcon + '</span>';
