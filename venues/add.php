@@ -75,6 +75,7 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
 <body>
     <div class="wrapper">
         <h1 class="center">Create a Venue</h1>
+        <!-- <form name="myForm" class="center" action="create.php" method="POST" onsubmit=""> -->
         <form name="myForm" class="center" action="create.php" method="POST" onsubmit="return validateForm()">
             <div class="input-group mt-3 mb-1 input-group-sm">
                 <div class="input-group-prepend"><span class="input-group-text">Venue Name</span></div>
@@ -135,7 +136,7 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
                             <p style="color: tomato;">* Required Field</p>
                     </div>
                 </div>
-                <span class="input-group-addon">&nbsp</span>
+                <!-- <span class="input-group-addon">&nbsp</span>
                 <div class="input-group">
                     <div class="input-group-prepend"><span class="input-group-text">End Date</span></div>
                     <input style=" width: 50px;" type="date" onclick="this.nextElementSibling.classList.add('hide')" name="venueDateEnd" class="form-control" placeholder="">
@@ -147,12 +148,12 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
                     <div class="hide">
                         <p style="color: tomato;">* Required Field</p>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm">
                 <div class="input-group-prepend"><span class="input-group-text">Venue Timezone</span><select onchange="this.nextElementSibling.classList.add('hide')" name="timezoneId"></div>
-                <option value="-1" selected="selected">Choose one</option>
-                <?php foreach ($timezones_array as $item) { ?>
+                <!-- <option value="-1" selected="selected">Choose one</option> -->
+                <option value="12" selected="selected">Default *(CST)</option>                <?php foreach ($timezones_array as $item) { ?>
                     <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['name']; ?></option>
                 <?php } ?>
                 </select>

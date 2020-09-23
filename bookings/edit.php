@@ -26,7 +26,8 @@ while ($row = mysqli_fetch_assoc($result2)) {
     $venueConfirm = $row["venueConfirm"];
     $bookingStatus = $row["bookingStatus"];
 }
-
+// (empty($venueNameId)) ? $venueNameId = '0' : $venueNameId = $venueNameId;
+// echo "Venueid is not showing correctly:$venueNameId";
 $timezone_sql = "SELECT timezone from timezones where id='$timezoneId';";
 $timezone_result = mysqli_query($conn, $timezone_sql);
 if (mysqli_num_rows($timezone_result) > 0) {
@@ -144,23 +145,27 @@ window.addEventListener('load', (event) => {
                 <div class="input-group-prepend"><span class="input-group-text">Start Time</span></div>
                 <input type="time" name="bookingTimeStart" class="form-control" value="<?php echo $StartTime; ?>">
             </div>
-            <span class="input-group-addon">&nbsp</span>
+            <!-- <span class="input-group-addon">&nbsp</span>
             <div class="input-group">
                 <div class="input-group-prepend"><span class="input-group-text">End Date</span></div>
-                <input style=" width: 50px;" type="date" name="bookingDateEnd" class="form-control" value="<?php echo $EndDate; ?>">
+                <input style=" width: 50px;" type="date" name="bookingDateEnd" class="form-control" value="<?php //echo $EndDate; ?>">
                 <div class="input-group-prepend"><span class="input-group-text">End Time</span></div>
-                <input type="time" name="bookingTimeEnd" class="form-control" value="<?php echo $EndTime; ?>">
-            </div>
+                <input type="time" name="bookingTimeEnd" class="form-control" value="<?php //echo $EndTime; ?>">
+            </div> -->
             <div class="input-group mt-3 mb-1 input-group-sm p-1">
                 <div class="input-group-prepend"><span class="input-group-text">Timezone</span></div>
                 <select style=" width: 375px;" name="timezoneId" class="form-control">
-                    <option selected="selected">Select Timezone</option>
+                    <option value="-1" selected="selected">Select Timezone</option>
                     <?php foreach ($timezones_array as $item) { ?>
                         <option value="<?php echo strtolower($item['id']); ?>" <?php if ($item['id'] == $timezoneId) {
                                                                                     echo "selected";
                                                                                 } ?>> <?php echo $item['name']; ?></option>
                     <?php } ?>
                 </select>
+                <div class="hide">
+                    <p style="color: tomato;">* Required Field</p>
+                </div>
+
             </div>
             <div class="input-group">
                 <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
@@ -219,6 +224,7 @@ window.addEventListener('load', (event) => {
             <input type="hidden" name="id" value="<?php echo $id; ?>">
             <div class="m-5">
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <a class="btn btn-danger" href="delete.php?id=<?php echo $id; ?>">Delete</a>
                 <a class="btn btn-secondary" href="view.php">X</a>
             </div>
         </form>

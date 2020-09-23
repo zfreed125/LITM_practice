@@ -17,7 +17,7 @@ $timezoneId = $_REQUEST['timezoneId'];
 $bookingLength = $_REQUEST['bookingLength'];
 $clientNameId = ($_REQUEST['clientNameId'] == '-1') ? 'NULL' : $_REQUEST['clientNameId'];
 $clientConfirm = (isset($_POST['clientConfirm'])) ? 1 : 0;
-$venueNameId = ($_REQUEST['venueNameId'] == '-1') ? 'NULL' : $_REQUEST['venueNameId'];
+$venueNameId = ($_REQUEST['venueNameId'] == '-1' || empty($_REQUEST['venueNameId'])) ? 'NULL' : $_REQUEST['venueNameId'];
 $venueConfirm = (isset($_POST['venueConfirm'])) ? 1 : 0;
 $bookingStatus = $_REQUEST['bookingStatus'];
 
@@ -39,9 +39,15 @@ function convertTimeDateTimezone($date,$time,$tz){
 
 
 (empty($bookingDateStart)) ? $bookingDateTimeStart = 'NULL': $bookingDateTimeStart = "'" .convertTimeDateTimezone($bookingDateStart,$bookingTimeStart,$tz). "'";
-(empty($bookingDateEnd)) ? $bookingDateTimeEnd = 'NULL': $bookingDateTimeEnd = "'" .convertTimeDateTimezone($bookingDateEnd,$bookingTimeEnd,$tz). "'";
+(empty($bookingDateStart)) ? $bDateTimeStart = 'NULL': $bDateTimeStart =  convertTimeDateTimezone($bookingDateStart,$bookingTimeStart,$tz) ;
+// (empty($bookingDateEnd)) ? $bookingDateTimeEnd = 'NULL': $bookingDateTimeEnd = "'" .convertTimeDateTimezone($bookingDateEnd,$bookingTimeEnd,$tz). "'";
 
-$sql = "UPDATE bookings set bookingTypeId='$bookingTypeId', bookingDateTimeStart=".$bookingDateTimeStart.", bookingDateTimeEnd=".$bookingDateTimeEnd.",
+$bookend =  date('Y-m-d H:i',strtotime("+{$bookingLength} minutes",strtotime($bDateTimeStart)));
+
+(empty($bookingDateStart)) ? $end = 'NULL': $end = "'" .$bookend. "'";
+// echo $end;
+// die();
+$sql = "UPDATE bookings set bookingTypeId='$bookingTypeId', bookingDateTimeStart=".$bookingDateTimeStart.", bookingDateTimeEnd=".$end.",
 timezoneId='$timezoneId', bookingLength='$bookingLength', clientNameId=".$clientNameId.", clientConfirm='$clientConfirm', venueNameId=".$venueNameId.",
 venueConfirm='$venueConfirm', bookingStatus='$bookingStatus' where id='$id';";
 

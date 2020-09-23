@@ -54,11 +54,24 @@ function convertTimeDateTimezone($date,$time,$tz){
     return $venueDateTimeUtc;
 }
 
-$venueDateTimeStart = convertTimeDateTimezone($venueDateStart,$venueTimeStart,$tz);
-$venueDateTimeEnd = convertTimeDateTimezone($venueDateEnd,$venueTimeEnd,$tz);
+// $venueDateTimeStart = convertTimeDateTimezone($venueDateStart,$venueTimeStart,$tz);
+// $venueDateTimeEnd = convertTimeDateTimezone($venueDateEnd,$venueTimeEnd,$tz);
+
+$end = date('Y-m-d H:i',strtotime("+{$showLength} minutes",strtotime($venueDateTimeStart)));
+
+
+(empty($venueDateStart)) ? $venueDateTimeStart = 'NULL': $venueDateTimeStart = "'" .convertTimeDateTimezone($venueDateStart,$venueTimeStart,$tz). "'";
+(empty($venueDateStart)) ? $vDateTimeStart = 'NULL': $vDateTimeStart =  convertTimeDateTimezone($venueDateStart,$venueTimeStart,$tz) ;
+
+$venueend =  date('Y-m-d H:i',strtotime("+{$showLength} minutes",strtotime($vDateTimeStart)));
+
+$end = "'" .$venueend. "'";
+
+(empty($venueDateStart)) ? $end = 'NULL': $end = "'" .$venueend. "'";
 
 // Attempt insert query execution
-$sql = "UPDATE venues set venueName='$venueName', venueTypeId='$venueTypeId', contactNameId='$contactNameId', hostNameId='$hostNameId', venueDateTimeStart='$venueDateTimeStart', venueDateTimeEnd='$venueDateTimeEnd', timezoneId='$timezoneId', showLength='$showLength', bookingAuto='$bookingAuto', bookingCount='$bookingCount', bookingColor='$bookingColor', active='$active' where id='$id';";
+$sql = "UPDATE venues set venueName='$venueName', venueTypeId='$venueTypeId', contactNameId='$contactNameId', hostNameId='$hostNameId', 
+venueDateTimeStart=".$venueDateTimeStart.", venueDateTimeEnd=".$end.", timezoneId='$timezoneId', showLength='$showLength', bookingAuto='$bookingAuto', bookingCount='$bookingCount', bookingColor='$bookingColor', active='$active' where id='$id';";
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
     header("location: view.php");

@@ -157,7 +157,11 @@ function createBooking(startDate, clientFullName, color, title, booking) {
     }
     detailsPanel.innerHTML = getDetailsPane(booking);
     sideDetails.appendChild(detailsPanel);
-    sideDetails.appendChild(emailButton);
+    if (booking.clientPrimaryEmail !== 'unassigned') {
+      sideDetails.appendChild(emailButton);
+
+    }
+    // console.log(booking.clientPrimaryEmail);
   })
   cell.appendChild(bookingEl);
 

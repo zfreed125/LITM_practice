@@ -142,10 +142,11 @@
                                 $tz = $item['timezone'];
                             }
                         }
-                        $StartDate = convertDateTimeUTCtoLocal($row['venueDateTimeStart'], $tz)[0];
-                        $StartTime = convertDateTimeUTCtoLocal($row['venueDateTimeStart'], $tz)[1];
-                        $EndDate = convertDateTimeUTCtoLocal($row['venueDateTimeEnd'], $tz)[0];
-                        $EndTime = convertDateTimeUTCtoLocal($row['venueDateTimeEnd'], $tz)[1];
+                        (empty($row['venueDateTimeStart'])) ? $StartDate = 'unset' : $StartDate = convertDateTimeUTCtoLocal($row['venueDateTimeStart'], $timezone)[0];
+                        (empty($row['venueDateTimeStart'])) ? $StartTime = 'unset' : $StartTime = convertDateTimeUTCtoLocal($row['venueDateTimeStart'], $timezone)[1];
+                        (empty($row['venueDateTimeEnd'])) ? $EndDate = 'unset' : $EndDate = convertDateTimeUTCtoLocal($row['venueDateTimeEnd'], $timezone)[0];
+                        (empty($row['venueDateTimeEnd'])) ? $EndTime = 'unset' : $EndTime = convertDateTimeUTCtoLocal($row['venueDateTimeEnd'], $timezone)[1];
+
                         $StartDateTime = "$StartDate $StartTime";
                         $EndDateTime = "$EndDate $EndTime";
                         $primaryPhoneId = $row['primaryPhoneId'];

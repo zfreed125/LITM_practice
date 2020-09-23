@@ -67,10 +67,23 @@ function getValueFromClientSelect(clientId) {
     );
 
     // console.log("genre_array",genre_array);
-    // console.log("filteredVenues",filteredVenues);
+    console.log("filteredVenues", filteredVenues);
     var newFilteredVenuesByTag = changeVenueList(filteredVenues);
-    // console.log("newFilteredVenuesByTag",newFilteredVenuesByTag);
-    getVenueList(newFilteredVenuesByTag);
+    empty = [
+        {
+            "id": "-1",
+            "venueName": "Empty Search"
+        }
+    ]
+    // console.log(empty);
+    // console.log("newFilteredVenuesByTag", newFilteredVenuesByTag,newFilteredVenuesByTag.length);
+    if (newFilteredVenuesByTag.length === 0) {
+        getVenueList(empty);
+
+    } else {
+        getVenueList(newFilteredVenuesByTag);
+
+    }
 }
 
 

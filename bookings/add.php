@@ -143,13 +143,13 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
                     <div class="input-group-prepend"><span class="input-group-text">Start Time</span></div>
                     <input type="time" name="bookingTimeStart" class="form-control">
                 </div>
-                <span class="input-group-addon">&nbsp</span>
+                <!-- <span class="input-group-addon">&nbsp</span>
                 <div class="input-group">
                     <div class="input-group-prepend"><span class="input-group-text">End Date</span></div>
                     <input style=" width: 65px;" type="date" name="bookingDateEnd" class="form-control">
                     <div class="input-group-prepend"><span class="input-group-text">End Time</span></div>
                     <input type="time" name="bookingTimeEnd" class="form-control">
-                </div>
+                </div> -->
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text">Booking Timezone</span><select class="form-control" name="timezoneId"></div>

@@ -33,7 +33,6 @@ $timezone_result = mysqli_query($conn, $timezone_sql);
         $row = mysqli_fetch_assoc($timezone_result);
         $tz = $row['timezone'];
     }
-
 function convertTimeDateTimezone($date,$time,$tz){
     $datetime ="$date $time";
     $tz = new DateTimeZone($tz);
@@ -42,10 +41,23 @@ function convertTimeDateTimezone($date,$time,$tz){
     return $venueDateTimeUtc;
 }
 
-$venueDateTimeStart = convertTimeDateTimezone($venueDateStart,$venueTimeStart,$tz);
-$venueDateTimeEnd = convertTimeDateTimezone($venueDateEnd,$venueTimeEnd,$tz);
+
+// $venueDateTimeStart = convertTimeDateTimezone($venueDateStart,$venueTimeStart,$tz);
+(empty($venueDateStart)) ? $venueDateTimeStart = 'NULL': $venueDateTimeStart = "'" .convertTimeDateTimezone($venueDateStart,$venueTimeStart,$tz). "'";
+
+// $venueDateTimeEnd = convertTimeDateTimezone($venueDateEnd,$venueTimeEnd,$tz);
+(empty($venueDateStart)) ? $vDateTimeStart = 'NULL': $vDateTimeStart =  convertTimeDateTimezone($venueDateStart,$venueTimeStart,$tz) ;
+
+$venueend =  date('Y-m-d H:i',strtotime("+{$showLength} minutes",strtotime($vDateTimeStart)));
+$end = "'" .$venueend. "'";
+(empty($venueDateStart)) ? $end = 'NULL': $end = "'" .$venueend. "'";
+
+
+// $end = date('Y-m-d H:i',strtotime("+{$showLength} minutes",strtotime($vDateTimeStart)));
+// echo $end;
+// die();
 $sql = "INSERT INTO venues (venueName, venueTypeId, contactNameId, hostNameId, showLength, venueDateTimeStart,venueDateTimeEnd, timezoneId, active)
-VALUES ('$venueName', '$venueTypeId', '$contactNameId', '$hostNameId', '$showLength', '$venueDateTimeStart', '$venueDateTimeEnd', '$timezoneId', '$active')";
+VALUES ('$venueName', '$venueTypeId', '$contactNameId', '$hostNameId', '$showLength', ".$venueDateTimeStart.", ".$end.", '$timezoneId', '$active')";
 
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";

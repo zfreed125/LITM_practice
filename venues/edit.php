@@ -73,6 +73,14 @@ function convertDateTimeUTCtoLocal($venueDateTime, $tz)
 
     return array($venueDate, $venueTime);
 }
+
+(empty($venueDateTimeStart)) ? $StartDate = 'unset' : $StartDate = convertDateTimeUTCtoLocal($venueDateTimeStart, $tz)[0];
+(empty($venueDateTimeStart)) ? $StartTime = 'unset' : $StartTime = convertDateTimeUTCtoLocal($venueDateTimeStart, $tz)[1];
+(empty($venueDateTimeEnd)) ? $EndDate = 'unset' : $EndDate = convertDateTimeUTCtoLocal($venueDateTimeEnd, $tz)[0];
+(empty($venueDateTimeEnd)) ? $EndTime = 'unset' : $EndTime = convertDateTimeUTCtoLocal($venueDateTimeEnd, $tz)[1];
+
+
+
 $account_sql = "SELECT accounts.accountTypeId, account_types.id, account_types.accountType as typeName  FROM accounts 
 INNER JOIN account_types ON accounts.accountTypeId=account_types.id WHERE accounts.venueId=$id;";
 $account_result = mysqli_query($conn, $account_sql);
@@ -99,7 +107,7 @@ $conn->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="./js/validation.js"></script>
+    <script src="js/validation.js"></script>
     <link rel="stylesheet" href="../styles.css">
     <style type="text/css">
         .wrapper {
@@ -204,29 +212,29 @@ $conn->close();
             </div>
             <div class="input-group mt-4">
                 <div class="input-group-prepend"><span class="input-group-text label">Start Date</span></div>
-                <input class="date" type="date" name="venueDateStart" onclick="this.nextElementSibling.classList.add('hide')" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeStart, $tz)[0]; ?>">
+                <input class="date" type="date" name="venueDateStart" onclick="this.nextElementSibling.classList.add('hide')" class="form-control" value="<?php echo $StartDate; ?>">
                 <div class="hide">
                     <p style="color: tomato;">* Required Field</p>
                 </div>
                 <div class="input-group-prepend"><span class="input-group-text label">Start Time</span></div>
-                <input class="date" type="time" name="venueTimeStart" onclick="this.nextElementSibling.classList.add('hide')" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeStart, $tz)[1]; ?>">
+                <input class="date" type="time" name="venueTimeStart" onclick="this.nextElementSibling.classList.add('hide')" class="form-control" value="<?php echo $StartTime; ?>">
                 <div class="hide">
                     <p style="color: tomato;">* Required Field</p>
                 </div>
             </div>
-            <span class="input-group-addon">&nbsp</span>
+            <!-- <span class="input-group-addon">&nbsp</span>
             <div class="input-group">
                 <div class="input-group-prepend"><span class="input-group-text label">End Date</span></div>
-                <input class="date" type="date" name="venueDateEnd" onclick="this.nextElementSibling.classList.add('hide')" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeEnd, $tz)[0]; ?>">
+                <input class="date" type="date" name="venueDateEnd" onclick="this.nextElementSibling.classList.add('hide')" class="form-control" value="<?php //echo convertDateTimeUTCtoLocal($venueDateTimeEnd, $tz)[0]; ?>">
                 <div class="hide">
                     <p style="color: tomato;">* Required Field</p>
                 </div>
                 <div class="input-group-prepend"><span class="input-group-text label">End Time</span></div>
-                <input class="date" type="time" name="venueTimeEnd" onclick="this.nextElementSibling.classList.add('hide')" class="form-control" value="<?php echo convertDateTimeUTCtoLocal($venueDateTimeEnd, $tz)[1]; ?>">
+                <input class="date" type="time" name="venueTimeEnd" onclick="this.nextElementSibling.classList.add('hide')" class="form-control" value="<?php //echo convertDateTimeUTCtoLocal($venueDateTimeEnd, $tz)[1]; ?>">
                 <div class="hide">
                     <p style="color: tomato;">* Required Field</p>
                 </div>
-            </div>
+            </div> -->
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
                 <div class="input-group-prepend"><span class="input-group-text label">Timezone</span></div>
                 <select name="timezoneId" onchange="this.nextElementSibling.classList.add('hide')" class="form-control">
@@ -270,7 +278,7 @@ $conn->close();
             <br>
             <br>
             <!-- <input type="submit" class="btn btn-danger" value="Delete"> -->
-            <!-- <a class="btn btn-danger" href="delete.php?id=<?php echo $id; ?>">Delete</a> -->
+            <a class="btn btn-danger" href="delete.php?venueId=<?php echo $id; ?>">Delete</a>
            
             <a class="btn btn-secondary" href="view.php">Cancel</a>
         </form>

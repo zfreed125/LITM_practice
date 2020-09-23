@@ -35,17 +35,25 @@ function clientBookingsByMonth(bookings) {
     //     ],
     // }
 
-    const yearsInBookings = Array.from(
-        new Set(bookings.map((booking) => booking.startDate.year()))
-    );
-    const retval = yearsInBookings.reduce((bookingsTable, year) => {
-        bookingsTable[year] = [[], [], [], [], [], [], [], [], [], [], [], []];
-        return bookingsTable;
-    }, {});
-    bookings.forEach((booking) => {
-        retval[booking.startDate.year()][booking.startDate.month()].push(booking);
-    });
-    return retval;
+    try {
+
+        const yearsInBookings = Array.from(
+            new Set(bookings.map((booking) => booking.startDate.year()))
+        );
+        const retval = yearsInBookings.reduce((bookingsTable, year) => {
+            bookingsTable[year] = [[], [], [], [], [], [], [], [], [], [], [], []];
+            return bookingsTable;
+        }, {});
+        bookings.forEach((booking) => {
+            retval[booking.startDate.year()][booking.startDate.month()].push(booking);
+        });
+        return retval;
+    }
+
+    catch (err) {
+        return '';
+        //when no date Historical log will fail
+    }
 }
 
 function bookingsByClient(filtered) {

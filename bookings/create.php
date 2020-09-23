@@ -39,10 +39,16 @@ function convertTimeDateTimezone($date,$time,$tz){
 }
 
 (empty($bookingDateStart)) ? $bookingDateTimeStart = 'NULL': $bookingDateTimeStart = "'" .convertTimeDateTimezone($bookingDateStart,$bookingTimeStart,$tz). "'";
-(empty($bookingDateEnd)) ? $bookingDateTimeEnd = 'NULL': $bookingDateTimeEnd = "'" .convertTimeDateTimezone($bookingDateEnd,$bookingTimeEnd,$tz). "'";
-$sql = "INSERT INTO bookings (bookingTypeId, bookingDateTimeStart, bookingDateTimeEnd, timezoneId, bookingLength, clientNameId, clientConfirm, venueNameId, venueConfirm, bookingStatus)
-    VALUES ('$bookingTypeId', ".$bookingDateTimeStart.", ".$bookingDateTimeEnd.", '$timezoneId', '$bookingLength', ".$clientNameId.", ".$clientConfirm.", ".$venueNameId.", '$venueConfirm', 'Initialized');";
+(empty($bookingDateStart)) ? $bDateTimeStart = 'NULL': $bDateTimeStart =  convertTimeDateTimezone($bookingDateStart,$bookingTimeStart,$tz) ;
+// (empty($bookingDateEnd)) ? $bookingDateTimeEnd = 'NULL': $bookingDateTimeEnd = "'" .convertTimeDateTimezone($bookingDateEnd,$bookingTimeEnd,$tz). "'";
 
+$bookend =  date('Y-m-d H:i',strtotime("+{$bookingLength} minutes",strtotime($bDateTimeStart)));
+$end = "'" .$bookend. "'";
+(empty($bookingDateStart)) ? $end = 'NULL': $end = "'" .$bookend. "'";
+// echo $end;
+// die();
+$sql = "INSERT INTO bookings (bookingTypeId, bookingDateTimeStart, bookingDateTimeEnd, timezoneId, bookingLength, clientNameId, clientConfirm, venueNameId, venueConfirm, bookingStatus)
+    VALUES ('$bookingTypeId', ".$bookingDateTimeStart.", ".$end.", '$timezoneId', '$bookingLength', ".$clientNameId.", ".$clientConfirm.", ".$venueNameId.", '$venueConfirm', 'Initialized');";
 
 if(mysqli_query($conn, $sql)){
     header("location: view.php");
