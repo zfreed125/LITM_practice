@@ -179,24 +179,29 @@ $pacificSource = "$pacificStartEnd $pacificTimezoneName";
 $clientSource = "$clientStartEnd $clientTimezoneName ";
 $litmSource = "$litmStartEnd $litmTimezoneName";
 
-
 // echo $pacificSource;
 // echo $clientSource;
 // echo $litmSource;
-$times = "$pacificStartEnd $pacificTimezoneName $clientStartEnd $clientTimezoneName $litmStartEnd $litmTimezoneName";
-$times = implode(' ',array_unique(explode(' ', $times)));
+// $times = "$pacificStartDate $pacificStartEnd ($pacificTimezoneName) $clientStartDate $clientStartEnd ($clientTimezoneName) $litmStartDate $litmStartEnd ($litmTimezoneName)";
 // echo $times;
+// $times = str_replace(")",")<br>",$times);
+// $times = implode(')<br>',array_unique(explode(')<br>', $times)));
+$times = array();
+array_push($times,"$pacificStartDate $pacificStartEnd ($pacificTimezoneName)", "$clientStartDate $clientStartEnd ($clientTimezoneName)", "$litmStartDate $litmStartEnd ($litmTimezoneName)");
+$times = array_unique($times);
+foreach ($times as $v) {
+    $t .= "$v<br>";
+}
 
-
-$start = explode('-', $litmStartDate);
+// echo $litmStartDate;
+$start = explode('-', $clientStartDate);
 $month = $start[0];
 $day = $start[1];
 $year = $start[2];
 $real_start = implode('-', [$day, $month, $year]);
-
 $time = strtotime($real_start);
+$clientStartDate = date('l, F jS',$time);
 
-$litmStartDate = date('l, F jS',$time);
 
 
 $message = "
@@ -332,11 +337,11 @@ $show = <<<SHOW
             $hostEmail
 
             <div style="margin-left: 1em;">
-                <span style="display: inline-block;font-weight: bold; width: 140px;">Date:</span><span style="display: inline-block; padding: 0.25em 0">$litmStartDate</span>
+                <span style="display: inline-block;font-weight: bold; width: 140px;">Date:</span><span style="display: inline-block; padding: 0.25em 0">$clientStartDate ($clientTimezoneName)</span>
             </div>
 
             <div style="margin-left: 1em;">
-                <span style="display: inline-block;font-weight: bold; width: 140px;">Times:</span><span style="display: inline-block; padding: 0.25em 0"> $times</span>
+                <span style="display: inline-block;font-weight: bold; width: 140px;">Times:</span><span style="display: inline-block; padding: 0.25em 0"> $t</span>
             </div>
 
             <div style="margin-left: 1em;">

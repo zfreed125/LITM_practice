@@ -173,10 +173,15 @@ $litmSource = "$litmStartEnd $litmTimezoneName";
 // echo $pacificSource;
 // echo $clientSource;
 // echo $litmSource;
-$times = "$pacificStartEnd $pacificTimezoneName $clientStartEnd $clientTimezoneName $litmStartEnd $litmTimezoneName";
-$times = implode(' ',array_unique(explode(' ', $times)));
+// $times = "$pacificStartEnd $pacificTimezoneName $clientStartEnd $clientTimezoneName $litmStartEnd $litmTimezoneName";
+// $times = implode(' ',array_unique(explode(' ', $times)));
 // echo $times;
-
+$times = array();
+array_push($times,"$pacificStartDate $pacificStartEnd ($pacificTimezoneName)", "$clientStartDate $clientStartEnd ($clientTimezoneName)", "$litmStartDate $litmStartEnd ($litmTimezoneName)");
+$times = array_unique($times);
+foreach ($times as $v) {
+    $t .= "$v<br>";
+}
 
 $start = explode('-', $litmStartDate);
 $month = $start[0];
@@ -202,7 +207,7 @@ $reminder = "
         </tr>
         <tr>
             <th style='text-align: left;'>Time:</th>
-            <td style='text-align: left;'>" . $times . "</td> 
+            <td style='text-align: left;'>" . $t . "</td> 
         </tr>
         <tr>
             <th style='text-align: left;'>Host:</th>

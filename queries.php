@@ -9,6 +9,71 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
+
+// $times = "
+$pacificStartDate = '9-25-2020';
+$pacificStartEnd = '02:00-03:00am';
+$pacificTimezoneName = 'Pacific';
+$clientStartDate = '9-24-2020';
+$clientStartEnd = '11:00pm-12:00am';
+$clientTimezoneName = 'Hawaii';
+// $clientStartDate = '9-25-2020';
+// $clientStartEnd = '02:00-03:00am';
+// $clientTimezoneName = 'Pacific';
+$litmStartDate = '9-25-2020';
+$litmStartEnd = '04:00-05:00am';
+$litmTimezoneName = 'Central';
+
+
+
+// $times = "$pacificStartDate $pacificStartEnd ($pacificTimezoneName) $clientStartDate $clientStartEnd ($clientTimezoneName) $litmStartDate $litmStartEnd ($litmTimezoneName)";
+// $times = str_replace(")",")<br>",$times);
+// $times = array($times);
+// echo array_unique($times);
+
+
+$times = array();
+array_push($times,"$pacificStartDate $pacificStartEnd ($pacificTimezoneName)", "$clientStartDate $clientStartEnd ($clientTimezoneName)", "$litmStartDate $litmStartEnd ($litmTimezoneName)");
+$times = array_unique($times);
+foreach ($times as $v) {
+    echo "$v<br>";
+}
+
+// echo $times;
+// $times = implode(')<br>',array_unique(explode(')<br>', $times)));
+
+// 9-25-2020 02:00-03:00am (Pacific)
+// 9-24-2020 11:00pm-12:00am (Hawaii)
+// 9-25-2020 04:00-05:00am (Central)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // function get_timezone_abbreviation($timezone_id)
 // {
 //     if($timezone_id){
@@ -64,19 +129,19 @@ if ($conn->connect_error) {
     //      'Hawaii' => 'Pacific/Honolulu'
     //     );
 // ini_set('memory_limit', '-1');
-        $tz_alias = array();
-        $sql = "SELECT timezone,alias FROM timezones;";
-        $result = mysqli_query($conn, $sql);
-        while ($row = mysqli_fetch_assoc($result)){
-            $tz_alias[$row['alias']] = $row['timezone'];
-        }
-        $timezoneName = "America/Denver";
-        $TzAbbrev = array_search($timezoneName,$tz_alias);
+        // $tz_alias = array();
+        // $sql = "SELECT timezone,alias FROM timezones;";
+        // $result = mysqli_query($conn, $sql);
+        // while ($row = mysqli_fetch_assoc($result)){
+        //     $tz_alias[$row['alias']] = $row['timezone'];
+        // }
+        // $timezoneName = "America/Denver";
+        // $TzAbbrev = array_search($timezoneName,$tz_alias);
 
-        echo "Is valid:($TzAbbrev)";
-        echo "<pre>";
-        print_r($tz_alias);
-        echo "</pre>";
+        // echo "Is valid:($TzAbbrev)";
+        // echo "<pre>";
+        // print_r($tz_alias);
+        // echo "</pre>";
 
 
         // $sql3 = "SELECT genres.genreTypeId, genre_types.genreType FROM genres
