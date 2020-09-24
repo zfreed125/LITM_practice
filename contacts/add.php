@@ -8,7 +8,12 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-// $contactId = $_REQUEST['id'];
+$account_types_sql = "SELECT * FROM account_types;";
+$result = mysqli_query($conn, $account_types_sql);
+$account_type_array = array();
+while ($row = mysqli_fetch_assoc($result)) {
+    $account_type_array[] = array('id' => $row['id'], 'accountType' => $row['accountType']);
+}
 $timezones_sql = "SELECT * FROM timezones;";
 $timezones_result = mysqli_query($conn, $timezones_sql);
 $timezones_array = array();
@@ -16,8 +21,6 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
     $timezones_array[] = array('id' => $row['id'], 'name' => $row['name']);
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,10 +51,6 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
                 <div class="input-group-prepend"><span class="input-group-text label">Last Name</span></div>
                 <input class="form-control" type="text" name="last_name">
             </div>
-            <!-- <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text">Birthdate</span></div>
-                <input class="form-control" type="date" name="birthdate">
-            </div> -->
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group-prepend"><span class="input-group-text label">Job Title</span></div>
                 <input class="form-control" type="text" name="jobTitle">
@@ -62,6 +61,14 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
                 <?php foreach ($timezones_array as $item) { ?>
                     <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['name']; ?></option>
                 <?php } ?>
+                </select>
+            </div>
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+            <div class="input-group-prepend"><span class="input-group-text label">Account Type</span><select name="accountTypeId"></div>
+                    <option value="-1" selected="selected">Choose one</option>
+                        <?php foreach($account_type_array as $item){ ?>
+                    <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['accountType']; ?></option>
+                        <?php } ?>
                 </select>
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
