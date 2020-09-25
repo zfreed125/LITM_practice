@@ -184,7 +184,7 @@ window.addEventListener('load', (event) => {
             </div>
             <div style=" position: absolute; left: 840px; top: 370px;" class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div style="height: 40px;" class="input-group-prepend"><span class="input-group-text">Client Genre Tags</span></div>
-                <div id="genreContactTags" ondblclick="createInputTag(this.id, 'addTagToClient', 'btnTagToClient', addTagFromClientInput, getValueFromClientSelect)" style="border: 1px solid black; min-width: 250px; max-width: 250px; "> </div>
+                <div title="*If you add a tag 'all' you will get all venues."id="genreContactTags" ondblclick="createInputTag(this.id, 'addTagToClient', 'btnTagToClient', addTagFromClientInput, getValueFromClientSelect)" style="border: 1px solid black; min-width: 250px; max-width: 250px; "></div>
             </div>
             <div class="input-group mt-5 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group">

@@ -10,16 +10,18 @@ function getFilteredVenues(q, genre_array, venue_name_array) {
 
     const filteredVenues = q.reduce((filteredVenuesArray, searchTerm) => {
         if (searchTerm.length >= MIN_SEARCH_TERM_LENGTH) {
+            if (searchTerm === 'all') {
+                filteredVenuesArray = venue_name_array;
+            }
             gsearch
                 .filter((genre) => genre.genreName.includes(searchTerm.toLowerCase()))
                 .forEach((genre) => {
                     const venue = venue_name_array.find(
                         (venue) => venue.id === genre.venueId
-                        );
-                        filteredVenuesArray.push(venue);
-                    });
-                }
-                // venue['venueName'] = venue['venueName'] + ' (filtered)';
+                    );
+                    filteredVenuesArray.push(venue);
+                });
+        }
         return filteredVenuesArray;
     }, []);
 
@@ -27,5 +29,5 @@ function getFilteredVenues(q, genre_array, venue_name_array) {
 }
 
 function deduplicateArrayById(arr) {
-  return arr.filter((el, idx) => idx === arr.findIndex((i) => i.id === el.id));
+    return arr.filter((el, idx) => idx === arr.findIndex((i) => i.id === el.id));
 }
