@@ -174,6 +174,7 @@ function getDetailsPane(booking) {
   let hostPrimaryEmail = ``;
   let clientPrimaryNote = ``;
   let reminderSent = ``;
+  let soundCheck = ``;
   let bookingLiveRecorded = ``;
   if (booking.bookingLiveRecorded === '0') {
     bookingLiveRecorded = 'Live';
@@ -186,6 +187,11 @@ function getDetailsPane(booking) {
     bookingAudioOnly = 'Audio&Video';
   } else {
     bookingAudioOnly = 'Audio Only';
+  }
+  if (booking.soundCheck == null) {
+    soundCheck = `<div style="margin-left:2em;"><span>Sound Check:</span>Pending<a href="../bookings/update_sc.php?id=${booking.bookingId}&sc=1" title="Performed Sound Check"><i style="border-radius: 5px;margin-right:2px;background-color:white;color:red;" class="fas fa-microphone-alt-slash"></i></a></div>`;
+  } else {
+    soundCheck = `<div style="margin-left:2em;"><span>Sound Check:</span>Completed<i title='Completed Sound Check' style="border-radius: 5px;margin-right:2px;margin-left:2px;background-color:white;color:green;" class="fas fa-microphone-alt"></i></div>`;
   }
   if (booking.reminder == null) {
     reminderSent = 'Not sent';
@@ -238,6 +244,8 @@ function getDetailsPane(booking) {
     <div style="margin-left:2em;"><span>Name:</span> ${booking.clientFullName}</div>
     ${clientPrimaryEmail}
     ${clientPrimaryNote}
+    ${soundCheck}
+    
     
     <div><span>Host:</span></div>  
       <div style="margin-left:2em;"><span>Name:</span> ${booking.hostFullName}</div>
