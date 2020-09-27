@@ -98,14 +98,14 @@
                                 $timezone = $item['timezone'];
                             }
                         }
-
+                        ($row['active'] == '1') ? $isActive = 'Yes' : $isActive = 'No';
                         echo "<tr>";
                         echo "<td class='fitwidth'>" . "$row[id]" . "</td>";
                         echo "<td class='fitwidth'>" . "$row[firstname]" . "</td>";
                         echo "<td class='fitwidth'>" . "$row[lastname]" . "</td>";
                         echo "<td class='fitwidth'>" . $timezone . "</td>";
                         echo "<td class='fitwidth'>" . "$row[jobTitle]" . "</td>";
-                        echo "<td class='fitwidth'>" . "$row[active]" . "</td>";
+                        echo "<td class='fitwidth'>" . "$isActive" . "</td>";
                         // echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                         echo "<td class='fitwidth'>";
                         echo "<a href='edit.php?id=" . $row['id'] . "' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";

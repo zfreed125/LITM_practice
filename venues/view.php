@@ -154,6 +154,7 @@
                         $primaryAddressId = $row['primaryAddressId'];
                         $primaryServiceId = $row['primaryServiceId'];
                         $primaryNoteId = $row['primaryNoteId'];
+                        ($row['active'] == '1') ? $isActive = 'Yes' : $isActive = 'No';
                         echo "<td class='fitwidth'>" . "$row[id]" . "</td>";
                         echo "<td class='fitwidth'>" . "$row[venueName]" . "</td>";
                         echo "<td class='fitwidth'>" . $venueType . "</td>";
@@ -163,7 +164,7 @@
                         echo "<td class='fitwidth'>" . "$EndDateTime" . "</td>";
                         echo "<td class='fitwidth'>" . $timezone . "</td>";
                         echo "<td class='fitwidth'>" . "$row[showLength]" . " Mins</td>";
-                        echo "<td class='fitwidth'>" . "$row[active]" . "</td>";
+                        echo "<td class='fitwidth'>" . "$isActive" . "</td>";
                         // echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                         echo "<td class='fitwidth'>";
                         echo "<a href='edit.php?id=" . $row['id'] . "' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";

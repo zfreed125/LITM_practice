@@ -17,11 +17,10 @@
 // Requires more details (you need to be very specific)
 //The whole thing is NOT USER FRIENDLY for the young’ins
 //“Bookings” needs a little more work done.
+// No back button on certain pages What pages need back button?
 
 // LITM Exec Notes
-☐ Contact page – Blue “bread crumb” line is under contact name, should be above
-☐ No back button on certain pages
-☐ Active – change from “1”/”0” to “yes”/ “no”
+✔ Active – change from “1”/”0” to “yes”/ “no” @done(20-09-27 14:05)
 ☐ What is “reminder: null”?
 ☐ Under “Venue” options for “live show” or “Pre-recorded”, AND “Audio only” or “Audio/Visual”
 ☐ Needs options on Venue side (talk to Michelle for clarification)
@@ -32,6 +31,10 @@
 ☐ I want a page that shows “To Be Confirmed” where it will show all the clients and guests that haven’t confirmed yet.
 ☐ Contact list – needs “Sort” buttons. Sort by Alphabetical, Date created/modified
 ☐ Client list – no search option
+
+// Can not be done at this time
+✔ Contact page – Blue “bread crumb” line is under contact name, should be above @notdone(20-09-27 13:55)
+
 // No Cant be done!
 ☐ Can we bulk email from the masterbase?
 

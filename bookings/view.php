@@ -183,13 +183,15 @@
                                 for ($h = 0; $h < count($contacts_array); $h++) { $client = $contacts_array[$h][$clientNameId]; echo $client; }
                                 echo "</a></td>";
                                 // echo "<td>" . (!empty($client)) ? $row['clientNameId'] : $client . "</td>";
-                                echo "<td>" . $row['clientConfirm'] . "</td>";
+                                ($row['clientConfirm'] == '1') ? $isClientConfirm = 'Yes' : $isClientConfirm = 'No';
+                                echo "<td>" . $isClientConfirm . "</td>";
                                 // echo "<td>" . $venue . "</td>";
                                 $htmlVenue = htmlspecialchars('window.location.href="../venues/edit.php?id='.$venueNameId.'"',ENT_QUOTES);
                                 echo "<td ondblclick='dbclick($htmlVenue)'><a href='#' title='Show/Hide accounts'onclick='myFunction(tbl_venue" . $row['id'] . ")'>";
                                 for ($i = 0; $i < count($venue_name_array); $i++) { $venue = $venue_name_array[$i][$venueNameId]; echo $venue; }
                                 echo "</a></td>";
-                                echo "<td>" . $row['venueConfirm'] . "</td>";
+                                ($row['venueConfirm'] == '1') ? $isVenueConfirm = 'Yes' : $isVenueConfirm = 'No';
+                                echo "<td>" . $isVenueConfirm . "</td>";
                                 echo "<td>" . $row['bookingStatus'] . "</td>";
                                 echo "<td>";
                                 echo "<a href='view.php?id=" . $row['id'] . "' title='View Record' data-toggle='tooltip'><span><i class='fas fa-eye'></i></span></a>";
