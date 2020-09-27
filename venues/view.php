@@ -116,6 +116,8 @@
                         echo "<th>End Date/Time</th>";
                         echo "<th>Timezone</th>";
                         echo "<th>Show Length</th>";
+                        echo "<th>Live/Pre-recorded</th>";
+                        echo "<th>Audio Video</th>";
                         echo "<th>Active</th>";
                         // echo "<th>Created</th>";
                         echo "</tr>";
@@ -155,6 +157,8 @@
                         $primaryServiceId = $row['primaryServiceId'];
                         $primaryNoteId = $row['primaryNoteId'];
                         ($row['active'] == '1') ? $isActive = 'Yes' : $isActive = 'No';
+                        ($row['bookingLiveRecorded'] == '1') ? $isbookingLiveRecorded = 'Pre-Recorded' : $isbookingLiveRecorded = 'Live';
+                        ($row['bookingAudioOnly'] == '1') ? $isbookingAudioOnly = 'Audio Only' : $isbookingAudioOnly = 'Audio&Video';
                         echo "<td class='fitwidth'>" . "$row[id]" . "</td>";
                         echo "<td class='fitwidth'>" . "$row[venueName]" . "</td>";
                         echo "<td class='fitwidth'>" . $venueType . "</td>";
@@ -164,6 +168,8 @@
                         echo "<td class='fitwidth'>" . "$EndDateTime" . "</td>";
                         echo "<td class='fitwidth'>" . $timezone . "</td>";
                         echo "<td class='fitwidth'>" . "$row[showLength]" . " Mins</td>";
+                        echo "<td class='fitwidth'>" . "$isbookingLiveRecorded" . "</td>";
+                        echo "<td class='fitwidth'>" . "$isbookingAudioOnly" . "</td>";
                         echo "<td class='fitwidth'>" . "$isActive" . "</td>";
                         // echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                         echo "<td class='fitwidth'>";

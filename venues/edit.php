@@ -37,6 +37,8 @@ $venues_result = mysqli_query($conn, $venues_sql);
 // output data of each row
 while ($row = mysqli_fetch_assoc($venues_result)) {
     $active = $row["active"];
+    $bookingLiveRecorded = $row["bookingLiveRecorded"];
+    $bookingAudioOnly = $row["bookingAudioOnly"];
     $venueName = $row["venueName"];
     $venueTypeId = $row["venueTypeId"];
     $contactNameId = $row["contactNameId"];
@@ -134,11 +136,23 @@ $conn->close();
             } else {
                 document.getElementById("active").checked = false;
             }
-            var x = document.getElementById("bookingAuto").value;
-            if (x == 1) {
+            var y = document.getElementById("bookingAuto").value;
+            if (y == 1) {
                 document.getElementById("bookingAuto").checked = true;
             } else {
                 document.getElementById("bookingAuto").checked = false;
+            }
+            var j = document.getElementById("bookingLiveRecorded").value;
+            if (j == 1) {
+                document.getElementById("bookingLiveRecorded").checked = true;
+            } else {
+                document.getElementById("bookingLiveRecorded").checked = false;
+            }
+            var k = document.getElementById("bookingAudioOnly").value;
+            if (k == 1) {
+                document.getElementById("bookingAudioOnly").checked = true;
+            } else {
+                document.getElementById("bookingAudioOnly").checked = false;
             }
 
             if ('<?php echo $is_client; ?>' !== '1') {
@@ -267,6 +281,14 @@ $conn->close();
                     <div class="input-group-prepend"><span class="input-group-text label">Booking Color</span></div>
                     <input type="color" id="bookingColor" class="form-control" name="bookingColor" value="<?php echo $bookingColor; ?>">
                 </div>
+            </div>
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
+                <div class="input-group-prepend"><span class="input-group-text label">Pre-Recorded</span></div>
+                <input type="checkbox" name="bookingLiveRecorded" id="bookingLiveRecorded" class="form-control" value="<?php echo $bookingLiveRecorded; ?>">
+            </div>
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
+                <div class="input-group-prepend"><span class="input-group-text label">Audio only</span></div>
+                <input type="checkbox" name="bookingAudioOnly" id="bookingAudioOnly" class="form-control" value="<?php echo $bookingAudioOnly; ?>">
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
                 <div class="input-group-prepend"><span class="input-group-text label">Active</span></div>

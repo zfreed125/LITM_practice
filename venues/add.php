@@ -171,9 +171,20 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text">Pre-Recorded</span></div>
+                    <input class="form-control" type="checkbox" id="bookingLiveRecorded" name="bookingLiveRecorded" value="bookingLiveRecorded">
+                </div>
+            </div>
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text">Audio Only</span></div>
+                    <input class="form-control" type="checkbox" id="bookingAudioOnly" name="bookingAudioOnly" value="bookingAudioOnly">
+                </div>
+            </div>
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                <div class="input-group">
                     <div class="input-group-prepend"><span class="input-group-text">Active</span></div>
                     <input class="form-control" type="checkbox" id="active" name="active" value="active">
-                    <!-- <label for="active">Active</label> -->
                 </div>
             </div>
             <!-- <div class="m-5"> -->
