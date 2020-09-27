@@ -73,6 +73,21 @@ $bookingStatus = $data['bookingStatus'];
 
 $primaryVenueId = $data['primaryVenueId'];
 $primaryVenueNoteId = $data['primaryVenueNoteId'];
+$bookingLiveRecorded = $data['bookingLiveRecorded'];
+$bookingAudioOnly = $data['bookingAudioOnly'];
+
+if ($bookingLiveRecorded === '0') {
+    $bookingLiveRecorded = 'Live';
+  } else {
+    $bookingLiveRecorded = 'Pre-Recorded';
+  }
+ if ($bookingAudioOnly === '0') {
+      $bookingAudioOnly = 'Audio&Video';
+    } else {
+      $bookingAudioOnly = 'Audio Only';
+    }
+
+
 $primaryVenueNote = $data['primaryVenueNote'];
 $clientPrimaryEmailId = $data['clientPrimaryEmailId'];
 $clientPrimaryEmail = $data['clientPrimaryEmail'];
@@ -344,6 +359,12 @@ $show = <<<SHOW
                 <span style="display: inline-block;font-weight: bold; width: 140px;">Times:</span><span style="display: inline-block; padding: 0.25em 0"> $t</span>
             </div>
 
+            <div style="margin-left: 1em;">
+                <span style="font-weight: bold;display: inline-block; padding: 0.25em 0">$bookingLiveRecorded</span>
+            </div>
+            <div style="margin-left: 1em;">
+                <span style="font-weight: bold;display: inline-block; padding: 0.25em 0">$bookingAudioOnly</span>
+            </div>
             <div style="margin-left: 1em;">
                 <span style="display: inline-block; width:font-weight: bold; 140px;">Length of Interview:</span>
                 <span style="display: inline-block; padding: 0.25em 0">$bookingLength</span>

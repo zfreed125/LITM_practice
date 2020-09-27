@@ -174,11 +174,23 @@ function getDetailsPane(booking) {
   let hostPrimaryEmail = ``;
   let clientPrimaryNote = ``;
   let reminderSent = ``;
+  let bookingLiveRecorded = ``;
+  if (booking.bookingLiveRecorded === '0') {
+    bookingLiveRecorded = 'Live';
+  } else {
+    bookingLiveRecorded = 'Pre-Recorded';
+  }
+
+  let bookingAudioOnly = ``;
+  if (booking.bookingAudioOnly === '0') {
+    bookingAudioOnly = 'Audio&Video';
+  } else {
+    bookingAudioOnly = 'Audio Only';
+  }
   if (booking.reminder == null) {
     reminderSent = 'Not sent';
   } else {
     reminderSent = 'Was sent';
-
   }
   if (booking.clientPrimaryNoteId) {
     clientPrimaryNote = `<div style="margin-left:2em;"><span>Note:</span> ${booking.clientPrimaryNote}</div>`;
@@ -233,6 +245,8 @@ function getDetailsPane(booking) {
 
     ${primaryVenueService}
     ${primaryVenueNote}
+    <div><span>Live/Pre-Recorded:</span> ${bookingLiveRecorded}</div>
+    <div><span>Audio Video:</span> ${bookingAudioOnly}</div>
     <div><span>Reminder:</span> ${reminderSent}</div>
     <div hidden><span>clientTzId:</span> ${booking.clientTzId}</div>
   </div>

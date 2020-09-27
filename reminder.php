@@ -72,6 +72,21 @@ $bookingStatus = $data['bookingStatus'];
 
 $primaryVenueId = $data['primaryVenueId'];
 $primaryVenueNoteId = $data['primaryVenueNoteId'];
+
+$bookingLiveRecorded = $data['bookingLiveRecorded'];
+$bookingAudioOnly = $data['bookingAudioOnly'];
+
+if ($bookingLiveRecorded === '0') {
+    $bookingLiveRecorded = 'Live';
+  } else {
+    $bookingLiveRecorded = 'Pre-Recorded';
+  }
+ if ($bookingAudioOnly === '0') {
+      $bookingAudioOnly = 'Audio&Video';
+    } else {
+      $bookingAudioOnly = 'Audio Only';
+    }
+
 $primaryVenueNote = $data['primaryVenueNote'];
 $clientPrimaryEmailId = $data['clientPrimaryEmailId'];
 $clientPrimaryEmail = $data['clientPrimaryEmail'];
@@ -212,6 +227,14 @@ $reminder = "
         <tr>
             <th style='text-align: left;'>Host:</th>
             <td style='text-align: left;'>" . $hostFullName . " (" . $hostPrimaryEmail . ")</td> 
+        </tr>
+        <tr>
+            <th style='text-align: left;'>Show Type:</th>
+            <td style='text-align: left;'>" . $bookingLiveRecorded . "</td> 
+        </tr>
+        <tr>
+            <th style='text-align: left;'>Audio/Video:</th>
+            <td style='text-align: left;'>" . $bookingAudioOnly . "</td> 
         </tr>
         <tr>
             <th style='text-align: left;'>Length of Interview:</th>
