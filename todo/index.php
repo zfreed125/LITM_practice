@@ -29,7 +29,6 @@
         background-color: #4A0C57;
         color:#4FDC0E;
         border: solid 6px #4FDC0E;
-/* 4FDC0E; */
         position: relative;
         margin: 20px;
         padding: 10px;
@@ -52,7 +51,7 @@
 <body>
 <form name="myForm" action="index.php" method="POST">
 <span>
-    <h3 class="center">Month: <input name="month" type="text" value="<?php echo $month; ?>"> Year: <input name="year" type="text" value="<?php echo $year; ?>"><input class="btn btn-primary" type="submit" name="submit" value="Submit"></h3>
+    <h3 class="center">(Client Only) Month: <input name="month" type="text" value="<?php echo $month; ?>"> Year: <input name="year" type="text" value="<?php echo $year; ?>"><input class="btn btn-primary" type="submit" name="submit" value="Submit"></h3>
       
 </span>    
 </form>
@@ -113,6 +112,11 @@ foreach ($venue_name_array as $venue_item) {
     );
     
 }
+    echo "<pre>";
+    // print_r($client_booking_count_array);
+    echo "</pre>";
+
+
 $todo_array = array();
 $client_booking_count = array();
 

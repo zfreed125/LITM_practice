@@ -1,4 +1,6 @@
 function showBookingsForClient(clientId) {
+    // console.log('contacts_array', contacts_array);
+
     const clientName = contacts_array.find(function (c) {
         return c.id == clientId;
     }).fullname;
@@ -6,6 +8,24 @@ function showBookingsForClient(clientId) {
     let bookingsByClientDiv = document.getElementById("bookingsByClient");
     const filtered = bookings_array.filter(function (obj) {
         return obj.clientNameId == clientId;
+    });
+    el.innerHTML = bookingsByClient(filtered);
+    while (bookingsByClientDiv.hasChildNodes()) {
+        bookingsByClientDiv.removeChild(bookingsByClientDiv.lastChild);
+    }
+    bookingsByClientDiv.appendChild(el);
+}
+// Not in need to revisit this in order to flip venue/guest 
+function showBookingsForVenue(venueId) {
+    // console.log('venue_name_array_from_db', venue_name_array_from_db);
+
+    const venueName = venue_name_array_from_db.find(function (v) {
+        return v.id == venueId;
+    }).venueName;
+    let el = document.createElement("span");
+    let bookingsByClientDiv = document.getElementById("bookingsByClient");
+    const filtered = bookings_array.filter(function (obj) {
+        return obj.venueNameId == venueId;
     });
     el.innerHTML = bookingsByClient(filtered);
     while (bookingsByClientDiv.hasChildNodes()) {

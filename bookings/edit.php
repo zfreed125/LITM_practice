@@ -82,11 +82,26 @@ function changeVenueList(venue_list){
 }
 
 
-
 window.addEventListener('load', (event) => {
     updateGenreTags( selected_contact, 'genreContactTags', 'contactId', getValueFromClientSelect );
     updateGenreTags( selected_venue, 'genreVenueTags', 'venueId', getValueFromVenueSelect );
-    showBookingsForClient(selected_contact);
+    // console.log('selected_contact',selected_contact);
+    // need to evaluate based on Booking Type First and disable gsearch if its Venue
+    if(selected_contact === ""){
+        showBookingsForVenue(selected_venue);
+    }else{
+        showBookingsForClient(selected_contact);
+    }
+    selectVenueOption = {
+        "id": "-1",
+        "venueName": "Select Venue"
+    };
+    // console.log('selectVenueOption',selectVenueOption);
+    
+    if (selected_venue === ""){
+        venue_name_array_from_db.unshift(selectVenueOption);
+    }
+    // console.log('New List',venue_name_array_from_db);
     getVenueList(venue_name_array_from_db);
 
     var contacts_array = <?php echo json_encode($contacts_array) ?>;

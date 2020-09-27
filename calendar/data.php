@@ -136,7 +136,10 @@ while ($row = mysqli_fetch_assoc($result)) {
     (empty($bookingDateTimeStart)) ? $StartTime = 'unset' : $StartTime = convertDateTimeUTCtoLocal($bookingDateTimeStart, $tz)[1];
     (empty($bookingDateTimeEnd)) ? $EndDate = 'unset' : $EndDate = convertDateTimeUTCtoLocal($bookingDateTimeEnd, $tz)[0];
     (empty($bookingDateTimeEnd)) ? $EndTime = 'unset' : $EndTime = convertDateTimeUTCtoLocal($bookingDateTimeEnd, $tz)[1];
+    // suppress error if venue is NULL
+    error_reporting(E_ERROR | E_PARSE);
     for ($i = 0; $i < count($venue_name_array); $i++) { $venueName = $venue_name_array[$i][$venueNameId]; }
+
     $bookings_array[] = array(
         'bookingId' => $bookingId,
         'bookingType' => $bookingType,
