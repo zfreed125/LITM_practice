@@ -173,6 +173,13 @@ function getDetailsPane(booking) {
   let clientPrimaryEmail = ``;
   let hostPrimaryEmail = ``;
   let clientPrimaryNote = ``;
+  let reminderSent = ``;
+  if (booking.reminder == null) {
+    reminderSent = 'Not sent';
+  } else {
+    reminderSent = 'Was sent';
+
+  }
   if (booking.clientPrimaryNoteId) {
     clientPrimaryNote = `<div style="margin-left:2em;"><span>Note:</span> ${booking.clientPrimaryNote}</div>`;
   }
@@ -226,7 +233,7 @@ function getDetailsPane(booking) {
 
     ${primaryVenueService}
     ${primaryVenueNote}
-    <div><span>Reminder:</span> ${booking.reminder}</div>
+    <div><span>Reminder:</span> ${reminderSent}</div>
     <div hidden><span>clientTzId:</span> ${booking.clientTzId}</div>
   </div>
   `;
