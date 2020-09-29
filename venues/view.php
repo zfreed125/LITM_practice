@@ -52,6 +52,7 @@
                     <div class="page-header clearfix">
                         <h2 class="pull-left">Venue List</h2>
                         <a href="../" style="float:left;font-size:18px;" class="" ><i class="fas fa-chevron-left"></i> Back</a>
+                        <a href="#" onclick='collapseAll()' style="margin-left:500px;font-size:18px;" class="" ><i class="fas fa-chevron-down"></i> Collapse All</a>
                         <a href="add.php" style="float:right;" class="btn btn-success pull-right">Add New Venue</a>
                     </div>
                     <?php

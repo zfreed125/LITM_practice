@@ -52,6 +52,7 @@
                         <h2 class="pull-left">Contact List</h2>
 
                         <a href="../" style="float:left;font-size:18px;" class="" ><i class="fas fa-chevron-left"></i> Back</a>
+                        <a href="#" onclick='collapseAll()' style="margin-left:500px;" class="" ><i class="fas fa-chevron-down"></i> Collapse All</a>
                         <a href="../contacts/add.php" style="float:right;" class="btn btn-success pull-right mb-2" >Add New Contact</a>
 
                     </div>
