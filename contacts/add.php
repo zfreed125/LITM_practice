@@ -14,6 +14,12 @@ $account_type_array = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $account_type_array[] = array('id' => $row['id'], 'accountType' => $row['accountType']);
 }
+$genre_types_sql = "SELECT * FROM genre_types;";
+$result = mysqli_query($conn, $genre_types_sql);
+$genre_type_array = array();
+while ($row = mysqli_fetch_assoc($result)) {
+    $genre_type_array[] = array('id' => $row['id'], 'genreType' => $row['genreType']);
+}
 $timezones_sql = "SELECT * FROM timezones;";
 $timezones_result = mysqli_query($conn, $timezones_sql);
 $timezones_array = array();
@@ -69,6 +75,14 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
                         <?php foreach($account_type_array as $item){ ?>
                     <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['accountType']; ?></option>
                         <?php } ?>
+                </select>
+            </div>
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+            <div class="input-group-prepend"><span class="input-group-text label">Genre Type</span><select size="10" multiple name="genreTypeId[]"></div>
+                <option disabled selected="selected">Choose one or multiple with Ctl Button</option>
+                    <?php foreach($genre_type_array as $item){ ?>
+                <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['genreType']; ?></option>
+                    <?php } ?>
                 </select>
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">

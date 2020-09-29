@@ -38,10 +38,18 @@ $venueId = $_REQUEST['venueId'];
     <div class="wrapper">
         <h1 class="center">Add an Genre</h1>
         <form class="center" action="create.php" method="POST">
-            <div class="input-group">
+            <!-- <div class="input-group">
             <div class="input-group-prepend"><select name="genreTypeId"></div>
                 
                 <option selected="selected">Choose one</option>
+                    <?php foreach($genre_type_array as $item){ ?>
+                <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['genreType']; ?></option>
+                    <?php } ?>
+                </select>
+            </div> -->
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+            <div class="input-group-prepend"><span class="input-group-text label">Genre Type</span><select size="10" multiple name="genreTypeId[]"></div>
+                <option disabled selected="selected">Choose one or multiple with Ctl Button</option>
                     <?php foreach($genre_type_array as $item){ ?>
                 <option value="<?php echo strtolower($item['id']); ?>"><?php echo $item['genreType']; ?></option>
                     <?php } ?>
