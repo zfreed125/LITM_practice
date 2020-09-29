@@ -7,7 +7,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $clientTypeId = $row['id'];
   }
 $venue_array = array();
-$venueId_sql = "SELECT venueId  FROM accounts WHERE accountTypeId='$clientTypeId' AND venueId IS NOT NULL;";
+$venueId_sql = "SELECT venueId  FROM accounts WHERE accountTypeId='$clientTypeId' AND venueId IS NOT NULL AND hotCold='1';";
 $venueId_result = mysqli_query($conn, $venueId_sql);
 while ($row = mysqli_fetch_assoc($venueId_result)) {
     $client_venueId = $row['venueId'];

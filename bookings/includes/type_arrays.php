@@ -18,7 +18,7 @@ while ($row = mysqli_fetch_assoc($genre_results)) {
     $genre_array[] = array( 'id' => $row['gId'], 'genreName' => $row['genreType'], 'contactId' => $row['contactId'], 'venueId' => $row['venueId'] );
 }
 
-$venue_name_sql = "SELECT id, venueName FROM venues;";
+$venue_name_sql = "SELECT id, venueName FROM venues WHERE hotCold='1' AND active='1';";
 $result = mysqli_query($conn, $venue_name_sql);
 $venue_name_array = array();
 while ($row = mysqli_fetch_assoc($result)) {
