@@ -102,7 +102,7 @@
                         $timezones_array[] = array('id' => $row['id'], 'name' => $row['name'], 'timezone' => $row['timezone']);
                     }
                     //contacts sql query loop table
-                    $venues_sql = "SELECT * FROM venues;";
+                    $venues_sql = "SELECT * FROM venues ORDER BY id desc;";
                     $venues_result = mysqli_query($conn, $venues_sql);
                     while ($row =  mysqli_fetch_assoc($venues_result)) {
                         echo "<table class='table table-bordered table-striped'>";
@@ -119,6 +119,7 @@
                         echo "<th>Show Length</th>";
                         echo "<th>Live/Pre-recorded</th>";
                         echo "<th>Audio Video</th>";
+                        echo "<th>Hot/Cold</th>";
                         echo "<th>Active</th>";
                         // echo "<th>Created</th>";
                         echo "</tr>";
@@ -158,6 +159,7 @@
                         $primaryServiceId = $row['primaryServiceId'];
                         $primaryNoteId = $row['primaryNoteId'];
                         ($row['active'] == '1') ? $isActive = 'Yes' : $isActive = 'No';
+                        ($row['hotCold'] == '1') ? $ishotCold = 'Hot' : $ishotCold = 'Cold';
                         ($row['bookingLiveRecorded'] == '1') ? $isbookingLiveRecorded = 'Pre-Recorded' : $isbookingLiveRecorded = 'Live';
                         ($row['bookingAudioOnly'] == '1') ? $isbookingAudioOnly = 'Audio Only' : $isbookingAudioOnly = 'Audio&Video';
                         echo "<td class='fitwidth'>" . "$row[id]" . "</td>";
@@ -171,6 +173,7 @@
                         echo "<td class='fitwidth'>" . "$row[showLength]" . " Mins</td>";
                         echo "<td class='fitwidth'>" . "$isbookingLiveRecorded" . "</td>";
                         echo "<td class='fitwidth'>" . "$isbookingAudioOnly" . "</td>";
+                        echo "<td class='fitwidth'>" . "$ishotCold" . "</td>";
                         echo "<td class='fitwidth'>" . "$isActive" . "</td>";
                         // echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                         echo "<td class='fitwidth'>";

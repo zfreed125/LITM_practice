@@ -24,6 +24,7 @@ $venueTimeStart = $_REQUEST['venueTimeStart'];
 $venueDateEnd = $_REQUEST['venueDateEnd'];
 $venueTimeEnd = $_REQUEST['venueTimeEnd'];
 $timezoneId = $_REQUEST['timezoneId'];
+$hotCold = (isset($_POST['hotCold'])) ? 1 : 0;
 $active = (isset($_POST['active'])) ? 1 : 0;
 $bookingLiveRecorded = (isset($_POST['bookingLiveRecorded'])) ? 1 : 0;
 $bookingAudioOnly = (isset($_POST['bookingAudioOnly'])) ? 1 : 0;
@@ -58,8 +59,8 @@ $end = "'" .$venueend. "'";
 // $end = date('Y-m-d H:i',strtotime("+{$showLength} minutes",strtotime($vDateTimeStart)));
 // echo $end;
 // die();
-$sql = "INSERT INTO venues (venueName, venueTypeId, contactNameId, hostNameId, showLength, venueDateTimeStart,venueDateTimeEnd, timezoneId,bookingLiveRecorded,bookingAudioOnly, active)
-VALUES ('$venueName', '$venueTypeId', '$contactNameId', '$hostNameId', '$showLength', ".$venueDateTimeStart.", ".$end.", '$timezoneId','$bookingLiveRecorded' ,'$bookingAudioOnly', '$active')";
+$sql = "INSERT INTO venues (venueName, venueTypeId, contactNameId, hostNameId, showLength, venueDateTimeStart,venueDateTimeEnd, timezoneId,bookingLiveRecorded,bookingAudioOnly,hotCold, active)
+VALUES ('$venueName', '$venueTypeId', '$contactNameId', '$hostNameId', '$showLength', ".$venueDateTimeStart.", ".$end.", '$timezoneId','$bookingLiveRecorded' ,'$bookingAudioOnly', '$hotCold', '$active')";
 
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";

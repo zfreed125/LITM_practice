@@ -34,6 +34,7 @@ $sql1 = "CREATE TABLE venues (
     primaryNoteId INT(6) NULL,
     bookingLiveRecorded INT(1) NULL,
     bookingAudioOnly INT(1) NULL,
+    hotCold INT(1) NULL,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )";
 

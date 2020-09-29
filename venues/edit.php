@@ -50,6 +50,7 @@ while ($row = mysqli_fetch_assoc($venues_result)) {
     $bookingAuto = $row['bookingAuto'];
     $bookingCount = $row['bookingCount'];
     $bookingColor = $row['bookingColor'];
+    $hotCold = $row["hotCold"];
 }
 $timezone_sql = "SELECT timezone from timezones where id='$timezoneId';";
 $timezone_result = mysqli_query($conn, $timezone_sql);
@@ -130,6 +131,12 @@ $conn->close();
     <script>
         window.addEventListener('load', (event) => {
 
+            var l = document.getElementById("hotCold").value;
+            if (l == 1) {
+                document.getElementById("hotCold").checked = true;
+            } else {
+                document.getElementById("hotCold").checked = false;
+            }
             var x = document.getElementById("active").value;
             if (x == 1) {
                 document.getElementById("active").checked = true;
@@ -289,6 +296,10 @@ $conn->close();
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
                 <div class="input-group-prepend"><span class="input-group-text label">Audio only</span></div>
                 <input type="checkbox" name="bookingAudioOnly" id="bookingAudioOnly" class="form-control" value="<?php echo $bookingAudioOnly; ?>">
+            </div>
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
+                <div class="input-group-prepend"><span class="input-group-text label">Hot</span></div>
+                <input type="checkbox" name="hotCold" id="hotCold" class="form-control" value="<?php echo $hotCold; ?>">
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-50">
                 <div class="input-group-prepend"><span class="input-group-text label">Active</span></div>

@@ -39,6 +39,7 @@ if ($is_client){
 }
 $bookingLiveRecorded = (isset($_POST['bookingLiveRecorded'])) ? 1 : 0;
 $bookingAudioOnly = (isset($_POST['bookingAudioOnly'])) ? 1 : 0;
+$hotCold = (isset($_POST['hotCold'])) ? 1 : 0;
 $active = (isset($_POST['active'])) ? 1 : 0;
 
 $timezone_sql = "SELECT timezone from timezones where id='$timezoneId';";
@@ -73,7 +74,7 @@ $end = "'" .$venueend. "'";
 
 // Attempt insert query execution
 $sql = "UPDATE venues set venueName='$venueName', venueTypeId='$venueTypeId', contactNameId='$contactNameId', hostNameId='$hostNameId', 
-venueDateTimeStart=".$venueDateTimeStart.", venueDateTimeEnd=".$end.", timezoneId='$timezoneId', showLength='$showLength', bookingAuto='$bookingAuto', bookingCount='$bookingCount', bookingColor='$bookingColor', bookingLiveRecorded='$bookingLiveRecorded',bookingAudioOnly='$bookingAudioOnly',active='$active' where id='$id';";
+venueDateTimeStart=".$venueDateTimeStart.", venueDateTimeEnd=".$end.", timezoneId='$timezoneId', showLength='$showLength', bookingAuto='$bookingAuto', bookingCount='$bookingCount', bookingColor='$bookingColor', bookingLiveRecorded='$bookingLiveRecorded',bookingAudioOnly='$bookingAudioOnly',hotCold='$hotCold',active='$active' where id='$id';";
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
     header("location: view.php");

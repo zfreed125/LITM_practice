@@ -183,6 +183,12 @@ while ($row = mysqli_fetch_assoc($timezones_result)) {
             </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
                 <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text">Hot</span></div>
+                    <input class="form-control" type="checkbox" id="hotCold" name="hotCold" value="hotCold">
+                </div>
+            </div>
+            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
+                <div class="input-group">
                     <div class="input-group-prepend"><span class="input-group-text">Active</span></div>
                     <input class="form-control" type="checkbox" id="active" name="active" value="active">
                 </div>

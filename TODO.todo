@@ -6,13 +6,13 @@
 ✔ Booking added to calendar @done(20-09-10 09:35)
 ✔ Booking color on calendar @done(20-09-10 09:35)
 ✔ Historical log on bookings @done(20-09-10 10:13)
-☐ Filter venues/clients by genre @wip
-☐ Booking status @wip 
-☐ Email notification w/tz array @wip 
-☐ Invoice ?
-☐ Historical log sort by date
+✔ Filter venues/clients by genre @wip @done(20-09-29 12:44)
+✔ Booking status @wip @done(20-09-29 12:44)
+✔ Email notification w/tz array @wip @done(20-09-29 12:44)
+✔ Historical log sort by date @done(20-09-29 12:44)
 ✔ How to set up number of dots per client? @done(20-09-27 13:23) // Update Contact after contact is client
 ✔ How to set color to client dots? @done(20-09-27 13:23) //  Update Contact after contact is client
+☐ Invoice ?
 
 // Requires more details (you need to be very specific)
 //The whole thing is NOT USER FRIENDLY for the young’ins
@@ -25,10 +25,13 @@
 ✔ Under “Venue” options for “live show” or “Pre-recorded”, AND “Audio only” or “Audio/Visual” @done(20-09-27 15:48)
 ✔ Needs options on Venue side (talk to Michelle for clarification) @done(20-09-27 15:48)
 ✔ Collapse All @done(20-09-29 08:53)
-
-
 ☐ Venue has Hot Cold option that doesnt populate gsearch
-☐ Contacts add email phone default no primary
+☐ Contacts add email phone maybe genres(multiple) default no primary
+☐ The Dump (Month Queue)
+☐ Input Mask on Phone
+☐ Join multiple genre at once
+
+
 
 // The View should have sort options 
 ✔ Sound Check button? (Check box if they did a sound check. Also add that to #15) @done(20-09-27 16:37)
