@@ -17,7 +17,6 @@ $sql1 = "CREATE TABLE contacts (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     firstname VARCHAR(30) NOT NULL,
     lastname VARCHAR(30) NOT NULL,
-    jobTitle VARCHAR(30) NULL,
     active INT(1) DEFAULT 1,
     birthdate DATE NULL,
     timezoneId INT(3) NULL,

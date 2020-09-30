@@ -106,10 +106,6 @@ $conn->close();
                 <div class="input-group-prepend"><span class="input-group-text label">Birth Date</span></div>
                 <input type="date" name="birthdate" class="form-control" value="<?php echo $birthdate; ?>">
             </div>
-            <div class="input-group mt-3 mb-1 input-group-sm p-1 w-75">
-                <div class="input-group-prepend"><span class="input-group-text label">Job Title</span></div>
-                <input type="text" name="jobTitle" class="form-control" value="<?php echo $jobTitle; ?>">
-            </div>
             <div class="input-group mt-3 mb-1 input-group-sm p-1">
                 <div class="input-group-prepend"><span class="input-group-text label">Timezone</span></div>
                 <select style=" width: 375px;" name="timezoneId" class="form-control">

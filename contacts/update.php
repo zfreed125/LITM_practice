@@ -20,7 +20,6 @@ $firstname = mysqli_real_escape_string($conn, $_REQUEST['firstname']);
 $lastname = mysqli_real_escape_string($conn, $_REQUEST['lastname']);
 $birthdate = $_REQUEST['birthdate'];
 $timezoneId = $_REQUEST['timezoneId'];
-$jobTitle = $_REQUEST['jobTitle'];
 if ($is_client){
     $bookingAuto = (isset($_POST['bookingAuto'])) ? 1 : 0;
     $bookingCount = $_REQUEST['bookingCount'];
@@ -35,9 +34,9 @@ if ($is_client){
 $active = (isset($_POST['active'])) ? 1 : 0;
 // Attempt insert query execution
 if (empty($birthdate)){
-$sql = "UPDATE contacts set firstname='$firstname', lastname='$lastname', jobTitle='$jobTitle', timezoneId='$timezoneId', bookingAuto='$bookingAuto', bookingCount='$bookingCount', bookingColor='$bookingColor', active='$active' where id='$id';";
+$sql = "UPDATE contacts set firstname='$firstname', lastname='$lastname', timezoneId='$timezoneId', bookingAuto='$bookingAuto', bookingCount='$bookingCount', bookingColor='$bookingColor', active='$active' where id='$id';";
 }else{
-$sql = "UPDATE contacts set firstname='$firstname', lastname='$lastname', birthdate='$birthdate' , jobTitle='$jobTitle', timezoneId='$timezoneId', bookingAuto='$bookingAuto', bookingCount='$bookingCount', bookingColor='$bookingColor', active='$active' where id='$id';";
+$sql = "UPDATE contacts set firstname='$firstname', lastname='$lastname', birthdate='$birthdate' , timezoneId='$timezoneId', bookingAuto='$bookingAuto', bookingCount='$bookingCount', bookingColor='$bookingColor', active='$active' where id='$id';";
 }
 if(mysqli_query($conn, $sql)){
     // echo "Records added successfully.";
