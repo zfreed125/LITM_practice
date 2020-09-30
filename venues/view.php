@@ -102,7 +102,7 @@
                         $timezones_array[] = array('id' => $row['id'], 'name' => $row['name'], 'timezone' => $row['timezone']);
                     }
                     //contacts sql query loop table
-                    $venues_sql = "SELECT * FROM venues ORDER BY id desc;";
+                    $venues_sql = "SELECT * FROM venues ORDER BY venueName asc;";
                     $venues_result = mysqli_query($conn, $venues_sql);
                     while ($row =  mysqli_fetch_assoc($venues_result)) {
                         echo "<table class='table table-bordered table-striped'>";

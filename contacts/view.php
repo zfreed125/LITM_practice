@@ -77,7 +77,7 @@
                     }
 
                     //contacts sql query loop table
-                    $contact_sql = "SELECT * FROM contacts ORDER BY id desc;";
+                    $contact_sql = "SELECT * FROM contacts ORDER BY lastName asc;";
                     $result = mysqli_query($conn, $contact_sql);
 
                     while ($row = mysqli_fetch_assoc($result)) {

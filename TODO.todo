@@ -35,8 +35,9 @@
 
 // The View should have sort options 
 ✔ Sound Check button? (Check box if they did a sound check. Also add that to #15) @done(20-09-27 16:37)
-☐ I want a page that shows “To Be Confirmed” where it will show all the clients and guests that haven’t confirmed yet.
 ☐ Contact list – needs “Sort” buttons. Sort by Alphabetical, Date created/modified
+
+☐ I want a page that shows “To Be Confirmed” where it will show all the clients and guests that haven’t confirmed yet.
 ☐ Client list – no search option
 
 // Can not be done at this time
