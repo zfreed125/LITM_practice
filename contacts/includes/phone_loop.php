@@ -1,4 +1,7 @@
 <?php
+
+
+
 $phone_types_sql = "SELECT * FROM phone_types;";
 $phone_types_result = mysqli_query($conn, $phone_types_sql);
 $phone_type_array = array();
@@ -35,9 +38,11 @@ while ($row = mysqli_fetch_assoc($phone_types_result)) {
   }else{
   $phone_primary = "<a href='primary.php?phoneId=".$row['id']."&contactId=".$contactId."'><span><i style='color:green'class='far fa-star'></i></span></a>";
   }
+  $phoneNumber = usformatPhoneNumber($row['phone']);
+
   echo "<tr>";
   echo "<td class='fitwidth'>" . "$phone_primary" . "</td>";
-  echo "<td class='fitwidth'>" . "$row[phone]" . "</td>";
+  echo "<td class='fitwidth'>" . "$phoneNumber" . "</td>";
   echo "<td class='fitwidth'>" . "$phoneTypeId" . "</td>";
   echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
   echo "<td class='fitwidth'>";

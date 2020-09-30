@@ -57,8 +57,9 @@
 
                     </div>
                     <?php
-
+                    
                     require_once '../config.php';
+                    require_once '../formatPhone.php';
 
                     // Create connection
                     $conn = new mysqli($servername, $username, $password, $database);
@@ -76,7 +77,7 @@
                     }
 
                     //contacts sql query loop table
-                    $contact_sql = "SELECT * FROM contacts;";
+                    $contact_sql = "SELECT * FROM contacts ORDER BY id desc;";
                     $result = mysqli_query($conn, $contact_sql);
 
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -87,7 +88,6 @@
                         echo "<th>First Name</th>";
                         echo "<th>Last Name</th>";
                         echo "<th>Timezone</th>";
-                        echo "<th>Job Title</th>";
                         echo "<th>Active</th>";
                         // echo "<th>Created</th>";
                         echo "</tr>";
@@ -105,7 +105,6 @@
                         echo "<td class='fitwidth'>" . "$row[firstname]" . "</td>";
                         echo "<td class='fitwidth'>" . "$row[lastname]" . "</td>";
                         echo "<td class='fitwidth'>" . $timezone . "</td>";
-                        echo "<td class='fitwidth'>" . "$row[jobTitle]" . "</td>";
                         echo "<td class='fitwidth'>" . "$isActive" . "</td>";
                         // echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
                         echo "<td class='fitwidth'>";

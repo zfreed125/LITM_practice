@@ -35,9 +35,10 @@ if($primaryPhoneId == $row['id']) {
 }else{
     $phone_primary = "<a href='primary.php?phoneId=".$row['id']."&venueId=".$venuesId."'><span><i style='color:green'class='far fa-star'></i></span></a>";
 }
+$phoneNumber = usformatPhoneNumber($row['phone']);
 echo "<tr>";
 echo "<td class='fitwidth'>" . "$phone_primary" . "</td>";
-echo "<td class='fitwidth'>" . "$row[phone]" . "</td>";
+echo "<td class='fitwidth'>" . "$phoneNumber" . "</td>";
 echo "<td class='fitwidth'>" . "$phoneTypeId" . "</td>";
 echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
 echo "<td class='fitwidth'>";

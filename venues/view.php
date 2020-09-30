@@ -56,7 +56,7 @@
                         <a href="add.php" style="float:right;" class="btn btn-success pull-right">Add New Venue</a>
                     </div>
                     <?php
-
+                    require_once '../formatPhone.php';
                     require_once '../config.php';
                     function convertDateTimeUTCtoLocal($venueDateTime, $tz)
                     {
