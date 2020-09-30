@@ -76,6 +76,9 @@ text-transform: capitalize;
 
             </tbody>
         </table>
+        <div title="This is where unset Bookings Sit until they have a Date!"style="color:tomato;padding:5px;border: solid 1px black;font-weight:bold;">The Dump
+            <div style="border-top: solid 1px black;" id="dump"></div>
+        </div>
         <br/>
         <div id="sideDetails"></div>
         <form hidden class="form-inline">

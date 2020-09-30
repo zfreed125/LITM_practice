@@ -128,8 +128,18 @@ function reminder(book) {
 }
 function createBooking(startDate, clientFullName, color, title, booking) {
 
-  let cell = document.getElementById(startDate);
+  let dump = document.getElementById('dump');
+  let cell;
+
+  // if (cell == null){
+  if (startDate === 'unset') {
+    cell = dump;
+  } else {
+    cell = document.getElementById(startDate);
+  }
   if (cell == null) return;
+
+  // }
 
 
   let detailsPanel = document.createElement("span");
@@ -140,16 +150,20 @@ function createBooking(startDate, clientFullName, color, title, booking) {
   emailButton.className = 'btn btn-primary';
   emailButton.textContent = 'Email Booking';
   emailButton.onclick = email;
+  bookingEl.dataset.bookingid = booking.bookingId;
   bookingEl.innerHTML = clientFullName;
   bookingEl.className = 'badge p-1 m-1';
   bookingEl.style = `background-color: ${color}; color: white;cursor: pointer;font-size: 8px;`;
-  bookingEl.addEventListener('mousedown', (event) => {
-    if (event.which == 3) {
-      var answer = confirm("Please click on OK to send a reminder.")
-      if (answer)
-        reminder(booking);
-    }
-  })
+  // remove right click if reminder is not null
+  if (booking.reminder !== '1' && booking.hostPrimaryEmailId) {
+    bookingEl.addEventListener('mousedown', (event) => {
+      if (event.which == 3) {
+        var answer = confirm("Please click on OK to send a reminder.")
+        if (answer)
+          reminder(booking);
+      }
+    })
+  }
   bookingEl.addEventListener('dblclick', () => {
     let sideDetails = document.getElementById('sideDetails');
     while (sideDetails.hasChildNodes()) {
@@ -161,9 +175,13 @@ function createBooking(startDate, clientFullName, color, title, booking) {
       sideDetails.appendChild(emailButton);
 
     }
-    // console.log(booking.clientPrimaryEmail);
   })
-  cell.appendChild(bookingEl);
+
+  // only add if not already there
+  let elements = document.querySelectorAll(`[data-bookingid="` + booking.bookingId + `"]`);
+  if (elements.length == '0') {
+    cell.appendChild(bookingEl);
+  }
 
 }
 
