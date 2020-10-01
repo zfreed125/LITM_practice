@@ -165,6 +165,14 @@ foreach ($client_booking_count_array as $booking) {
     echo "<pre>";
     // echo print_r($client_booking_count_array);
     // echo print_r($todo_array);
+    // goal: bookings created/bookings required for client in selected month
+    // createdBookings, requiredBookings, clientName, bookingColor, venueName
+
+    // select bookings.clientNameId, bookings.venueNameId, bookings.bookingDateTimeStart
+    // select contacts.bookingCount, contacts.bookingColor, contacts.firstname, 
+    // contacts.lastname from contacts, bookings;
+
+
     echo "</pre>";
     foreach ($todo_array as $todo_item) {
         $card = " <div class='card'><div class='container'> ";
@@ -185,3 +193,24 @@ foreach ($client_booking_count_array as $booking) {
 </div>
 </body>
 </html>
+
+<!-- 
+select 
+    concat(contacts.firstname, ' ', contacts.lastname) as client,
+    bookings.bookingDateTimeStart as startTime,
+    bookings.bookingLength as duration,
+    contacts.bookingCount as requiredCount,
+    contacts.bookingColor as color,
+    venues.venueName as venue
+from 
+    bookings
+left join contacts on bookings.clientNameId = contacts.id
+left join venues on bookings.venueNameId = venues.id
+where
+    bookings.bookingDateTimeStart is null or
+    (
+        year(bookings.bookingDateTimeStart)=2020 and
+        month(bookings.bookingDateTimeStart)=9
+    )
+order by client;
+ -->
