@@ -48,6 +48,34 @@
         .fitwidth {
             /* width: 500px; */
         }
+                .dontShow {
+        display: none;
+        }
+        .highLight {
+        background-color: yellow !important;
+        }
+        .smallfield{
+        width:20px !important;
+        }
+        .parent {
+        width: 100%;
+        border: 1px solid lightgrey;
+        text-align: center;
+        margin-bottom: 2em;
+        background-color:#F2F2F2;
+        }
+        .title{
+            border: 1px solid black;
+            background-color:lightgrey;
+            
+        }
+        
+        .child {
+            display: inline-block;  
+            /* border: 1px solid red; */
+            margin: 2px;
+            
+        }
 </style>
 </head>
 
@@ -60,7 +88,30 @@
                         <h2 class="pull-left">Booking List</h2>
                         <a href="../" style="float:left;font-size:18px;" class="" ><i class="fas fa-chevron-left"></i> Back</a>
                         <a href="add.php" style="float:right;" class="btn btn-success pull-right">Add New Booking</a>
-                    </div><br>
+                    </div>
+                    <div class="parent">
+                        <div class="title">Search Fields</div>
+                        <span class="">
+                            &nbsp 
+                        </span>
+                        <span class="child">
+                            <input type="text" onkeyup="searchType()" id="searchTypeInput" placeholder="Search for Booking Type.."> 
+                        </span>
+                        <span class="child">
+                            <input type="text" onkeyup="searchVenueNames()" id="searchVenueNamesInput" placeholder="Search for Venue Name.."> 
+                        </span>
+                        <span class="child">
+                            <input type="text" onkeyup="searchContactNames()" id="searchContactNamesInput" placeholder="Search for Contact Name.."> 
+                        </span>
+                        <span class="child">
+                            <input type="checkbox" onclick="ClientConfirm()" id="ClientConfirm" placeholder="Search for Client Confirm.."> 
+                            <label for="searchActive">Only Client Confirm</label>
+                        </span>
+                        <span class="child">
+                            <input type="checkbox" onclick="VenueConfirm()" id="VenueConfirm" placeholder="Search for Venue Confirm.."> 
+                            <label for="searchActive">Only Venue Confirm</label>
+                        </span>
+                    </div>
                     <?php
                     // Include config file
                     require_once '../config.php';
@@ -117,47 +168,48 @@
                     }
                     //Attempt select query execution
                     $sql = "SELECT * FROM bookings ORDER BY id desc;";
+                    echo "<table class='table table-bordered '>";
+                    echo "<thead>";
+                    echo "<tr>";
+                    echo "<th>#</th>";
+                    echo "<th>Type</th>";
+                    echo "<th>Start Date/Time</th>";
+                    echo "<th>End Date/Time</th>";
+                    echo "<th>Timezone</th>";
+                    echo "<th>Length</th>";
+                    echo "<th>Client Name</th>";
+                    echo "<th>Client Confirm</th>";
+                    echo "<th>Venue Name</th>";
+                    echo "<th>Venue Confirm</th>";
+                    echo "<th>Status</th>";
+                    echo "<th></th>";
+                    echo "</tr>";
+                    echo "</thead>";
+
+                    echo "<tbody>";
+                    echo "</tbody>";
+                    echo "</table>";
                     if ($result = mysqli_query($conn, $sql)) {
-                        echo "<table class='table table-bordered '>";
-                        echo "<thead>";
-                        echo "<tr>";
-                        echo "<th>#</th>";
-                        echo "<th>Type</th>";
-                        echo "<th>Start Date/Time</th>";
-                        echo "<th>End Date/Time</th>";
-                        echo "<th>Timezone</th>";
-                        echo "<th>Length</th>";
-                        echo "<th>Client Name</th>";
-                        echo "<th>Client Confirm</th>";
-                        echo "<th>Venue Name</th>";
-                        echo "<th>Venue Confirm</th>";
-                        echo "<th>Status</th>";
-                        echo "<th></th>";
-                        echo "</tr>";
-                        echo "</thead>";
                         // echo "<tbody>";
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_array($result)) {
-                                echo "<table class='table table-bordered table-striped'>";
-                                echo "<tbody>";
                                 $clientNameId = $row['clientNameId'];
                                 $venueNameId = $row['venueNameId'];
-                                // echo "$clientNameId";
+                                ($row['clientConfirm'] == '1') ? $ClientConfirm = 'true' : $ClientConfirm = 'false';
+                                ($row['venueConfirm'] == '1') ? $VenueConfirm = 'true' : $VenueConfirm = 'false';
+                                // echo "($clientNameId $test)";
                                 foreach ($booking_type_array as $item) {
                                     if ($item['id'] == $row['bookingTypeId']) {
                                         $bookingType = $item['bookingType'];
                                     }
                                 }
-                                // echo "<pre>";
-                                // print_r($contacts_array);
-                                // echo "</pre>";
-                                // for ($h = 0; $h < count($contacts_array); $h++) { echo $contacts_array[$h][$clientNameId]; }
-                                // foreach ($venue_name_array as $item) {
-                                //     if ($item['id'] == $row['venueNameId']) {
-                                //         $venue = $item['venueName'];
-                                //         $venueNameId = $row['venueNameId'];
-                                //     }
-                                // }
+                                echo "<div class='' data-type='".strtolower($bookingType)."' data-venuename='";
+                                for ($i = 0; $i < count($venue_name_array); $i++) { $venue = $venue_name_array[$i][$venueNameId]; echo strtolower($venue); }
+                                echo "' data-contactname='";
+                                for ($h = 0; $h < count($contacts_array); $h++) { $clientFull = $contacts_array[$h][$clientNameId]; echo strtolower($clientFull); }
+                                echo "' data-clientconfirm='".$ClientConfirm."' data-venueconfirm='".$VenueConfirm."'>";
+                                echo "<table class='table table-bordered table-striped'>";
+                                echo "<tbody>";
                                 foreach ($timezones_array as $item) {
                                     if ($item['id'] == $row['timezoneId']) {
                                         $timezone = $item['timezone'];
@@ -207,10 +259,10 @@
                                 // echo "<span ";
                                 require "./includes/client_loop.php";
                                 // echo "</span>";
-                                // echo "<div>";
-
-                        }
-                        echo "</tbody>";
+                                
+                                echo "</div>";
+                            }
+                            echo "</tbody>";
                         echo "</table>";
 
 
