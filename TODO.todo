@@ -24,6 +24,7 @@
 ✔ What is “reminder: null”? @done(20-09-27 14:22)
 ✔ Under “Venue” options for “live show” or “Pre-recorded”, AND “Audio only” or “Audio/Visual” @done(20-09-27 15:48)
 ✔ Needs options on Venue side (talk to Michelle for clarification) @done(20-09-27 15:48)
+✔ Sound Check button? (Check box if they did a sound check. Also add that to #15) @done(20-09-27 16:37)
 ✔ Collapse All @done(20-09-29 08:53)
 ✔ Venue has Hot Cold option that doesnt populate gsearch @done(20-09-29 13:33)
 ✔ Input Mask on Phone @done(20-09-30 10:22)
@@ -31,11 +32,13 @@
 ✔ The Dump (Month Queue) @done(20-09-30 11:41)
 ✔ Join multiple genre at once @done(20-09-30 11:41)
 ✔ Client list – no search option @done(20-10-01 14:05)
+☐ Cascade Search not implemented
 
+// Right now its too difficult to implement I will keep it on the list for future
+☐ Front page – have each dot hover over to see shorthand what each booking is
 
 
 // The View should have sort options 
-✔ Sound Check button? (Check box if they did a sound check. Also add that to #15) @done(20-09-27 16:37)
 ☐ Contact list – needs “Sort” buttons. Sort by Alphabetical, Date created/modified
 
 ☐ I want a page that shows “To Be Confirmed” where it will show all the clients and guests that haven’t confirmed yet.
@@ -46,10 +49,10 @@
 // No Cant be done! We can create a method to compose an email template and download email list for mailchimp or something like it
 // Can we bulk email from the masterbase?
 
-// Not Priority
-☐ Create a Contact – “Job title” should be a drop-down list?
+// Not Priority Removed
+✔ Create a Contact – “Job title” should be a drop-down list? @done(20-10-01 14:24)
     // My thought was to have most common 
-    ☐ Auto-alphabatize type lists when added
+    ✔ Auto-alphabatize type lists when added @done(20-10-01 14:24)
     
     // Possible but will nullify the point of gsearch
     ☐ Create a venue – needs an autofill – most things where we need to add from lists of contacts and stuff need an autofill where we can start typing and then it’ll pull from the source lists
@@ -57,13 +60,11 @@
 // It sorts new to old 
 ☐ Contacts page – When editing things on the page, it refreshes to the top of the page. We want it to stay where we were at.
 
-// Right now its too difficult to implement I will keep it on the list for future
-☐ Front page – have each dot hover over to see shorthand what each booking is
 
 // Need to discuss
     // created dates may be needed later, are you sure we should hide it?
     ☐ Hide the “created dates” – it can get confusing to see next to everything else
-    ☐ “Notes” – needs clarification of what/why it is
+    ✔ “Notes” – needs clarification of what/why it is @done(20-10-01 14:25)
 
 // Development this will be removed on Production
 // Viewing “Tables” generates error messages

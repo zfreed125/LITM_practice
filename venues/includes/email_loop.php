@@ -10,10 +10,14 @@ while ($row = mysqli_fetch_assoc($email_types_result)) {
 $email_sql = "SELECT * FROM emails where venueId = '$venuesId';";
 $email_result = mysqli_query($conn, $email_sql);
 $emailRowCount = mysqli_num_rows($email_result);
-
+if(!$emailRowCount){
+    $dataset = "data-email='' ";
+}else{
+    $dataset = "";
+}
 echo "<table id='tbl_email". $venuesId ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
 echo "<caption><a href='../emails/add.php?venueId=". $venuesId ."' title='Add Email' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span>Email</a></caption>";
-echo "<a href='#' title='Show/Hide Emails'style='position: relative; left: 50px;' onclick='myFunction(tbl_email". $venuesId .")'><span><i class='fas fa-chevron-down'></i>&nbsp Emails (". $emailRowCount .")&nbsp</span></a>";
+echo "<a ".$dataset." href='#' title='Show/Hide Emails'style='position: relative; left: 50px;' onclick='myFunction(tbl_email". $venuesId .")'><span><i class='fas fa-chevron-down'></i>&nbsp Emails (". $emailRowCount .")&nbsp</span></a>";
 echo "<thead>";
 echo "<tr>";
 echo "<th></th>";
@@ -38,7 +42,7 @@ if($primaryEmailId == $row['id']) {
 }
 echo "<tr>";
 echo "<td class='fitwidth'>" . "$email_primary" . "</td>";
-echo "<td class='fitwidth'>" . "$row[email]" . "</td>";
+echo "<td data-email='".strtolower($row['email'])."' class='fitwidth'>" . "$row[email]" . "</td>";
 echo "<td class='fitwidth'>" . "$emailTypeId" . "</td>";
 echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
 echo "<td class='fitwidth'>";

@@ -44,6 +44,34 @@
         }
         .fitwidth {
         }
+        .dontShow {
+        display: none;
+        }
+        .highLight {
+        background-color: yellow !important;
+        }
+        .smallfield{
+        width:20px !important;
+        }
+        .parent {
+        width: 100%;
+        border: 1px solid lightgrey;
+        text-align: center;
+        margin-bottom: 2em;
+        background-color:#F2F2F2;
+        }
+        .title{
+            border: 1px solid black;
+            background-color:lightgrey;
+            
+        }
+        
+        .child {
+            display: inline-block;  
+            /* border: 1px solid red; */
+            margin: 2px;
+            
+        }
 </style>
     <div class="wrapper pull-left">
         <div class="container-fluid">
@@ -54,6 +82,38 @@
                         <a href="../" style="float:left;font-size:18px;" class="" ><i class="fas fa-chevron-left"></i> Back</a>
                         <a href="#" onclick='collapseAll()' style="margin-left:500px;font-size:18px;" class="" ><i class="fas fa-chevron-down"></i> Collapse All</a>
                         <a href="add.php" style="float:right;" class="btn btn-success pull-right">Add New Venue</a>
+                    </div>
+                    <div class="parent">
+                        <div class="title">Search Fields</div>
+                        <span class="">
+                            &nbsp 
+                        </span>
+                        <span class="child">
+                            <input type="text" onkeyup="searchType()" id="searchTypeInput" placeholder="Search for Venue Type.."> 
+                        </span>
+                        <span class="child">
+                            <input type="text" onkeyup="searchVenueNames()" id="searchVenueNamesInput" placeholder="Search for Venue Name.."> 
+                        </span>
+                        <span class="child">
+                            <input type="text" onkeyup="searchContactNames()" id="searchContactNamesInput" placeholder="Search for Contact Name.."> 
+                        </span>
+                        <span class="child">
+                            <input type="text" onkeyup="searchHostNames()" id="searchHostNamesInput" placeholder="Search for host Name.."> 
+                        </span>
+                        <span class="child">
+                            <input type="text" onkeyup="searchEmails()" id="searchEmailInput" placeholder="Search for Email.."> 
+                        </span>
+                        <span class="child">
+                            <input type="text" onkeyup="prerecorded()" id="prerecorded" placeholder="Type Live or Recorded.."> 
+                        </span>
+                        <span class="child">
+                            <input type="checkbox" onclick="searchHot()" id="searchHot" placeholder="Search for Hot.."> 
+                            <label for="searchActive">Only Hot</label>
+                        </span>
+                        <span class="child">
+                            <input type="checkbox" onclick="searchActive()" id="searchActive" placeholder="Search for Active.."> 
+                            <label for="searchActive">Only Active</label>
+                        </span>
                     </div>
                     <?php
                     require_once '../formatPhone.php';
@@ -105,6 +165,30 @@
                     $venues_sql = "SELECT * FROM venues ORDER BY venueName asc;";
                     $venues_result = mysqli_query($conn, $venues_sql);
                     while ($row =  mysqli_fetch_assoc($venues_result)) {
+                        $venuesId = $row['id'];
+                        foreach ($contacts_array as $item) {
+                            if ($row['contactNameId'] == $item['id']) {
+                                $contactFullname = $item['fullname'];
+                            }
+                            if ($row['hostNameId'] == $item['id']) {
+                                $hostFullname = $item['fullname'];
+                            }
+                        }
+                        foreach ($venue_type_array as $item) {
+                            if ($row['venueTypeId'] == $item['id']) {
+                                $venueType = $item['venueType'];
+                            }
+                        }
+                        foreach ($timezones_array as $item) {
+                            if ($row['timezoneId'] == $item['id']) {
+                                $timezone = $item['timezone'];
+                                $tz = $item['timezone'];
+                            }
+                        }
+                        ($row['active'] == '1') ? $active = 'true' : $active = 'false'; 
+                        ($row['hotCold'] == '1') ? $hotCold = 'true' : $hotCold = 'false';
+                        ($row['bookingLiveRecorded'] == '1') ? $isbookingLiveRecorded = 'Pre-Recorded' : $isbookingLiveRecorded = 'Live';
+                        echo "<div class='' data-type='".strtolower($venueType)."' data-venuename='".strtolower($row['venueName'])."' data-contactname='".strtolower($contactFullname)."' data-hostname='".strtolower($hostFullname)."' data-preRecorded='".strtolower($isbookingLiveRecorded)."' data-hotCold='".$hotCold."' data-active='".$active."'>";
                         echo "<table class='table table-bordered table-striped'>";
                         echo "<thead>";
                         echo "<tr>";
@@ -126,26 +210,7 @@
                         echo "</thead>";
                         echo "<tbody>";
                         echo "<tr>";
-                        $venuesId = $row['id'];
-                        foreach ($contacts_array as $item) {
-                            if ($row['contactNameId'] == $item['id']) {
-                                $contactFullname = $item['fullname'];
-                            }
-                            if ($row['hostNameId'] == $item['id']) {
-                                $hostFullname = $item['fullname'];
-                            }
-                        }
-                        foreach ($venue_type_array as $item) {
-                            if ($row['venueTypeId'] == $item['id']) {
-                                $venueType = $item['venueType'];
-                            }
-                        }
-                        foreach ($timezones_array as $item) {
-                            if ($row['timezoneId'] == $item['id']) {
-                                $timezone = $item['timezone'];
-                                $tz = $item['timezone'];
-                            }
-                        }
+                        
                         (empty($row['venueDateTimeStart'])) ? $StartDate = 'unset' : $StartDate = convertDateTimeUTCtoLocal($row['venueDateTimeStart'], $timezone)[0];
                         (empty($row['venueDateTimeStart'])) ? $StartTime = 'unset' : $StartTime = convertDateTimeUTCtoLocal($row['venueDateTimeStart'], $timezone)[1];
                         (empty($row['venueDateTimeEnd'])) ? $EndDate = 'unset' : $EndDate = convertDateTimeUTCtoLocal($row['venueDateTimeEnd'], $timezone)[0];
@@ -160,7 +225,7 @@
                         $primaryNoteId = $row['primaryNoteId'];
                         ($row['active'] == '1') ? $isActive = 'Yes' : $isActive = 'No';
                         ($row['hotCold'] == '1') ? $ishotCold = 'Hot' : $ishotCold = 'Cold';
-                        ($row['bookingLiveRecorded'] == '1') ? $isbookingLiveRecorded = 'Pre-Recorded' : $isbookingLiveRecorded = 'Live';
+                        
                         ($row['bookingAudioOnly'] == '1') ? $isbookingAudioOnly = 'Audio Only' : $isbookingAudioOnly = 'Audio&Video';
                         echo "<td class='fitwidth'>" . "$row[id]" . "</td>";
                         echo "<td class='fitwidth'>" . "$row[venueName]" . "</td>";
@@ -202,9 +267,10 @@
 
                         //Services sql query loop table
                         require './includes/service_loop.php';
+                        echo "</div>";
+                        echo "</tbody>";
                     } //end of contact loop
                     //end of the table from the contacts loop
-                    echo "</tbody>";
                     echo "</table>";
 
 
