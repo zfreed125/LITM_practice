@@ -19,7 +19,72 @@ function collapseAll() {
         sessionStorage.setItem("contacts_uncollapsed", JSON.stringify(show));
     }
 }
+// function clearAllNames(){
+//     divs = document.querySelectorAll('[data-lastname]');
+//     divs.forEach(div => div.classList.remove('dontShow'))
+//     input = document.getElementById('searchInput').value = '';
 
+// }
+function searchLastNames() {
+    console.log("last");
+    let input, divs, rows;
+    divs = document.querySelectorAll('[data-lastname]');
+    input = document.getElementById('searchLastInput').value.toLowerCase();
+    if (input.length != 0) {
+        divs.forEach(div => div.classList.add('dontShow'))
+        rows = document.querySelectorAll(`[data-lastname*="` + input + `"]`);
+        rows.forEach(row => row.classList.remove('dontShow'))
+    } else {
+        divs.forEach(div => div.classList.remove('dontShow'))
+    }
+
+}
+function searchFirstNames() {
+    console.log("first");
+    let input, divs, rows;
+    divs = document.querySelectorAll('[data-firstname]');
+
+    input = document.getElementById('searchFirstInput').value.toLowerCase();
+    if (input.length != 0) {
+        divs.forEach(div => div.classList.add('dontShow'))
+        rows = document.querySelectorAll(`[data-firstname*="` + input + `"]`);
+        rows.forEach(row => row.classList.remove('dontShow'))
+    } else {
+        divs.forEach(div => div.classList.remove('dontShow'))
+    }
+
+}
+
+function searchActive() {
+    let input, divs, rows;
+    divs = document.querySelectorAll('[data-active]');
+
+    input = document.getElementById('searchActive').checked;
+    console.log("active", input);
+    if (input) {
+        divs.forEach(div => div.classList.add('dontShow'))
+        rows = document.querySelectorAll(`[data-active="` + input + `"]`);
+        rows.forEach(row => row.classList.remove('dontShow'))
+    } else {
+        divs.forEach(div => div.classList.remove('dontShow'))
+    }
+
+}
+function searchEmails() {
+    console.log("emails");
+    let input, divs, rows;
+    divs = document.querySelectorAll('[data-email]');
+    console.log(divs);
+    input = document.getElementById('searchEmailInput').value.toLowerCase();
+    if (input.length != 0) {
+        divs.forEach(div => div.closest('div').classList.add('dontShow'))
+        rows = document.querySelectorAll(`[data-email*="` + input + `"]`);
+        rows.forEach(row => row.closest('div').classList.remove('dontShow'))
+    } else {
+        divs.forEach(div => div.closest('div').classList.remove('dontShow'))
+    }
+
+}
 window.addEventListener('load', (event) => {
     var uncollapsed = JSON.parse(sessionStorage.getItem("contacts_uncollapsed"));
     for (i = 0; i < uncollapsed.length; i++) {

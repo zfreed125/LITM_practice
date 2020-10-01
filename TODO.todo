@@ -30,6 +30,7 @@
 ✔ Contacts add email maybe genres(multiple) default no primary @done(20-09-30 10:23)
 ✔ The Dump (Month Queue) @done(20-09-30 11:41)
 ✔ Join multiple genre at once @done(20-09-30 11:41)
+✔ Client list – no search option @done(20-10-01 14:05)
 
 
 
@@ -38,7 +39,6 @@
 ☐ Contact list – needs “Sort” buttons. Sort by Alphabetical, Date created/modified
 
 ☐ I want a page that shows “To Be Confirmed” where it will show all the clients and guests that haven’t confirmed yet.
-☐ Client list – no search option
 
 // Can not be done at this time
 ✔ Contact page – Blue “bread crumb” line is under contact name, should be above @notdone(20-09-27 13:55)

@@ -12,7 +12,7 @@ $account_result = mysqli_query($conn, $account_sql);
 $accountRowCount = mysqli_num_rows($account_result);
 
 echo "<table id='tbl_account". $contactId ."' style= 'display: none; position: relative; left: 50px;' class='table table-bordered table-striped'>";
-echo "<caption><a href='../accounts/add.php?contactId=". $contactId ."' title='Add Account' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span>Account</a></caption>";
+echo "<caption data-lastname='$row[lastname]'><a href='../accounts/add.php?contactId=". $contactId ."' title='Add Account' data-toggle='tooltip'><span><i class='fas fa-plus'></i></span>Account</a></caption>";
 echo "<a href='#' title='Show/Hide accounts'style='position: relative; left: 50px;' onclick='myFunction(tbl_account". $contactId .")'><span><i class='fas fa-chevron-down'></i>&nbsp Account Type (". $accountRowCount .")&nbsp</span></a>";
 echo "<thead>";
 echo "<tr>";

@@ -43,6 +43,34 @@
         }
         .fitwidth {
         }
+        .dontShow {
+        display: none;
+        }
+        .highLight {
+        background-color: yellow !important;
+        }
+        .smallfield{
+        width:20px !important;
+        }
+        .parent {
+        width: 100%;
+        border: 1px solid lightgrey;
+        text-align: center;
+        margin-bottom: 2em;
+        background-color:#F2F2F2;
+        }
+        .title{
+            border: 1px solid black;
+            background-color:lightgrey;
+            
+        }
+        
+        .child {
+            display: inline-block;  
+            /* border: 1px solid red; */
+            margin: 2px;
+            
+        }
 </style>
     <div class="wrapper pull-left">
         <div class="container-fluid">
@@ -55,6 +83,25 @@
                         <a href="#" onclick='collapseAll()' style="margin-left:500px;" class="" ><i class="fas fa-chevron-down"></i> Collapse All</a>
                         <a href="../contacts/add.php" style="float:right;" class="btn btn-success pull-right mb-2" >Add New Contact</a>
 
+                    </div>
+                    <div class="parent">
+                        <div class="title">Search Fields</div>
+                        <span class="">
+                            &nbsp 
+                        </span>
+                        <span class="child">
+                            <input type="text" onkeyup="searchFirstNames()" id="searchFirstInput" placeholder="Search for First Name.."> 
+                        </span>
+                        <span class="child">
+                            <input type="text" onkeyup="searchLastNames()" id="searchLastInput" placeholder="Search for Last Name.."> 
+                        </span>
+                        <span class="child">
+                            <input type="text" onkeyup="searchEmails()" id="searchEmailInput" placeholder="Search for Email.."> 
+                        </span>
+                        <span class="child">
+                            <input type="checkbox" onclick="searchActive()" id="searchActive" placeholder="Search for Active.."> 
+                            <label for="searchActive">Only Active</label>
+                        </span>
                     </div>
                     <?php
                     
@@ -81,19 +128,20 @@
                     $result = mysqli_query($conn, $contact_sql);
 
                     while ($row = mysqli_fetch_assoc($result)) {
+                        ($row['active'] == '1') ? $active = 'true' : $active = 'false'; 
+                        echo "<div class='' data-lastname='".strtolower($row['lastname'])."' data-firstname='".strtolower($row['firstname'])."' data-active='".$active."'>";
                         echo "<table class='table table-bordered table-striped'>";
                         echo "<thead>";
                         echo "<tr>";
-                        echo "<th>#</th>";
+                        echo "<th class='smallfield'>#</th>";
                         echo "<th>First Name</th>";
                         echo "<th>Last Name</th>";
                         echo "<th>Timezone</th>";
-                        echo "<th>Active</th>";
-                        // echo "<th>Created</th>";
+                        echo "<th class='smallfield'>Active</th>";
+                        echo "<th class='smallfield'></th>";
                         echo "</tr>";
                         echo "</thead>";
                         echo "<tbody>";
-
                         foreach ($timezones_array as $item) {
                             if ($item['id'] == $row['timezoneId']) {
                                 $timezone = $item['timezone'];
@@ -101,13 +149,13 @@
                         }
                         ($row['active'] == '1') ? $isActive = 'Yes' : $isActive = 'No';
                         echo "<tr>";
-                        echo "<td class='fitwidth'>" . "$row[id]" . "</td>";
+                        echo "<td class='smallfield'>" . "$row[id]" . "</td>";
                         echo "<td class='fitwidth'>" . "$row[firstname]" . "</td>";
                         echo "<td class='fitwidth'>" . "$row[lastname]" . "</td>";
                         echo "<td class='fitwidth'>" . $timezone . "</td>";
-                        echo "<td class='fitwidth'>" . "$isActive" . "</td>";
+                        echo "<td class='smallfield'>" . "$isActive" . "</td>";
                         // echo "<td class='fitwidth'>" . "$row[created]" . "</td>";
-                        echo "<td class='fitwidth'>";
+                        echo "<td class='smallfield'>";
                         echo "<a href='edit.php?id=" . $row['id'] . "' title='Update Record' data-toggle='tooltip'><span><i class='fas fa-edit'></i></span></a>";
                         // echo "<a href='delete.php?contactId=" . $row['id'] . "' title='Delete Record' data-toggle='tooltip'><span><i class='fas fa-trash'></i></span></a>";
                         echo "</td>";
@@ -139,10 +187,10 @@
 
                         //Services sql query loop table
                         require './includes/service_loop.php';
+                        echo "</div>";
+                        echo "</tbody>";
                     } //end of contact loop
                     //end of the table from the contacts loop
-                    echo "</tbody>";
                     echo "</table>";
-
 
                     ?>
